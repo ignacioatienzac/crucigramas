@@ -99,17 +99,13 @@ function shuffleArray(arr) {
 }
 
 // Utilidad: Comprobar si 'word' se puede formar con las letras de 'baseWord'
+// Para favorecer que aparezcan más palabras (estilo "letter bank" de Scrabble),
+// solo verificamos que las letras existan en la palabra base, sin limitar la
+// frecuencia. También evitamos devolver la misma palabra base.
 function canBeFormedFrom(word, baseWord) {
-    if (word === baseWord) return false; // No queremos la misma palabra repetida
-    const baseMap = {};
-    for (let char of normalize(baseWord)) baseMap[char] = (baseMap[char] || 0) + 1;
-    
-    for (let char of normalize(word)) {
-        if (!baseMap[char]) return false;
-        baseMap[char]--;
-        if (baseMap[char] < 0) return false;
-    }
-    return true;
+    if (normalize(word) === normalize(baseWord)) return false;
+    const letters = new Set(normalize(baseWord).split(''));
+    return normalize(word).split('').every((char) => letters.has(char));
 }
 
 // Función principal de generación de crucigramas infinitos
@@ -139,7 +135,20 @@ function generarCrucigrama() {
     });
 
     // Filtrado de candidatos tipo Letter Bank
-    const candidates = shuffleArray(validWords.filter(item => canBeFormedFrom(item.palabra, baseWord)));
+    let candidates = shuffleArray(validWords.filter(item => canBeFormedFrom(item.palabra, baseWord)));
+
+    // Si no encontramos suficientes palabras estrictamente formadas con las
+    // letras de la base, relajamos la condición para permitir palabras que
+    // compartan al menos 2 letras con la base. Esto garantiza que el tablero
+    // no se quede solo con la palabra inicial.
+    if (candidates.length < 5) {
+        const baseSet = new Set(baseWord.split(''));
+        candidates = shuffleArray(validWords.filter(item => {
+            const normalized = normalize(item.palabra);
+            const shared = normalized.split('').filter(ch => baseSet.has(ch)).length;
+            return shared >= 2 && normalized !== baseWord;
+        }));
+    }
 
     for (let candObj of candidates) {
         const candStr = normalize(candObj.palabra);
