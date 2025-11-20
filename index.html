@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>12 Crucigramas Finales</title>
+    <title>Generador de Crucigramas A1</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -13,187 +13,290 @@
         }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 950px; width: 100%; }
-        h1 { color: var(--primary); margin-top: 0; text-align: center; }
-        select { width: 100%; padding: 12px; margin-bottom: 25px; font-size: 16px; border: 2px solid #bdc3c7; border-radius: 8px; cursor: pointer; background-color: #fff; }
-        select:focus { border-color: var(--secondary); outline: none; }
+        h1 { color: var(--primary); margin-top: 0; text-align: center; font-size: 24px; }
         
+        .controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; }
+        button { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; transition: 0.2s; }
+        button:hover { background: var(--primary); }
+        button#new-game-btn { background: var(--accent); }
+
+        select { padding: 10px; font-size: 16px; border: 2px solid #bdc3c7; border-radius: 8px; }
+
         .game-area { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; }
         
         /* Grid Design */
-        #grid-wrapper { background: #bdc3c7; padding: 5px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        #grid-wrapper { background: #bdc3c7; padding: 5px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: auto; max-width: 100%; }
         #grid { display: grid; gap: 2px; }
-        .cell { width: 44px; height: 44px; background: #ecf0f1; display: flex; justify-content: center; align-items: center; position: relative; font-weight: bold; font-size: 20px; color: var(--primary); text-transform: uppercase; }
+        .cell { width: 40px; height: 40px; background: #ecf0f1; display: flex; justify-content: center; align-items: center; position: relative; font-weight: bold; font-size: 18px; color: var(--primary); text-transform: uppercase; }
         .cell.filled { background: white; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); animation: pop 0.3s ease-out; }
-        .cell .num { position: absolute; top: 2px; left: 4px; font-size: 10px; color: var(--accent); font-weight: 700; line-height: 1; }
+        .cell .num { position: absolute; top: 1px; left: 3px; font-size: 9px; color: var(--accent); font-weight: 700; line-height: 1; }
 
         /* Clues Design */
-        .clues { flex: 1; min-width: 280px; max-width: 400px; background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #eee; }
-        h3 { color: var(--secondary); border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; }
+        .clues { flex: 1; min-width: 280px; max-width: 400px; background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #eee; max-height: 500px; overflow-y: auto; }
+        h3 { color: var(--secondary); border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; font-size: 18px; }
         ul { padding-left: 20px; margin-bottom: 20px; }
-        li { margin-bottom: 8px; line-height: 1.4; color: #555; }
+        li { margin-bottom: 8px; line-height: 1.4; color: #555; font-size: 14px; }
         li b { color: var(--primary); margin-right: 5px; }
 
         @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        #loading { text-align: center; color: #7f8c8d; font-style: italic; }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Crucigramas de Español</h1>
-    <select id="selector"></select>
-    <div class="game-area">
+    <h1>Generador de Crucigramas: Vocabulario</h1>
+    <div id="loading">Cargando diccionario...</div>
+    
+    <div class="controls" style="display:none;" id="game-controls">
+        <button id="new-game-btn" onclick="generateRandomLevel()">🎲 Generar Nuevo Nivel</button>
+    </div>
+
+    <div class="game-area" id="game-area" style="display:none;">
         <div id="grid-wrapper"><div id="grid"></div></div>
         <div class="clues">
+            <h4 id="level-title" style="margin-top:0; color:#7f8c8d;"></h4>
             <h3>Horizontales</h3><ul id="h-clues"></ul>
             <h3>Verticales</h3><ul id="v-clues"></ul>
         </div>
     </div>
 </div>
+
 <script>
-const data = [
-    {
-        id: 1, nombre: "1. Bueno y Uno",
-        palabras: [
-            { palabra: "bueno", pista: "good", orientacion: "horizontal", x: 0, y: 2, desglose: ["b","u","e","n","o"] },
-            { palabra: "buen", pista: "good (short)", orientacion: "vertical", x: 0, y: 2, desglose: ["b","u","e","n"] },
-            { palabra: "uno", pista: "one", orientacion: "vertical", x: 4, y: 0, desglose: ["u","n","o"] }
-        ]
-    },
-    {
-        id: 2, nombre: "2. Sol y Solo",
-        palabras: [
-            { palabra: "solo", pista: "alone / only", orientacion: "horizontal", x: 0, y: 0, desglose: ["s","o","l","o"] },
-            { palabra: "sol", pista: "sun", orientacion: "vertical", x: 0, y: 0, desglose: ["s","o","l"] },
-            { palabra: "los", pista: "the (plural)", orientacion: "vertical", x: 2, y: 0, desglose: ["l","o","s"] }
-        ]
-    },
-    {
-        id: 3, nombre: "3. Porqués",
-        palabras: [
-            { palabra: "porque", pista: "because", orientacion: "horizontal", x: 0, y: 2, desglose: ["p","o","r","q","u","e"] },
-            { palabra: "por", pista: "by / for", orientacion: "vertical", x: 0, y: 2, desglose: ["p","o","r"] },
-            { palabra: "que", pista: "what / that", orientacion: "vertical", x: 3, y: 2, desglose: ["q","u","e"] },
-            { palabra: "pero", pista: "but", orientacion: "vertical", x: 5, y: 1, desglose: ["p","e","r","o"] }
-        ]
-    },
-    {
-        id: 4, nombre: "4. Cocinero y Números (Final)",
-        palabras: [
-            { palabra: "cocinero", pista: "cook / chef", orientacion: "horizontal", x: 0, y: 4, desglose: ["c","o","c","i","n","e","r","o"] },
-            { palabra: "cinco", pista: "five", orientacion: "vertical", x: 1, y: 0, desglose: ["c","i","n","c","o"] },
-            { palabra: "rico", pista: "rich", orientacion: "vertical", x: 7, y: 1, desglose: ["r","i","c","o"] },
-            { palabra: "cine", pista: "cinema", orientacion: "vertical", x: 4, y: 2, desglose: ["c","i","n","e"] },
-            { palabra: "cien", pista: "one hundred", orientacion: "horizontal", x: 0, y: 1, desglose: ["c","i","e","n"] }
-        ]
-    },
-    {
-        id: 5, nombre: "5. Mercado",
-        palabras: [
-            { palabra: "mercado", pista: "market", orientacion: "horizontal", x: 2, y: 0, desglose: ["m","e","r","c","a","d","o"] },
-            { palabra: "madre", pista: "mother", orientacion: "vertical", x: 2, y: 0, desglose: ["m","a","d","r","e"] },
-            { palabra: "cero", pista: "zero", orientacion: "horizontal", x: 0, y: 3, desglose: ["c","e","r","o"] },
-            { palabra: "comer", pista: "to eat", orientacion: "vertical", x: 5, y: 0, desglose: ["c","o","m","e","r"] },
-            { palabra: "doce", pista: "twelve", orientacion: "vertical", x: 7, y: 0, desglose: ["d","o","c","e"] }
-        ]
-    },
-    {
-        id: 6, nombre: "6. Vestido",
-        palabras: [
-            { palabra: "vestido", pista: "dress", orientacion: "horizontal", x: 0, y: 0, desglose: ["v","e","s","t","i","d","o"] },
-            { palabra: "dos", pista: "two", orientacion: "vertical", x: 5, y: 0, desglose: ["d","o","s"] },
-            { palabra: "tio", pista: "uncle", orientacion: "vertical", x: 3, y: 0, desglose: ["t","i","o"] },
-            { palabra: "sed", pista: "thirst", orientacion: "horizontal", x: 5, y: 2, desglose: ["s","e","d"] }
-        ]
-    },
-    {
-        id: 7, nombre: "7. Tienda",
-        palabras: [
-            { palabra: "tienda", pista: "shop", orientacion: "horizontal", x: 0, y: 0, desglose: ["t","i","e","n","d","a"] },
-            { palabra: "tia", pista: "aunt", orientacion: "vertical", x: 0, y: 0, desglose: ["t","i","a"] },
-            { palabra: "nieta", pista: "granddaughter", orientacion: "vertical", x: 3, y: 0, desglose: ["n","i","e","t","a"] },
-            { palabra: "dia", pista: "day", orientacion: "horizontal", x: 1, y: 4, desglose: ["d","i","a"] }
-        ]
-    },
-    {
-        id: 8, nombre: "8. Camarero (Final)",
-        palabras: [
-            { palabra: "camarero", pista: "waiter", orientacion: "horizontal", x: 1, y: 0, desglose: ["c","a","m","a","r","e","r","o"] },
-            { palabra: "cama", pista: "bed", orientacion: "vertical", x: 1, y: 0, desglose: ["c","a","m","a"] },
-            { palabra: "amar", pista: "to love", orientacion: "horizontal", x: 0, y: 2, desglose: ["a","m","a","r"] },
-            // Mar en (3,0) y conecta en (3,2) con 'r'. Debe ser Vertical para cruzar horizontal y=0 y y=2
-            { palabra: "mar", pista: "sea", orientacion: "vertical", x: 3, y: 0, desglose: ["m","a","r"] },
-            { palabra: "roma", pista: "Rome", orientacion: "vertical", x: 7, y: 0, desglose: ["r","o","m","a"] },
-            { palabra: "caro", pista: "expensive", orientacion: "horizontal", x: 6, y: 3, desglose: ["c","a","r","o"] }
-        ]
-    },
-    {
-        id: 9, nombre: "9. Hermano",
-        palabras: [
-            { palabra: "hermano", pista: "brother", orientacion: "horizontal", x: 0, y: 0, desglose: ["h","e","r","m","a","n","o"] },
-            { palabra: "hora", pista: "hour", orientacion: "vertical", x: 0, y: 0, desglose: ["h","o","r","a"] },
-            { palabra: "mano", pista: "hand", orientacion: "vertical", x: 3, y: 0, desglose: ["m","a","n","o"] }
-        ]
-    },
-    {
-        id: 10, nombre: "10. Invierno",
-        palabras: [
-            { palabra: "invierno", pista: "winter", orientacion: "horizontal", x: 0, y: 2, desglose: ["i","n","v","i","e","r","n","o"] },
-            { palabra: "vino", pista: "wine", orientacion: "vertical", x: 2, y: 2, desglose: ["v","i","n","o"] },
-            { palabra: "ver", pista: "to see", orientacion: "vertical", x: 4, y: 1, desglose: ["v","e","r"] },
-            { palabra: "nieto", pista: "grandson", orientacion: "vertical", x: 6, y: 2, desglose: ["n","i","e","t","o"] },
-            { palabra: "uno", pista: "one", orientacion: "vertical", x: 7, y: 0, desglose: ["u","n","o"] }
-        ]
-    },
-    {
-        id: 11, nombre: "11. Estudiantes",
-        palabras: [
-            { palabra: "estudiantes", pista: "students", orientacion: "horizontal", x: 0, y: 6, desglose: ["e","s","t","u","d","i","a","n","t","e","s"] },
-            { palabra: "sesenta", pista: "sixty", orientacion: "vertical", x: 6, y: 0, desglose: ["s","e","s","e","n","t","a"] },
-            { palabra: "esta", pista: "this", orientacion: "vertical", x: 0, y: 6, desglose: ["e","s","t","a"] },
-            { palabra: "setenta", pista: "seventy", orientacion: "vertical", x: 2, y: 4, desglose: ["s","e","t","e","n","t","a"] },
-            { palabra: "tia", pista: "aunt", orientacion: "vertical", x: 8, y: 6, desglose: ["t","i","a"] }
-        ]
-    },
-    {
-        id: 12, nombre: "12. Primavera",
-        palabras: [
-            { palabra: "primavera", pista: "spring", orientacion: "horizontal", x: 0, y: 2, desglose: ["p","r","i","m","a","v","e","r","a"] },
-            { palabra: "prima", pista: "cousin", orientacion: "vertical", x: 0, y: 2, desglose: ["p","r","i","m","a"] },
-            { palabra: "mirar", pista: "to look", orientacion: "vertical", x: 3, y: 2, desglose: ["m","i","r","a","r"] },
-            { palabra: "ver", pista: "to see", orientacion: "vertical", x: 5, y: 2, desglose: ["v","e","r"] },
-            { palabra: "mar", pista: "sea", orientacion: "vertical", x: 7, y: 0, desglose: ["m","a","r"] }
-        ]
+let fullVocabulary = [];
+let currentLevelData = null;
+
+// 1. Cargar el JSON
+async function init() {
+    try {
+        const response = await fetch('vocabulario-a1-completo.json');
+        if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
+        fullVocabulary = await response.json();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('game-controls').style.display = 'flex';
+        document.getElementById('game-area').style.display = 'flex';
+        
+        generateRandomLevel();
+    } catch (error) {
+        document.getElementById('loading').innerHTML = "Error: Asegúrate de que 'vocabulario-a1-completo.json' está en la misma carpeta y usa un servidor local (Live Server).";
+        console.error(error);
     }
-];
+}
 
-// Inicialización del juego
-const sel = document.getElementById('selector');
-data.forEach((d, i) => { let o = document.createElement('option'); o.value = i; o.text = d.nombre; sel.add(o); });
-sel.onchange = () => load(sel.value);
+// --- LÓGICA DEL GENERADOR ---
 
-function load(idx) {
-    const d = data[idx];
-    const grid = document.getElementById('grid');
-    const h = document.getElementById('h-clues'), v = document.getElementById('v-clues');
+// Utilidad: Normalizar texto (quitar tildes para la lógica de la rejilla)
+const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+// Utilidad: Comprobar si 'word' se puede formar con las letras de 'baseWord'
+function canBeFormedFrom(word, baseWord) {
+    if (word === baseWord) return false; // No queremos la misma palabra repetida
+    const baseMap = {};
+    for (let char of normalize(baseWord)) baseMap[char] = (baseMap[char] || 0) + 1;
     
+    for (let char of normalize(word)) {
+        if (!baseMap[char]) return false;
+        baseMap[char]--;
+        if (baseMap[char] < 0) return false;
+    }
+    return true;
+}
+
+// Función principal de generación
+function generateRandomLevel() {
+    // 1. Filtrar palabras válidas (más de 2 letras, sin espacios)
+    const validWords = fullVocabulary.filter(item => item.palabra.trim().length > 2 && !item.palabra.includes(" "));
+    
+    // 2. Seleccionar "Palabra Madre" (Larga, > 6 letras)
+    const longWords = validWords.filter(item => item.palabra.length >= 7);
+    if (longWords.length === 0) { alert("No hay palabras suficientemente largas en el JSON."); return; }
+    
+    const baseObj = longWords[Math.floor(Math.random() * longWords.length)];
+    const baseWord = normalize(baseObj.palabra);
+
+    // 3. Buscar candidatos (palabras que se forman con las letras de la madre)
+    let candidates = validWords.filter(item => canBeFormedFrom(item.palabra, baseWord));
+    // Mezclar candidatos
+    candidates.sort(() => Math.random() - 0.5);
+
+    // 4. Algoritmo de colocación en Rejilla
+    // Usamos una rejilla virtual de 20x20 para calcular posiciones
+    const gridSize = 30;
+    const center = Math.floor(gridSize / 2);
+    let grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+    let placedWords = []; // Array para guardar resultado final
+
+    // Colocar palabra madre en el centro (Horizontal por defecto)
+    let startX = center - Math.floor(baseWord.length / 2);
+    let startY = center;
+    
+    placeWordOnGrid(grid, baseObj, startX, startY, 'horizontal', baseWord);
+    placedWords.push({
+        palabra: baseObj.palabra,
+        pista: baseObj.traduccion_ingles,
+        orientacion: 'horizontal',
+        x: startX,
+        y: startY,
+        desglose: baseWord.split('')
+    });
+
+    // Intentar colocar candidatos
+    for (let candObj of candidates) {
+        let candStr = normalize(candObj.palabra);
+        let placed = false;
+
+        // Buscar intersecciones con palabras ya colocadas
+        // Aleatorizamos el orden de las palabras colocadas para variar la estructura
+        let shuffledPlaced = [...placedWords].sort(() => Math.random() - 0.5);
+
+        for (let target of shuffledPlaced) {
+            if (placed) break;
+            
+            // Verificar cruce letra por letra
+            let targetStr = normalize(target.palabra);
+            
+            for (let i = 0; i < candStr.length; i++) {
+                for (let j = 0; j < targetStr.length; j++) {
+                    if (candStr[i] === targetStr[j]) {
+                        // Hay coincidencia de letra. 
+                        // Si target es Horizontal, candidato debe ser Vertical, y viceversa
+                        let newDir = target.orientacion === 'horizontal' ? 'vertical' : 'horizontal';
+                        
+                        // Calcular coordenadas propuestas para el candidato
+                        // Si target está en (tx, ty) y la letra común es j
+                        // La intersección absoluta es: ix = tx + j (si horiz), iy = ty (si horiz)
+                        let ix = target.x + (target.orientacion === 'horizontal' ? j : 0);
+                        let iy = target.y + (target.orientacion === 'horizontal' ? 0 : j);
+
+                        // El inicio del candidato será: 
+                        // Si es vertical: x = ix, y = iy - i
+                        // Si es horizontal: x = ix - i, y = iy
+                        let propX = newDir === 'horizontal' ? ix - i : ix;
+                        let propY = newDir === 'vertical' ? iy - i : iy;
+
+                        if (isValidPlacement(grid, candStr, propX, propY, newDir)) {
+                            placeWordOnGrid(grid, candObj, propX, propY, newDir, candStr);
+                            placedWords.push({
+                                palabra: candObj.palabra,
+                                pista: candObj.traduccion_ingles,
+                                orientacion: newDir,
+                                x: propX,
+                                y: propY,
+                                desglose: candStr.split('')
+                            });
+                            placed = true;
+                            break; // Salir bucle j
+                        }
+                    }
+                }
+                if (placed) break; // Salir bucle i
+            }
+        }
+    }
+
+    // 5. Normalizar coordenadas (hacer que empiece en 0,0)
+    let minX = Infinity, minY = Infinity;
+    placedWords.forEach(p => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); });
+    placedWords.forEach(p => { p.x -= minX; p.y -= minY; });
+
+    // Renderizar
+    document.getElementById('level-title').innerText = `Nivel basado en: ${baseObj.palabra.toUpperCase()} (${baseObj.traduccion_ingles})`;
+    renderGame(placedWords);
+}
+
+function isValidPlacement(grid, word, x, y, dir) {
+    const len = word.length;
+    const h = grid.length;
+    const w = grid[0].length;
+
+    // 1. Check Bounds
+    if (x < 1 || y < 1 || x + (dir === 'horizontal' ? len : 1) >= w - 1 || y + (dir === 'vertical' ? len : 1) >= h - 1) return false;
+
+    for (let i = 0; i < len; i++) {
+        let cx = x + (dir === 'horizontal' ? i : 0);
+        let cy = y + (dir === 'vertical' ? i : 0);
+        let char = word[i];
+
+        // Verificar celda actual
+        let cellContent = grid[cy][cx];
+        
+        // Si hay letra, debe ser la misma (intersección)
+        if (cellContent !== null && cellContent !== char) return false;
+
+        // REGLA DE ADYACENCIA:
+        // Si la celda estaba vacía (no es intersección), verificamos vecinos
+        if (cellContent === null) {
+            // Vecinos ortogonales (Arriba, Abajo, Izq, Der) deben estar vacíos
+            // excepto si son parte de una línea válida que estamos cruzando (eso ya se valida indirectamente)
+            // La forma fácil: No puede haber NADA adyacente que no sea parte del cruce permitido.
+            
+            let neighbors = [
+                {nx: cx+1, ny: cy}, {nx: cx-1, ny: cy},
+                {nx: cx, ny: cy+1}, {nx: cx, ny: cy-1}
+            ];
+
+            for (let n of neighbors) {
+                // Si el vecino tiene letra
+                if (grid[n.ny][n.nx] !== null) {
+                    // Solo es válido si esa letra pertenece a una palabra perpendicular que cruza EXACTAMENTE en (cx, cy)
+                    // Pero como estamos en el bloque "cellContent === null", significa que aquí NO hay cruce previo.
+                    // Por tanto, no deberíamos tener ningún vecino.
+                    return false;
+                }
+            }
+        }
+        
+        // Verificar extremos (antes de la primera letra y después de la última)
+        if (i === 0) {
+            let bx = x + (dir === 'horizontal' ? -1 : 0);
+            let by = y + (dir === 'vertical' ? -1 : 0);
+            if (grid[by][bx] !== null) return false;
+        }
+        if (i === len - 1) {
+            let ax = x + (dir === 'horizontal' ? 1 : 0);
+            let ay = y + (dir === 'vertical' ? 1 : 0);
+            if (grid[ay][ax] !== null) return false;
+        }
+    }
+    return true;
+}
+
+function placeWordOnGrid(grid, wordObj, x, y, dir, cleanWord) {
+    for (let i = 0; i < cleanWord.length; i++) {
+        let cx = x + (dir === 'horizontal' ? i : 0);
+        let cy = y + (dir === 'vertical' ? i : 0);
+        grid[cy][cx] = cleanWord[i];
+    }
+}
+
+// --- RENDERIZADO (IGUAL QUE ANTES PERO ADAPTADO) ---
+
+function renderGame(wordsData) {
+    const gridEl = document.getElementById('grid');
+    const hEl = document.getElementById('h-clues');
+    const vEl = document.getElementById('v-clues');
+    
+    // Calcular dimensiones finales
     let cols = 0, rows = 0;
-    d.palabras.forEach(p => {
+    wordsData.forEach(p => {
         if (p.orientacion === 'horizontal') { cols = Math.max(cols, p.x + p.desglose.length); rows = Math.max(rows, p.y + 1); }
         else { cols = Math.max(cols, p.x + 1); rows = Math.max(rows, p.y + p.desglose.length); }
     });
 
+    // Mapear celdas
     const map = Array.from({ length: rows }, () => Array(cols).fill(null));
-    d.palabras.forEach((p, wi) => {
+    wordsData.forEach((p, wi) => {
         let cx = p.x, cy = p.y;
         p.desglose.forEach((char, ci) => {
             if (!map[cy][cx]) map[cy][cx] = { char: char, nums: [] };
-            if (ci === 0) map[cy][cx].nums.push(wi + 1);
+            if (ci === 0) map[cy][cx].nums.push(wi + 1); // Número de la pista
             p.orientacion === 'horizontal' ? cx++ : cy++;
         });
     });
 
-    grid.style.gridTemplateColumns = `repeat(${cols}, 44px)`;
-    grid.style.gridTemplateRows = `repeat(${rows}, 44px)`;
-    grid.innerHTML = ''; h.innerHTML = ''; v.innerHTML = '';
+    // Dibujar Grid
+    gridEl.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+    gridEl.innerHTML = ''; hEl.innerHTML = ''; vEl.innerHTML = '';
 
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -204,17 +307,26 @@ function load(idx) {
                     let n = document.createElement('span'); n.className = 'num';
                     n.innerText = map[r][c].nums.join('/'); cell.appendChild(n);
                 }
+            } else {
+                cell.style.background = "transparent"; // Ocultar celdas vacías visualmente
+                cell.style.boxShadow = "none";
             }
-            grid.appendChild(cell);
+            gridEl.appendChild(cell);
         }
     }
 
-    d.palabras.forEach((p, i) => {
-        let li = document.createElement('li'); li.innerHTML = `<b>${i + 1}.</b> ${p.pista}`;
-        p.orientacion === 'horizontal' ? h.appendChild(li) : v.appendChild(li);
+    // Dibujar Pistas
+    wordsData.forEach((p, i) => {
+        let li = document.createElement('li'); 
+        li.innerHTML = `<b>${i + 1}.</b> ${p.pista} <i style="color:#95a5a6; font-size:0.8em;">(${p.palabra})</i>`; // Muestro la respuesta temporalmente para debug, puedes quitarlo
+        li.innerHTML = `<b>${i + 1}.</b> ${p.pista}`; // Versión final limpia
+        p.orientacion === 'horizontal' ? hEl.appendChild(li) : vEl.appendChild(li);
     });
 }
-load(0);
+
+// Iniciar aplicación
+init();
+
 </script>
 </body>
 </html>
