@@ -1,0 +1,3495 @@
+[
+  {
+    "palabra": "yo",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "invariable",
+    "traduccion_ingles": "I",
+    "frase_ejemplo": "Yo soy estudiante de español."
+  },
+  {
+    "palabra": "tú",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "invariable",
+    "traduccion_ingles": "you (singular informal)",
+    "frase_ejemplo": "¿Tú vives en esta ciudad?"
+  },
+  {
+    "palabra": "él",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "masculino",
+    "traduccion_ingles": "he",
+    "frase_ejemplo": "Él es mi mejor amigo."
+  },
+  {
+    "palabra": "ella",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "femenino",
+    "traduccion_ingles": "she",
+    "frase_ejemplo": "Ella tiene veinticinco años."
+  },
+  {
+    "palabra": "usted",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "invariable",
+    "traduccion_ingles": "you (singular formal)",
+    "frase_ejemplo": "¿Usted es el profesor de historia?"
+  },
+  {
+    "palabra": "nosotros",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "masculino",
+    "traduccion_ingles": "we (masculine/mixed)",
+    "frase_ejemplo": "Nosotros vamos al cine mañana."
+  },
+  {
+    "palabra": "nosotras",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "femenino",
+    "traduccion_ingles": "we (feminine)",
+    "frase_ejemplo": "Nosotras somos hermanas."
+  },
+  {
+    "palabra": "vosotros",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "masculino",
+    "traduccion_ingles": "you (plural informal masculine/mixed)",
+    "frase_ejemplo": "¿Vosotros sois de España?"
+  },
+  {
+    "palabra": "vosotras",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "femenino",
+    "traduccion_ingles": "you (plural informal feminine)",
+    "frase_ejemplo": "Vosotras tenéis un coche muy bonito."
+  },
+  {
+    "palabra": "ellos",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "masculino",
+    "traduccion_ingles": "they (masculine/mixed)",
+    "frase_ejemplo": "Ellos comen en el restaurante."
+  },
+  {
+    "palabra": "ellas",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "femenino",
+    "traduccion_ingles": "they (feminine)",
+    "frase_ejemplo": "Ellas están muy contentas."
+  },
+  {
+    "palabra": "ustedes",
+    "campo_lexico": "Pronombres Personales",
+    "genero": "invariable",
+    "traduccion_ingles": "you (plural formal/informal Latin America)",
+    "frase_ejemplo": "Ustedes hablan muy bien."
+  },
+  {
+    "palabra": "español",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Spanish (nationality)",
+    "frase_ejemplo": "Mi amigo es español."
+  },
+  {
+    "palabra": "española",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Spanish (nationality)",
+    "frase_ejemplo": "La comida española es deliciosa."
+  },
+  {
+    "palabra": "mexicano",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Mexican",
+    "frase_ejemplo": "El cantante es mexicano."
+  },
+  {
+    "palabra": "mexicana",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Mexican",
+    "frase_ejemplo": "Ella es una actriz mexicana."
+  },
+  {
+    "palabra": "francés",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "French",
+    "frase_ejemplo": "Pierre es francés."
+  },
+  {
+    "palabra": "francesa",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "French",
+    "frase_ejemplo": "París es una ciudad francesa."
+  },
+  {
+    "palabra": "estadounidense",
+    "campo_lexico": "Nacionalidades",
+    "genero": "invariable",
+    "traduccion_ingles": "American (USA)",
+    "frase_ejemplo": "El presidente estadounidense habla hoy."
+  },
+  {
+    "palabra": "canadiense",
+    "campo_lexico": "Nacionalidades",
+    "genero": "invariable",
+    "traduccion_ingles": "Canadian",
+    "frase_ejemplo": "Mi vecino es canadiense."
+  },
+  {
+    "palabra": "inglés",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "English",
+    "frase_ejemplo": "El turista inglés busca el museo."
+  },
+  {
+    "palabra": "inglesa",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "English",
+    "frase_ejemplo": "La profesora de inglés es inglesa."
+  },
+  {
+    "palabra": "alemán",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "German",
+    "frase_ejemplo": "Tengo un coche alemán."
+  },
+  {
+    "palabra": "alemana",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "German",
+    "frase_ejemplo": "Claudia es alemana."
+  },
+  {
+    "palabra": "italiano",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Italian",
+    "frase_ejemplo": "Marco es italiano."
+  },
+  {
+    "palabra": "italiana",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Italian",
+    "frase_ejemplo": "La pasta italiana es famosa."
+  },
+  {
+    "palabra": "chino",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Chinese",
+    "frase_ejemplo": "Él estudia chino."
+  },
+  {
+    "palabra": "china",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Chinese",
+    "frase_ejemplo": "Ella es de una ciudad china."
+  },
+  {
+    "palabra": "japonés",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Japanese",
+    "frase_ejemplo": "El estudiante japonés es muy aplicado."
+  },
+  {
+    "palabra": "japonesa",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Japanese",
+    "frase_ejemplo": "La empresa es japonesa."
+  },
+  {
+    "palabra": "coreano",
+    "campo_lexico": "Nacionalidades",
+    "genero": "masculino",
+    "traduccion_ingles": "Korean",
+    "frase_ejemplo": "El grupo de música es coreano."
+  },
+  {
+    "palabra": "coreana",
+    "campo_lexico": "Nacionalidades",
+    "genero": "femenino",
+    "traduccion_ingles": "Korean",
+    "frase_ejemplo": "Mi compañera de piso es coreana."
+  },
+  {
+    "palabra": "hola",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "hello / hi",
+    "frase_ejemplo": "¡Hola! Me llamo Pedro."
+  },
+  {
+    "palabra": "buenos días",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "masculino plural",
+    "traduccion_ingles": "good morning",
+    "frase_ejemplo": "Buenos días, ¿cómo está usted?"
+  },
+  {
+    "palabra": "buenas tardes",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "femenino plural",
+    "traduccion_ingles": "good afternoon",
+    "frase_ejemplo": "Buenas tardes, quiero una mesa para dos."
+  },
+  {
+    "palabra": "buenas noches",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "femenino plural",
+    "traduccion_ingles": "good evening / good night",
+    "frase_ejemplo": "Me voy a dormir, buenas noches."
+  },
+  {
+    "palabra": "adiós",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "goodbye",
+    "frase_ejemplo": "Adiós, nos vemos el lunes."
+  },
+  {
+    "palabra": "hasta luego",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "see you later",
+    "frase_ejemplo": "Tengo clase ahora, ¡hasta luego!"
+  },
+  {
+    "palabra": "hasta mañana",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "see you tomorrow",
+    "frase_ejemplo": "Terminamos por hoy, hasta mañana."
+  },
+  {
+    "palabra": "por favor",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "please",
+    "frase_ejemplo": "Un café con leche, por favor."
+  },
+  {
+    "palabra": "gracias",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "thank you",
+    "frase_ejemplo": "Muchas gracias por tu ayuda."
+  },
+  {
+    "palabra": "de nada",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "you are welcome",
+    "frase_ejemplo": "—Gracias por todo. —De nada."
+  },
+  {
+    "palabra": "lo siento",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "I am sorry",
+    "frase_ejemplo": "Lo siento, no comprendo bien."
+  },
+  {
+    "palabra": "perdón",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "sorry / excuse me",
+    "frase_ejemplo": "Perdón, ¿puedes repetir?"
+  },
+  {
+    "palabra": "mucho gusto",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "nice to meet you",
+    "frase_ejemplo": "—Soy Ana. —Mucho gusto."
+  },
+  {
+    "palabra": "encantado",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "masculino",
+    "traduccion_ingles": "pleased to meet you (said by a male)",
+    "frase_ejemplo": "Hola, soy Juan, encantado."
+  },
+  {
+    "palabra": "encantada",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "femenino",
+    "traduccion_ingles": "pleased to meet you (said by a female)",
+    "frase_ejemplo": "Soy María, encantada de conocerte."
+  },
+  {
+    "palabra": "¿qué tal?",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "how are things? / how are you?",
+    "frase_ejemplo": "Hola Luis, ¿qué tal?"
+  },
+  {
+    "palabra": "¿cómo estás?",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "how are you? (informal)",
+    "frase_ejemplo": "¿Cómo estás hoy?"
+  },
+  {
+    "palabra": "¿cómo está usted?",
+    "campo_lexico": "Saludos y Despedidas",
+    "genero": "N/A",
+    "traduccion_ingles": "how are you? (formal)",
+    "frase_ejemplo": "Buenos días, señor García, ¿cómo está usted?"
+  },
+  {
+    "palabra": "qué",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "what",
+    "frase_ejemplo": "¿Qué es esto?"
+  },
+  {
+    "palabra": "quién",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable (singular)",
+    "traduccion_ingles": "who (singular)",
+    "frase_ejemplo": "¿Quién es ese hombre?"
+  },
+  {
+    "palabra": "quiénes",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable (plural)",
+    "traduccion_ingles": "who (plural)",
+    "frase_ejemplo": "¿Quiénes son tus amigos?"
+  },
+  {
+    "palabra": "dónde",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "where",
+    "frase_ejemplo": "¿Dónde vives?"
+  },
+  {
+    "palabra": "de dónde",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "where from",
+    "frase_ejemplo": "¿De dónde eres?"
+  },
+  {
+    "palabra": "cuándo",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "when",
+    "frase_ejemplo": "¿Cuándo es tu cumpleaños?"
+  },
+  {
+    "palabra": "cómo",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "how",
+    "frase_ejemplo": "¿Cómo te llamas?"
+  },
+  {
+    "palabra": "por qué",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable",
+    "traduccion_ingles": "why",
+    "frase_ejemplo": "¿Por qué estudias español?"
+  },
+  {
+    "palabra": "cuál",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable (singular)",
+    "traduccion_ingles": "which / what",
+    "frase_ejemplo": "¿Cuál es tu número de teléfono?"
+  },
+  {
+    "palabra": "cuáles",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "invariable (plural)",
+    "traduccion_ingles": "which / what (plural)",
+    "frase_ejemplo": "¿Cuáles son tus libros favoritos?"
+  },
+  {
+    "palabra": "cuánto",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "masculino singular",
+    "traduccion_ingles": "how much",
+    "frase_ejemplo": "¿Cuánto cuesta este pantalón?"
+  },
+  {
+    "palabra": "cuánta",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "femenino singular",
+    "traduccion_ingles": "how much",
+    "frase_ejemplo": "¿Cuánta gente hay en la fiesta?"
+  },
+  {
+    "palabra": "cuántos",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "masculino plural",
+    "traduccion_ingles": "how many",
+    "frase_ejemplo": "¿Cuántos años tienes?"
+  },
+  {
+    "palabra": "cuántas",
+    "campo_lexico": "Preguntas Básicas",
+    "genero": "femenino plural",
+    "traduccion_ingles": "how many",
+    "frase_ejemplo": "¿Cuántas hermanas tienes?"
+  },
+  {
+    "palabra": "familia",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "family",
+    "frase_ejemplo": "Tengo una familia muy grande."
+  },
+  {
+    "palabra": "padre",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "father",
+    "frase_ejemplo": "Mi padre trabaja en una oficina."
+  },
+  {
+    "palabra": "madre",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "mother",
+    "frase_ejemplo": "Mi madre se llama Elena."
+  },
+  {
+    "palabra": "padres",
+    "campo_lexico": "La Familia",
+    "genero": "masculino plural",
+    "traduccion_ingles": "parents",
+    "frase_ejemplo": "Mis padres viven en Valencia."
+  },
+  {
+    "palabra": "hijo",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "son",
+    "frase_ejemplo": "Ellos tienen un hijo inteligente."
+  },
+  {
+    "palabra": "hija",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "daughter",
+    "frase_ejemplo": "Su hija tiene cinco años."
+  },
+  {
+    "palabra": "hermano",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "brother",
+    "frase_ejemplo": "Tengo un hermano mayor."
+  },
+  {
+    "palabra": "hermana",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "sister",
+    "frase_ejemplo": "Mi hermana estudia medicina."
+  },
+  {
+    "palabra": "abuelo",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "grandfather",
+    "frase_ejemplo": "Mi abuelo lee el periódico."
+  },
+  {
+    "palabra": "abuela",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "grandmother",
+    "frase_ejemplo": "La abuela cocina muy bien."
+  },
+  {
+    "palabra": "tío",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "uncle",
+    "frase_ejemplo": "Mi tío Juan es muy alto."
+  },
+  {
+    "palabra": "tía",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "aunt",
+    "frase_ejemplo": "Visito a mi tía los domingos."
+  },
+  {
+    "palabra": "primo",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "cousin (male)",
+    "frase_ejemplo": "Mi primo vive en otra ciudad."
+  },
+  {
+    "palabra": "prima",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "cousin (female)",
+    "frase_ejemplo": "Mi prima es mi mejor amiga."
+  },
+  {
+    "palabra": "esposo",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "husband",
+    "frase_ejemplo": "Su esposo es profesor."
+  },
+  {
+    "palabra": "esposa",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "wife",
+    "frase_ejemplo": "Su esposa trabaja en el banco."
+  },
+  {
+    "palabra": "marido",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "husband",
+    "frase_ejemplo": "Mi marido está en casa."
+  },
+  {
+    "palabra": "mujer",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "wife (also: woman)",
+    "frase_ejemplo": "Su mujer se llama Carmen."
+  },
+  {
+    "palabra": "nieto",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "grandson",
+    "frase_ejemplo": "El abuelo pasea con su nieto."
+  },
+  {
+    "palabra": "nieta",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "granddaughter",
+    "frase_ejemplo": "Es la nieta favorita de la abuela."
+  },
+  {
+    "palabra": "sobrino",
+    "campo_lexico": "La Familia",
+    "genero": "masculino",
+    "traduccion_ingles": "nephew",
+    "frase_ejemplo": "Tengo un regalo para mi sobrino."
+  },
+  {
+    "palabra": "sobrina",
+    "campo_lexico": "La Familia",
+    "genero": "femenino",
+    "traduccion_ingles": "niece",
+    "frase_ejemplo": "Mi sobrina tiene tres años."
+  },
+  {
+    "palabra": "profesor",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "teacher (male)",
+    "frase_ejemplo": "El profesor escribe en la pizarra."
+  },
+  {
+    "palabra": "profesora",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "teacher (female)",
+    "frase_ejemplo": "La profesora de inglés es excelente."
+  },
+  {
+    "palabra": "estudiante",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "student",
+    "frase_ejemplo": "Yo soy estudiante de español."
+  },
+  {
+    "palabra": "médico",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "doctor (male)",
+    "frase_ejemplo": "El médico trabaja en el hospital."
+  },
+  {
+    "palabra": "médica",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "doctor (female)",
+    "frase_ejemplo": "Mi madre es médica."
+  },
+  {
+    "palabra": "enfermero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "nurse (male)",
+    "frase_ejemplo": "El enfermero ayuda a los pacientes."
+  },
+  {
+    "palabra": "enfermera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "nurse (female)",
+    "frase_ejemplo": "La enfermera trabaja por la noche."
+  },
+  {
+    "palabra": "cocinero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "cook / chef (male)",
+    "frase_ejemplo": "El cocinero prepara una sopa."
+  },
+  {
+    "palabra": "cocinera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "cook / chef (female)",
+    "frase_ejemplo": "Ella es cocinera en un restaurante famoso."
+  },
+  {
+    "palabra": "policía",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "police officer",
+    "frase_ejemplo": "El policía controla el tráfico."
+  },
+  {
+    "palabra": "camarero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "waiter",
+    "frase_ejemplo": "El camarero trae el menú."
+  },
+  {
+    "palabra": "camarera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "waitress",
+    "frase_ejemplo": "La camarera sirve el café."
+  },
+  {
+    "palabra": "dependiente",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "shop assistant (male)",
+    "frase_ejemplo": "El dependiente vende ropa."
+  },
+  {
+    "palabra": "dependienta",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "shop assistant (female)",
+    "frase_ejemplo": "Pregunta a la dependienta el precio."
+  },
+  {
+    "palabra": "secretario",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "secretary (male)",
+    "frase_ejemplo": "El secretario contesta al teléfono."
+  },
+  {
+    "palabra": "secretaria",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "secretary (female)",
+    "frase_ejemplo": "La secretaria organiza la agenda."
+  },
+  {
+    "palabra": "taxista",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "taxi driver",
+    "frase_ejemplo": "El taxista conoce bien la ciudad."
+  },
+  {
+    "palabra": "profesor",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "teacher (male)",
+    "frase_ejemplo": "El profesor escribe en la pizarra."
+  },
+  {
+    "palabra": "profesora",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "teacher (female)",
+    "frase_ejemplo": "La profesora de inglés es excelente."
+  },
+  {
+    "palabra": "estudiante",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "student",
+    "frase_ejemplo": "Yo soy estudiante de español."
+  },
+  {
+    "palabra": "médico",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "doctor (male)",
+    "frase_ejemplo": "El médico trabaja en el hospital."
+  },
+  {
+    "palabra": "médica",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "doctor (female)",
+    "frase_ejemplo": "Mi madre es médica."
+  },
+  {
+    "palabra": "enfermero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "nurse (male)",
+    "frase_ejemplo": "El enfermero ayuda a los pacientes."
+  },
+  {
+    "palabra": "enfermera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "nurse (female)",
+    "frase_ejemplo": "La enfermera trabaja por la noche."
+  },
+  {
+    "palabra": "cocinero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "cook / chef (male)",
+    "frase_ejemplo": "El cocinero prepara una sopa."
+  },
+  {
+    "palabra": "cocinera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "cook / chef (female)",
+    "frase_ejemplo": "Ella es cocinera en un restaurante famoso."
+  },
+  {
+    "palabra": "policía",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "police officer",
+    "frase_ejemplo": "El policía controla el tráfico."
+  },
+  {
+    "palabra": "camarero",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "waiter",
+    "frase_ejemplo": "El camarero trae el menú."
+  },
+  {
+    "palabra": "camarera",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "waitress",
+    "frase_ejemplo": "La camarera sirve el café."
+  },
+  {
+    "palabra": "dependiente",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "shop assistant (male)",
+    "frase_ejemplo": "El dependiente vende ropa."
+  },
+  {
+    "palabra": "dependienta",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "shop assistant (female)",
+    "frase_ejemplo": "Pregunta a la dependienta el precio."
+  },
+  {
+    "palabra": "secretario",
+    "campo_lexico": "Profesiones",
+    "genero": "masculino",
+    "traduccion_ingles": "secretary (male)",
+    "frase_ejemplo": "El secretario contesta al teléfono."
+  },
+  {
+    "palabra": "secretaria",
+    "campo_lexico": "Profesiones",
+    "genero": "femenino",
+    "traduccion_ingles": "secretary (female)",
+    "frase_ejemplo": "La secretaria organiza la agenda."
+  },
+  {
+    "palabra": "taxista",
+    "campo_lexico": "Profesiones",
+    "genero": "invariable",
+    "traduccion_ingles": "taxi driver",
+    "frase_ejemplo": "El taxista conoce bien la ciudad."
+  },
+  {
+    "palabra": "cero",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "zero",
+    "frase_ejemplo": "Tengo cero errores en el examen."
+  },
+  {
+    "palabra": "uno",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "one",
+    "frase_ejemplo": "Hay solo un coche en la calle."
+  },
+  {
+    "palabra": "dos",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "two",
+    "frase_ejemplo": "Tengo dos hermanos."
+  },
+  {
+    "palabra": "tres",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "three",
+    "frase_ejemplo": "Son las tres de la tarde."
+  },
+  {
+    "palabra": "cuatro",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "four",
+    "frase_ejemplo": "La mesa tiene cuatro patas."
+  },
+  {
+    "palabra": "cinco",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "five",
+    "frase_ejemplo": "Tengo cinco dedos en la mano."
+  },
+  {
+    "palabra": "seis",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "six",
+    "frase_ejemplo": "Me levanto a las seis."
+  },
+  {
+    "palabra": "siete",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "seven",
+    "frase_ejemplo": "La semana tiene siete días."
+  },
+  {
+    "palabra": "ocho",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eight",
+    "frase_ejemplo": "El niño tiene ocho años."
+  },
+  {
+    "palabra": "nueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "nine",
+    "frase_ejemplo": "La tienda abre a las nueve."
+  },
+  {
+    "palabra": "diez",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "ten",
+    "frase_ejemplo": "Tengo diez euros."
+  },
+  {
+    "palabra": "once",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eleven",
+    "frase_ejemplo": "El equipo tiene once jugadores."
+  },
+  {
+    "palabra": "doce",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twelve",
+    "frase_ejemplo": "Comemos a las doce."
+  },
+  {
+    "palabra": "trece",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "thirteen",
+    "frase_ejemplo": "Vivo en el número trece."
+  },
+  {
+    "palabra": "catorce",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "fourteen",
+    "frase_ejemplo": "El 14 de febrero es San Valentín."
+  },
+  {
+    "palabra": "quince",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "fifteen",
+    "frase_ejemplo": "Mi hermana tiene quince años."
+  },
+  {
+    "palabra": "dieciséis",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "sixteen",
+    "frase_ejemplo": "Hay dieciséis estudiantes en clase."
+  },
+  {
+    "palabra": "diecisiete",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "seventeen",
+    "frase_ejemplo": "Cuesta diecisiete dólares."
+  },
+  {
+    "palabra": "dieciocho",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eighteen",
+    "frase_ejemplo": "A los dieciocho años eres adulto."
+  },
+  {
+    "palabra": "diecinueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "nineteen",
+    "frase_ejemplo": "Tengo diecinueve libros."
+  },
+  {
+    "palabra": "veinte",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty",
+    "frase_ejemplo": "Veinte personas vienen a la fiesta."
+  },
+  {
+    "palabra": "veintiuno",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-one",
+    "frase_ejemplo": "El siglo veintiuno."
+  },
+  {
+    "palabra": "veintidós",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-two",
+    "frase_ejemplo": "Mi cumpleaños es el veintidós."
+  },
+  {
+    "palabra": "veintitrés",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-three",
+    "frase_ejemplo": "El autobús veintitrés llega tarde."
+  },
+  {
+    "palabra": "veinticuatro",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-four",
+    "frase_ejemplo": "El día tiene veinticuatro horas."
+  },
+  {
+    "palabra": "veinticinco",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-five",
+    "frase_ejemplo": "El veinticinco de diciembre es Navidad."
+  },
+  {
+    "palabra": "veintiséis",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-six",
+    "frase_ejemplo": "El alfabeto tiene veintiséis letras (inglés)."
+  },
+  {
+    "palabra": "veintisiete",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-seven",
+    "frase_ejemplo": "Tengo veintisiete primos."
+  },
+  {
+    "palabra": "veintiocho",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-eight",
+    "frase_ejemplo": "Febrero tiene veintiocho días."
+  },
+  {
+    "palabra": "veintinueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "twenty-nine",
+    "frase_ejemplo": "El autobús cuesta veintinueve pesos."
+  },
+  {
+    "palabra": "treinta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "thirty",
+    "frase_ejemplo": "El mes tiene treinta días."
+  },
+  {
+    "palabra": "treinta y dos",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "thirty-two",
+    "frase_ejemplo": "Hace treinta y dos grados hoy."
+  },
+  {
+    "palabra": "treinta y ocho",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "thirty-eight",
+    "frase_ejemplo": "Ella tiene treinta y ocho zapatos."
+  },
+  {
+    "palabra": "cuarenta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "forty",
+    "frase_ejemplo": "Mi padre tiene cuarenta años."
+  },
+  {
+    "palabra": "cuarenta y cinco",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "forty-five",
+    "frase_ejemplo": "El partido dura cuarenta y cinco minutos."
+  },
+  {
+    "palabra": "cuarenta y nueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "forty-nine",
+    "frase_ejemplo": "El número ganador es el cuarenta y nueve."
+  },
+  {
+    "palabra": "cincuenta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "fifty",
+    "frase_ejemplo": "Hay cincuenta estados."
+  },
+  {
+    "palabra": "cincuenta y tres",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "fifty-three",
+    "frase_ejemplo": "Vivo en la calle cincuenta y tres."
+  },
+  {
+    "palabra": "cincuenta y seis",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "fifty-six",
+    "frase_ejemplo": "El libro tiene cincuenta y seis páginas."
+  },
+  {
+    "palabra": "sesenta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "sixty",
+    "frase_ejemplo": "Una hora son sesenta minutos."
+  },
+  {
+    "palabra": "sesenta y uno",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "sixty-one",
+    "frase_ejemplo": "Mi abuelo tiene sesenta y un años."
+  },
+  {
+    "palabra": "sesenta y siete",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "sixty-seven",
+    "frase_ejemplo": "El autobús sesenta y siete va al centro."
+  },
+  {
+    "palabra": "setenta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "seventy",
+    "frase_ejemplo": "La velocidad máxima es setenta."
+  },
+  {
+    "palabra": "setenta y cuatro",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "seventy-four",
+    "frase_ejemplo": "El año setenta y cuatro fue interesante."
+  },
+  {
+    "palabra": "setenta y ocho",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "seventy-eight",
+    "frase_ejemplo": "Tengo setenta y ocho discos."
+  },
+  {
+    "palabra": "ochenta",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eighty",
+    "frase_ejemplo": "La vuelta al mundo en ochenta días."
+  },
+  {
+    "palabra": "ochenta y dos",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eighty-two",
+    "frase_ejemplo": "La abuela tiene ochenta y dos años."
+  },
+  {
+    "palabra": "ochenta y nueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "eighty-nine",
+    "frase_ejemplo": "Cuesta ochenta y nueve euros."
+  },
+  {
+    "palabra": "noventa",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "ninety",
+    "frase_ejemplo": "Un ángulo de noventa grados."
+  },
+  {
+    "palabra": "noventa y cinco",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "ninety-five",
+    "frase_ejemplo": "El noventa y cinco por ciento aprueba."
+  },
+  {
+    "palabra": "noventa y nueve",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "ninety-nine",
+    "frase_ejemplo": "Tengo noventa y nueve problemas."
+  },
+  {
+    "palabra": "cien",
+    "campo_lexico": "Números (0-100)",
+    "genero": "masculino",
+    "traduccion_ingles": "one hundred",
+    "frase_ejemplo": "Cien años es un siglo."
+  },
+  {
+    "palabra": "a",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "a",
+    "traduccion_ingles": "a (letter)",
+    "frase_ejemplo": "A de árbol."
+  },
+  {
+    "palabra": "b",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "be",
+    "traduccion_ingles": "b (letter)",
+    "frase_ejemplo": "B de bueno."
+  },
+  {
+    "palabra": "c",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ce",
+    "traduccion_ingles": "c (letter)",
+    "frase_ejemplo": "C de casa."
+  },
+  {
+    "palabra": "d",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "de",
+    "traduccion_ingles": "d (letter)",
+    "frase_ejemplo": "D de dedo."
+  },
+  {
+    "palabra": "e",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "e",
+    "traduccion_ingles": "e (letter)",
+    "frase_ejemplo": "E de elefante."
+  },
+  {
+    "palabra": "f",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "efe",
+    "traduccion_ingles": "f (letter)",
+    "frase_ejemplo": "F de fiesta."
+  },
+  {
+    "palabra": "g",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ge",
+    "traduccion_ingles": "g (letter)",
+    "frase_ejemplo": "G de gato."
+  },
+  {
+    "palabra": "h",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "hache",
+    "traduccion_ingles": "h (letter)",
+    "frase_ejemplo": "H de hotel."
+  },
+  {
+    "palabra": "i",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "i",
+    "traduccion_ingles": "i (letter)",
+    "frase_ejemplo": "I de isla."
+  },
+  {
+    "palabra": "j",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "jota",
+    "traduccion_ingles": "j (letter)",
+    "frase_ejemplo": "J de jamón."
+  },
+  {
+    "palabra": "k",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ka",
+    "traduccion_ingles": "k (letter)",
+    "frase_ejemplo": "K de kilo."
+  },
+  {
+    "palabra": "l",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ele",
+    "traduccion_ingles": "l (letter)",
+    "frase_ejemplo": "L de limón."
+  },
+  {
+    "palabra": "m",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "eme",
+    "traduccion_ingles": "m (letter)",
+    "frase_ejemplo": "M de madre."
+  },
+  {
+    "palabra": "n",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ene",
+    "traduccion_ingles": "n (letter)",
+    "frase_ejemplo": "N de noche."
+  },
+  {
+    "palabra": "ñ",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "eñe",
+    "traduccion_ingles": "ñ (letter)",
+    "frase_ejemplo": "Ñ de España."
+  },
+  {
+    "palabra": "o",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "o",
+    "traduccion_ingles": "o (letter)",
+    "frase_ejemplo": "O de oso."
+  },
+  {
+    "palabra": "p",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "pe",
+    "traduccion_ingles": "p (letter)",
+    "frase_ejemplo": "P de pan."
+  },
+  {
+    "palabra": "q",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "cu",
+    "traduccion_ingles": "q (letter)",
+    "frase_ejemplo": "Q de queso."
+  },
+  {
+    "palabra": "r",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "erre",
+    "traduccion_ingles": "r (letter)",
+    "frase_ejemplo": "R de rosa."
+  },
+  {
+    "palabra": "s",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "ese",
+    "traduccion_ingles": "s (letter)",
+    "frase_ejemplo": "S de sol."
+  },
+  {
+    "palabra": "t",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "te",
+    "traduccion_ingles": "t (letter)",
+    "frase_ejemplo": "T de tomate."
+  },
+  {
+    "palabra": "u",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "u",
+    "traduccion_ingles": "u (letter)",
+    "frase_ejemplo": "U de uva."
+  },
+  {
+    "palabra": "v",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "uve",
+    "traduccion_ingles": "v (letter)",
+    "frase_ejemplo": "V de vino."
+  },
+  {
+    "palabra": "w",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "uve doble",
+    "traduccion_ingles": "w (letter)",
+    "frase_ejemplo": "W de wifi."
+  },
+  {
+    "palabra": "x",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "equis",
+    "traduccion_ingles": "x (letter)",
+    "frase_ejemplo": "X de xilófono."
+  },
+  {
+    "palabra": "y",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "i griega",
+    "traduccion_ingles": "y (letter)",
+    "frase_ejemplo": "Y de yoga."
+  },
+  {
+    "palabra": "z",
+    "campo_lexico": "El Abecedario",
+    "genero": "femenino",
+    "escritura": "zeta",
+    "traduccion_ingles": "z (letter)",
+    "frase_ejemplo": "Z de zapato."
+  },
+  {
+    "palabra": "lunes",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Monday",
+    "frase_ejemplo": "El lunes empiezo a trabajar."
+  },
+  {
+    "palabra": "martes",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Tuesday",
+    "frase_ejemplo": "El martes tengo clase de español."
+  },
+  {
+    "palabra": "miércoles",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Wednesday",
+    "frase_ejemplo": "Vamos al cine el miércoles."
+  },
+  {
+    "palabra": "jueves",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Thursday",
+    "frase_ejemplo": "El jueves ceno con mis padres."
+  },
+  {
+    "palabra": "viernes",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Friday",
+    "frase_ejemplo": "¡Por fin es viernes!"
+  },
+  {
+    "palabra": "sábado",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Saturday",
+    "frase_ejemplo": "Salgo con amigos el sábado."
+  },
+  {
+    "palabra": "domingo",
+    "campo_lexico": "Días de la Semana",
+    "genero": "masculino",
+    "traduccion_ingles": "Sunday",
+    "frase_ejemplo": "El domingo es para descansar."
+  },
+  {
+    "palabra": "enero",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "January",
+    "frase_ejemplo": "En enero hace frío."
+  },
+  {
+    "palabra": "febrero",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "February",
+    "frase_ejemplo": "Febrero es un mes corto."
+  },
+  {
+    "palabra": "marzo",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "March",
+    "frase_ejemplo": "La primavera empieza en marzo."
+  },
+  {
+    "palabra": "abril",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "April",
+    "frase_ejemplo": "En abril, aguas mil."
+  },
+  {
+    "palabra": "mayo",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "May",
+    "frase_ejemplo": "Mayo es el mes de las flores."
+  },
+  {
+    "palabra": "junio",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "June",
+    "frase_ejemplo": "Acabo el curso en junio."
+  },
+  {
+    "palabra": "julio",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "July",
+    "frase_ejemplo": "Voy a la playa en julio."
+  },
+  {
+    "palabra": "agosto",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "August",
+    "frase_ejemplo": "Mucha gente tiene vacaciones en agosto."
+  },
+  {
+    "palabra": "septiembre",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "September",
+    "frase_ejemplo": "La escuela empieza en septiembre."
+  },
+  {
+    "palabra": "octubre",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "October",
+    "frase_ejemplo": "Las hojas caen en octubre."
+  },
+  {
+    "palabra": "noviembre",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "November",
+    "frase_ejemplo": "Hace viento en noviembre."
+  },
+  {
+    "palabra": "diciembre",
+    "campo_lexico": "Meses del Año",
+    "genero": "masculino",
+    "traduccion_ingles": "December",
+    "frase_ejemplo": "Celebramos la Navidad en diciembre."
+  },
+  {
+    "palabra": "primavera",
+    "campo_lexico": "Las Estaciones",
+    "genero": "femenino",
+    "traduccion_ingles": "spring",
+    "frase_ejemplo": "Me gusta la primavera por las flores."
+  },
+  {
+    "palabra": "verano",
+    "campo_lexico": "Las Estaciones",
+    "genero": "masculino",
+    "traduccion_ingles": "summer",
+    "frase_ejemplo": "En verano hace mucho calor."
+  },
+  {
+    "palabra": "otoño",
+    "campo_lexico": "Las Estaciones",
+    "genero": "masculino",
+    "traduccion_ingles": "autumn / fall",
+    "frase_ejemplo": "El otoño tiene colores bonitos."
+  },
+  {
+    "palabra": "invierno",
+    "campo_lexico": "Las Estaciones",
+    "genero": "masculino",
+    "traduccion_ingles": "winter",
+    "frase_ejemplo": "En invierno me gusta esquiar."
+  },
+  {
+    "palabra": "tiempo",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "weather",
+    "frase_ejemplo": "¿Qué tiempo hace hoy?"
+  },
+  {
+    "palabra": "sol",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "sun",
+    "frase_ejemplo": "Me gusta tomar el sol."
+  },
+  {
+    "palabra": "calor",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "heat",
+    "frase_ejemplo": "En agosto hace mucho calor."
+  },
+  {
+    "palabra": "frío",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "cold",
+    "frase_ejemplo": "En la montaña hace frío."
+  },
+  {
+    "palabra": "viento",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "wind",
+    "frase_ejemplo": "El viento mueve los árboles."
+  },
+  {
+    "palabra": "lluvia",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "femenino",
+    "traduccion_ingles": "rain",
+    "frase_ejemplo": "La lluvia es necesaria para el campo."
+  },
+  {
+    "palabra": "nieve",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "femenino",
+    "traduccion_ingles": "snow",
+    "frase_ejemplo": "La nieve es blanca."
+  },
+  {
+    "palabra": "nube",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "femenino",
+    "traduccion_ingles": "cloud",
+    "frase_ejemplo": "Mira esa nube negra."
+  },
+  {
+    "palabra": "nublado",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino (adjetivo)",
+    "traduccion_ingles": "cloudy",
+    "frase_ejemplo": "El cielo está nublado."
+  },
+  {
+    "palabra": "niebla",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "femenino",
+    "traduccion_ingles": "fog",
+    "frase_ejemplo": "Hay mucha niebla en la carretera."
+  },
+  {
+    "palabra": "tormenta",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "femenino",
+    "traduccion_ingles": "storm",
+    "frase_ejemplo": "Tengo miedo de la tormenta."
+  },
+  {
+    "palabra": "grado",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "masculino",
+    "traduccion_ingles": "degree",
+    "frase_ejemplo": "Estamos a veinte grados."
+  },
+  {
+    "palabra": "llover",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "verbo",
+    "traduccion_ingles": "to rain",
+    "frase_ejemplo": "Va a llover mañana."
+  },
+  {
+    "palabra": "nevar",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "verbo",
+    "traduccion_ingles": "to snow",
+    "frase_ejemplo": "Suele nevar en enero."
+  },
+  {
+    "palabra": "hace buen tiempo",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "the weather is good",
+    "frase_ejemplo": "Hoy hace buen tiempo, vamos al parque."
+  },
+  {
+    "palabra": "hace mal tiempo",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "the weather is bad",
+    "frase_ejemplo": "No salimos porque hace mal tiempo."
+  },
+  {
+    "palabra": "hace sol",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "it is sunny",
+    "frase_ejemplo": "Lleva gafas porque hace sol."
+  },
+  {
+    "palabra": "hace calor",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "it is hot",
+    "frase_ejemplo": "Abre la ventana, hace calor."
+  },
+  {
+    "palabra": "hace frío",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "it is cold",
+    "frase_ejemplo": "Ponte el abrigo, hace frío."
+  },
+  {
+    "palabra": "hace viento",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "it is windy",
+    "frase_ejemplo": "Cierra la puerta, hace viento."
+  },
+  {
+    "palabra": "está despejado",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "expresión",
+    "traduccion_ingles": "it is clear (skies)",
+    "frase_ejemplo": "El cielo está despejado, no hay nubes."
+  },
+  {
+    "palabra": "está lloviendo",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "frase verbal",
+    "traduccion_ingles": "it is raining",
+    "frase_ejemplo": "Coge el paraguas, está lloviendo."
+  },
+  {
+    "palabra": "está nevando",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "frase verbal",
+    "traduccion_ingles": "it is snowing",
+    "frase_ejemplo": "¡Mira por la ventana, está nevando!"
+  },
+  {
+    "palabra": "llueve",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "verbo (presente)",
+    "traduccion_ingles": "it rains / it is raining",
+    "frase_ejemplo": "En Londres llueve mucho."
+  },
+  {
+    "palabra": "nieva",
+    "campo_lexico": "El Tiempo Atmosférico",
+    "genero": "verbo (presente)",
+    "traduccion_ingles": "it snows / it is snowing",
+    "frase_ejemplo": "Aquí nunca nieva."
+  },
+  {
+    "palabra": "casa",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "house",
+    "frase_ejemplo": "Vivo en una casa con jardín."
+  },
+  {
+    "palabra": "piso",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "flat / apartment",
+    "frase_ejemplo": "Mi piso es pequeño pero bonito."
+  },
+  {
+    "palabra": "habitación",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "room",
+    "frase_ejemplo": "Esta habitación tiene mucha luz."
+  },
+  {
+    "palabra": "dormitorio",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "bedroom",
+    "frase_ejemplo": "El niño duerme en su dormitorio."
+  },
+  {
+    "palabra": "salón",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "living room",
+    "frase_ejemplo": "Vemos la televisión en el salón."
+  },
+  {
+    "palabra": "comedor",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "dining room",
+    "frase_ejemplo": "Cenamos en el comedor."
+  },
+  {
+    "palabra": "cocina",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "kitchen",
+    "frase_ejemplo": "La cocina es nueva."
+  },
+  {
+    "palabra": "baño",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "bathroom",
+    "frase_ejemplo": "El baño tiene ducha."
+  },
+  {
+    "palabra": "jardín",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "garden",
+    "frase_ejemplo": "Hay flores en el jardín."
+  },
+  {
+    "palabra": "pared",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "wall",
+    "frase_ejemplo": "Quiero pintar la pared de blanco."
+  },
+  {
+    "palabra": "suelo",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "floor",
+    "frase_ejemplo": "El suelo es de madera."
+  },
+  {
+    "palabra": "mesa",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "table",
+    "frase_ejemplo": "Ponemos los platos en la mesa."
+  },
+  {
+    "palabra": "silla",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "chair",
+    "frase_ejemplo": "Siéntate en la silla, por favor."
+  },
+  {
+    "palabra": "cama",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "bed",
+    "frase_ejemplo": "La cama es muy cómoda."
+  },
+  {
+    "palabra": "sofá",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "sofa / couch",
+    "frase_ejemplo": "El gato duerme en el sofá."
+  },
+  {
+    "palabra": "sillón",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "armchair",
+    "frase_ejemplo": "Mi abuelo lee en el sillón."
+  },
+  {
+    "palabra": "armario",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "wardrobe / closet",
+    "frase_ejemplo": "Guardo la ropa en el armario."
+  },
+  {
+    "palabra": "estantería",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "shelf / bookcase",
+    "frase_ejemplo": "Los libros están en la estantería."
+  },
+  {
+    "palabra": "lámpara",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "lamp",
+    "frase_ejemplo": "Enciende la lámpara para leer."
+  },
+  {
+    "palabra": "espejo",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "masculino",
+    "traduccion_ingles": "mirror",
+    "frase_ejemplo": "Me miro en el espejo."
+  },
+  {
+    "palabra": "televisión",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "television",
+    "frase_ejemplo": "No veo mucho la televisión."
+  },
+  {
+    "palabra": "nevera",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "fridge",
+    "frase_ejemplo": "La leche está en la nevera."
+  },
+  {
+    "palabra": "lavadora",
+    "campo_lexico": "La Casa y Muebles",
+    "genero": "femenino",
+    "traduccion_ingles": "washing machine",
+    "frase_ejemplo": "La ropa sucia va a la lavadora."
+  },
+  {
+    "palabra": "móvil",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "mobile phone",
+    "frase_ejemplo": "Mi móvil no tiene batería."
+  },
+  {
+    "palabra": "llave",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "femenino",
+    "traduccion_ingles": "key",
+    "frase_ejemplo": "¿Dónde está la llave de casa?"
+  },
+  {
+    "palabra": "reloj",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "watch / clock",
+    "frase_ejemplo": "Tengo un reloj nuevo."
+  },
+  {
+    "palabra": "gafas",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "femenino plural",
+    "traduccion_ingles": "glasses",
+    "frase_ejemplo": "Necesito gafas para ver bien."
+  },
+  {
+    "palabra": "bolso",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "bag / handbag",
+    "frase_ejemplo": "Ella lleva un bolso negro."
+  },
+  {
+    "palabra": "cartera",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "femenino",
+    "traduccion_ingles": "wallet",
+    "frase_ejemplo": "El dinero está en la cartera."
+  },
+  {
+    "palabra": "paraguas",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "umbrella",
+    "frase_ejemplo": "Llueve, coge el paraguas."
+  },
+  {
+    "palabra": "dinero",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "money",
+    "frase_ejemplo": "No tengo dinero en efectivo."
+  },
+  {
+    "palabra": "tarjeta",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "femenino",
+    "traduccion_ingles": "card (credit/debit)",
+    "frase_ejemplo": "Voy a pagar con tarjeta."
+  },
+  {
+    "palabra": "libro",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "book",
+    "frase_ejemplo": "Leo un libro interesante."
+  },
+  {
+    "palabra": "cuaderno",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "notebook",
+    "frase_ejemplo": "Escribo notas en el cuaderno."
+  },
+  {
+    "palabra": "papel",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "paper",
+    "frase_ejemplo": "Necesito un papel para escribir."
+  },
+  {
+    "palabra": "bolígrafo",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "pen",
+    "frase_ejemplo": "Escribe con bolígrafo azul."
+  },
+  {
+    "palabra": "lápiz",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "pencil",
+    "frase_ejemplo": "El niño dibuja con lápiz."
+  },
+  {
+    "palabra": "ordenador",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "masculino",
+    "traduccion_ingles": "computer",
+    "frase_ejemplo": "Trabajo con el ordenador todos los días."
+  },
+  {
+    "palabra": "mochila",
+    "campo_lexico": "Objetos Cotidianos",
+    "genero": "femenino",
+    "traduccion_ingles": "backpack",
+    "frase_ejemplo": "Llevo los libros en la mochila."
+  },
+  {
+    "palabra": "ciudad",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "city",
+    "frase_ejemplo": "Madrid es una ciudad grande."
+  },
+  {
+    "palabra": "pueblo",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "town / village",
+    "frase_ejemplo": "Mi pueblo es muy tranquilo."
+  },
+  {
+    "palabra": "barrio",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "neighborhood",
+    "frase_ejemplo": "Me gusta vivir en este barrio."
+  },
+  {
+    "palabra": "calle",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "street",
+    "frase_ejemplo": "La calle es estrecha."
+  },
+  {
+    "palabra": "plaza",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "square",
+    "frase_ejemplo": "Nos vemos en la plaza mayor."
+  },
+  {
+    "palabra": "parque",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "park",
+    "frase_ejemplo": "Paseo por el parque."
+  },
+  {
+    "palabra": "tienda",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "shop / store",
+    "frase_ejemplo": "La tienda de ropa está cerrada."
+  },
+  {
+    "palabra": "supermercado",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "supermarket",
+    "frase_ejemplo": "Compro comida en el supermercado."
+  },
+  {
+    "palabra": "mercado",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "market",
+    "frase_ejemplo": "Hay fruta fresca en el mercado."
+  },
+  {
+    "palabra": "centro comercial",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "shopping mall",
+    "frase_ejemplo": "Vamos de compras al centro comercial."
+  },
+  {
+    "palabra": "escuela",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "school",
+    "frase_ejemplo": "Los niños van a la escuela."
+  },
+  {
+    "palabra": "hospital",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "hospital",
+    "frase_ejemplo": "El médico trabaja en el hospital."
+  },
+  {
+    "palabra": "farmacia",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "pharmacy",
+    "frase_ejemplo": "La farmacia está abierta."
+  },
+  {
+    "palabra": "banco",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "bank",
+    "frase_ejemplo": "Saco dinero en el banco."
+  },
+  {
+    "palabra": "restaurante",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "restaurant",
+    "frase_ejemplo": "Cenamos en un restaurante italiano."
+  },
+  {
+    "palabra": "bar",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "bar / cafe",
+    "frase_ejemplo": "Tomamos un café en el bar."
+  },
+  {
+    "palabra": "cine",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "cinema / movie theater",
+    "frase_ejemplo": "Vemos una película en el cine."
+  },
+  {
+    "palabra": "hotel",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "hotel",
+    "frase_ejemplo": "El hotel es muy cómodo."
+  },
+  {
+    "palabra": "museo",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "museum",
+    "frase_ejemplo": "El museo cierra los lunes."
+  },
+  {
+    "palabra": "aeropuerto",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "masculino",
+    "traduccion_ingles": "airport",
+    "frase_ejemplo": "Vamos al aeropuerto en taxi."
+  },
+  {
+    "palabra": "estación",
+    "campo_lexico": "La Ciudad y El Barrio",
+    "genero": "femenino",
+    "traduccion_ingles": "station (train/bus)",
+    "frase_ejemplo": "El tren sale de la estación."
+  },
+  {
+    "palabra": "coche",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "car",
+    "frase_ejemplo": "Voy al trabajo en coche."
+  },
+  {
+    "palabra": "autobús",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "bus",
+    "frase_ejemplo": "El autobús es barato."
+  },
+  {
+    "palabra": "metro",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "metro / subway",
+    "frase_ejemplo": "El metro es muy rápido."
+  },
+  {
+    "palabra": "tren",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "train",
+    "frase_ejemplo": "Viajo en tren a Barcelona."
+  },
+  {
+    "palabra": "bicicleta",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "femenino",
+    "traduccion_ingles": "bicycle",
+    "frase_ejemplo": "Me gusta montar en bicicleta."
+  },
+  {
+    "palabra": "moto",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "femenino",
+    "traduccion_ingles": "motorcycle",
+    "frase_ejemplo": "La moto es pequeña."
+  },
+  {
+    "palabra": "avión",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "plane",
+    "frase_ejemplo": "El avión vuela muy alto."
+  },
+  {
+    "palabra": "taxi",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "taxi",
+    "frase_ejemplo": "Llamo a un taxi para ir a casa."
+  },
+  {
+    "palabra": "barco",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "masculino",
+    "traduccion_ingles": "boat / ship",
+    "frase_ejemplo": "El barco navega por el mar."
+  },
+  {
+    "palabra": "a pie",
+    "campo_lexico": "Medios de Transporte",
+    "genero": "expresión",
+    "traduccion_ingles": "on foot",
+    "frase_ejemplo": "Voy a la escuela a pie."
+  },
+  {
+    "palabra": "alto",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "tall (male)",
+    "frase_ejemplo": "Mi hermano es muy alto."
+  },
+  {
+    "palabra": "alta",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "tall (female)",
+    "frase_ejemplo": "Ella es una chica alta."
+  },
+  {
+    "palabra": "bajo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "short (height - male)",
+    "frase_ejemplo": "Juan es un poco bajo."
+  },
+  {
+    "palabra": "baja",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "short (height - female)",
+    "frase_ejemplo": "La mesa es baja."
+  },
+  {
+    "palabra": "gordo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "fat (male)",
+    "frase_ejemplo": "Mi gato es muy gordo."
+  },
+  {
+    "palabra": "gorda",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "fat (female)",
+    "frase_ejemplo": "Esa vaca está gorda."
+  },
+  {
+    "palabra": "delgado",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "thin (male)",
+    "frase_ejemplo": "Él es alto y delgado."
+  },
+  {
+    "palabra": "delgada",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "thin (female)",
+    "frase_ejemplo": "Ella está muy delgada."
+  },
+  {
+    "palabra": "guapo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "handsome",
+    "frase_ejemplo": "El actor es muy guapo."
+  },
+  {
+    "palabra": "guapa",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "beautiful / pretty",
+    "frase_ejemplo": "¡Qué niña más guapa!"
+  },
+  {
+    "palabra": "feo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "ugly (male)",
+    "frase_ejemplo": "El monstruo es feo."
+  },
+  {
+    "palabra": "joven",
+    "campo_lexico": "Descripción Física",
+    "genero": "invariable",
+    "traduccion_ingles": "young",
+    "frase_ejemplo": "La profesora es muy joven."
+  },
+  {
+    "palabra": "mayor",
+    "campo_lexico": "Descripción Física",
+    "genero": "invariable",
+    "traduccion_ingles": "old / elderly",
+    "frase_ejemplo": "Mi abuelo es mayor."
+  },
+  {
+    "palabra": "pelo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "hair",
+    "frase_ejemplo": "Tengo el pelo corto."
+  },
+  {
+    "palabra": "ojos",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino plural",
+    "traduccion_ingles": "eyes",
+    "frase_ejemplo": "Tiene los ojos azules."
+  },
+  {
+    "palabra": "rubio",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "blonde (male)",
+    "frase_ejemplo": "El niño es rubio."
+  },
+  {
+    "palabra": "morena",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "brunette / dark-haired (female)",
+    "frase_ejemplo": "Ella es morena."
+  },
+  {
+    "palabra": "largo",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "long",
+    "frase_ejemplo": "Ella tiene el pelo largo."
+  },
+  {
+    "palabra": "corto",
+    "campo_lexico": "Descripción Física",
+    "genero": "masculino",
+    "traduccion_ingles": "short (length)",
+    "frase_ejemplo": "Llevo el pelo corto en verano."
+  },
+  {
+    "palabra": "barba",
+    "campo_lexico": "Descripción Física",
+    "genero": "femenino",
+    "traduccion_ingles": "beard",
+    "frase_ejemplo": "Mi padre tiene barba."
+  },
+  {
+    "palabra": "simpático",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "nice / friendly (male)",
+    "frase_ejemplo": "Tu amigo es muy simpático."
+  },
+  {
+    "palabra": "simpática",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "femenino",
+    "traduccion_ingles": "nice / friendly (female)",
+    "frase_ejemplo": "Ella es una persona simpática."
+  },
+  {
+    "palabra": "antipático",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "unfriendly / unpleasant",
+    "frase_ejemplo": "El vecino es un poco antipático."
+  },
+  {
+    "palabra": "bueno",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "good / kind",
+    "frase_ejemplo": "Él es un hombre bueno."
+  },
+  {
+    "palabra": "malo",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "bad / mean",
+    "frase_ejemplo": "El lobo del cuento es malo."
+  },
+  {
+    "palabra": "amable",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "invariable",
+    "traduccion_ingles": "kind / polite",
+    "frase_ejemplo": "El camarero es muy amable."
+  },
+  {
+    "palabra": "divertido",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "fun / funny",
+    "frase_ejemplo": "Este libro es muy divertido."
+  },
+  {
+    "palabra": "aburrido",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "boring",
+    "frase_ejemplo": "La película es aburrida."
+  },
+  {
+    "palabra": "inteligente",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "invariable",
+    "traduccion_ingles": "intelligent",
+    "frase_ejemplo": "El estudiante es muy inteligente."
+  },
+  {
+    "palabra": "trabajador",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "hard-working (male)",
+    "frase_ejemplo": "Luis es muy trabajador."
+  },
+  {
+    "palabra": "vago",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "lazy",
+    "frase_ejemplo": "No seas vago y estudia."
+  },
+  {
+    "palabra": "alegre",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "invariable",
+    "traduccion_ingles": "cheerful / happy",
+    "frase_ejemplo": "La música es alegre."
+  },
+  {
+    "palabra": "serio",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "serious",
+    "frase_ejemplo": "El jefe es muy serio."
+  },
+  {
+    "palabra": "tímido",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "masculino",
+    "traduccion_ingles": "shy",
+    "frase_ejemplo": "El niño es tímido."
+  },
+  {
+    "palabra": "feliz",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "invariable",
+    "traduccion_ingles": "happy",
+    "frase_ejemplo": "Soy muy feliz contigo."
+  },
+  {
+    "palabra": "triste",
+    "campo_lexico": "Descripción de Personalidad",
+    "genero": "invariable",
+    "traduccion_ingles": "sad",
+    "frase_ejemplo": "Estoy triste porque llueve."
+  },
+  {
+    "palabra": "rojo",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "red",
+    "frase_ejemplo": "La manzana es roja."
+  },
+  {
+    "palabra": "azul",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "blue",
+    "frase_ejemplo": "El cielo es azul."
+  },
+  {
+    "palabra": "verde",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "green",
+    "frase_ejemplo": "La hierba es verde."
+  },
+  {
+    "palabra": "amarillo",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "yellow",
+    "frase_ejemplo": "El sol es amarillo."
+  },
+  {
+    "palabra": "blanco",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "white",
+    "frase_ejemplo": "La nieve es blanca."
+  },
+  {
+    "palabra": "negro",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "black",
+    "frase_ejemplo": "Tengo un coche negro."
+  },
+  {
+    "palabra": "marrón",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "brown",
+    "frase_ejemplo": "El café es marrón."
+  },
+  {
+    "palabra": "gris",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "grey",
+    "frase_ejemplo": "El día está gris."
+  },
+  {
+    "palabra": "naranja",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "orange",
+    "frase_ejemplo": "Me gusta el color naranja."
+  },
+  {
+    "palabra": "rosa",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "pink",
+    "frase_ejemplo": "Las flores son rosa."
+  },
+  {
+    "palabra": "violeta",
+    "campo_lexico": "Colores",
+    "genero": "masculino",
+    "traduccion_ingles": "violet / purple",
+    "frase_ejemplo": "La camiseta es violeta."
+  },
+  {
+    "palabra": "camiseta",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino",
+    "traduccion_ingles": "t-shirt",
+    "frase_ejemplo": "Llevo una camiseta blanca."
+  },
+  {
+    "palabra": "camisa",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino",
+    "traduccion_ingles": "shirt",
+    "frase_ejemplo": "La camisa es elegante."
+  },
+  {
+    "palabra": "pantalón",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino",
+    "traduccion_ingles": "trousers / pants",
+    "frase_ejemplo": "El pantalón es azul."
+  },
+  {
+    "palabra": "vaqueros",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino plural",
+    "traduccion_ingles": "jeans",
+    "frase_ejemplo": "Me pongo los vaqueros todos los días."
+  },
+  {
+    "palabra": "falda",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino",
+    "traduccion_ingles": "skirt",
+    "frase_ejemplo": "La falda es corta."
+  },
+  {
+    "palabra": "vestido",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino",
+    "traduccion_ingles": "dress",
+    "frase_ejemplo": "Ella compra un vestido rojo."
+  },
+  {
+    "palabra": "zapatos",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino plural",
+    "traduccion_ingles": "shoes",
+    "frase_ejemplo": "Los zapatos son de piel."
+  },
+  {
+    "palabra": "zapatillas",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino plural",
+    "traduccion_ingles": "sneakers / trainers",
+    "frase_ejemplo": "Hago deporte con zapatillas."
+  },
+  {
+    "palabra": "abrigo",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino",
+    "traduccion_ingles": "coat",
+    "frase_ejemplo": "En invierno necesito un abrigo."
+  },
+  {
+    "palabra": "chaqueta",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino",
+    "traduccion_ingles": "jacket",
+    "frase_ejemplo": "Ponte la chaqueta, hace fresco."
+  },
+  {
+    "palabra": "jersey",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino",
+    "traduccion_ingles": "jumper / sweater",
+    "frase_ejemplo": "El jersey es de lana."
+  },
+  {
+    "palabra": "calcetines",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino plural",
+    "traduccion_ingles": "socks",
+    "frase_ejemplo": "Los calcetines son negros."
+  },
+  {
+    "palabra": "bufanda",
+    "campo_lexico": "Ropa Básica",
+    "genero": "femenino",
+    "traduccion_ingles": "scarf",
+    "frase_ejemplo": "Llevo bufanda en el cuello."
+  },
+  {
+    "palabra": "gorro",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino",
+    "traduccion_ingles": "hat (winter/beanie)",
+    "frase_ejemplo": "El gorro cubre las orejas."
+  },
+  {
+    "palabra": "guantes",
+    "campo_lexico": "Ropa Básica",
+    "genero": "masculino plural",
+    "traduccion_ingles": "gloves",
+    "frase_ejemplo": "Tengo frío en las manos, necesito guantes."
+  },
+  {
+    "palabra": "agua",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "water",
+    "frase_ejemplo": "Quiero una botella de agua, por favor."
+  },
+  {
+    "palabra": "café",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "coffee",
+    "frase_ejemplo": "Quiero un café con leche."
+  },
+  {
+    "palabra": "leche",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "milk",
+    "frase_ejemplo": "Bebo un vaso de leche antes de dormir."
+  },
+  {
+    "palabra": "té",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "tea",
+    "frase_ejemplo": "Prefiero té con limón."
+  },
+  {
+    "palabra": "zumo",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "juice",
+    "frase_ejemplo": "Me gusta el zumo de naranja natural."
+  },
+  {
+    "palabra": "vino",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "wine",
+    "frase_ejemplo": "Una copa de vino tinto, por favor."
+  },
+  {
+    "palabra": "cerveza",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "beer",
+    "frase_ejemplo": "Tomamos una cerveza en el bar."
+  },
+  {
+    "palabra": "pan",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "bread",
+    "frase_ejemplo": "Compro pan en la panadería."
+  },
+  {
+    "palabra": "huevo",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "egg",
+    "frase_ejemplo": "Necesito un huevo para la tortilla."
+  },
+  {
+    "palabra": "carne",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "meat",
+    "frase_ejemplo": "Hoy comemos carne con patatas."
+  },
+  {
+    "palabra": "pollo",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "chicken",
+    "frase_ejemplo": "El pollo asado está muy rico."
+  },
+  {
+    "palabra": "pescado",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "fish (food)",
+    "frase_ejemplo": "En España se come mucho pescado."
+  },
+  {
+    "palabra": "fruta",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "fruit",
+    "frase_ejemplo": "Es sano comer fruta todos los días."
+  },
+  {
+    "palabra": "manzana",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "apple",
+    "frase_ejemplo": "La manzana es roja o verde."
+  },
+  {
+    "palabra": "plátano",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "banana",
+    "frase_ejemplo": "El plátano es amarillo."
+  },
+  {
+    "palabra": "naranja",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "orange",
+    "frase_ejemplo": "Quiero una naranja de postre."
+  },
+  {
+    "palabra": "limón",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "lemon",
+    "frase_ejemplo": "El limón es muy ácido."
+  },
+  {
+    "palabra": "verdura",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "vegetables",
+    "frase_ejemplo": "La sopa tiene mucha verdura."
+  },
+  {
+    "palabra": "ensalada",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "salad",
+    "frase_ejemplo": "De primero quiero una ensalada."
+  },
+  {
+    "palabra": "tomate",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "tomato",
+    "frase_ejemplo": "El tomate es rojo."
+  },
+  {
+    "palabra": "patata",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "potato",
+    "frase_ejemplo": "Me gustan las patatas fritas."
+  },
+  {
+    "palabra": "arroz",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "rice",
+    "frase_ejemplo": "La paella lleva arroz."
+  },
+  {
+    "palabra": "pasta",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "pasta",
+    "frase_ejemplo": "Los italianos cocinan muy bien la pasta."
+  },
+  {
+    "palabra": "queso",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "cheese",
+    "frase_ejemplo": "Un bocadillo de queso."
+  },
+  {
+    "palabra": "azúcar",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "sugar",
+    "frase_ejemplo": "¿Quieres azúcar en el café?"
+  },
+  {
+    "palabra": "sal",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "femenino",
+    "traduccion_ingles": "salt",
+    "frase_ejemplo": "Pásame la sal, por favor."
+  },
+  {
+    "palabra": "aceite",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "oil",
+    "frase_ejemplo": "Aceite de oliva virgen extra."
+  },
+  {
+    "palabra": "chocolate",
+    "campo_lexico": "Comidas y Bebidas",
+    "genero": "masculino",
+    "traduccion_ingles": "chocolate",
+    "frase_ejemplo": "Me encanta el chocolate."
+  },
+  {
+    "palabra": "restaurante",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "restaurant",
+    "frase_ejemplo": "Cenamos en un restaurante italiano."
+  },
+  {
+    "palabra": "menú",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "menu (set menu)",
+    "frase_ejemplo": "¿Tienen menú del día?"
+  },
+  {
+    "palabra": "carta",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "menu (a la carte)",
+    "frase_ejemplo": "¿Me trae la carta, por favor?"
+  },
+  {
+    "palabra": "cuenta",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "bill / check",
+    "frase_ejemplo": "La cuenta, por favor."
+  },
+  {
+    "palabra": "camarero",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "waiter",
+    "frase_ejemplo": "El camarero trae la comida."
+  },
+  {
+    "palabra": "camarera",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "waitress",
+    "frase_ejemplo": "La camarera es muy simpática."
+  },
+  {
+    "palabra": "desayuno",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "breakfast",
+    "frase_ejemplo": "El desayuno es a las ocho."
+  },
+  {
+    "palabra": "almuerzo",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "lunch",
+    "frase_ejemplo": "El almuerzo es la comida principal."
+  },
+  {
+    "palabra": "cena",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "dinner",
+    "frase_ejemplo": "Preparo la cena para los amigos."
+  },
+  {
+    "palabra": "postre",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "dessert",
+    "frase_ejemplo": "¿Qué hay de postre?"
+  },
+  {
+    "palabra": "mesa",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "table",
+    "frase_ejemplo": "Quiero una mesa para dos personas."
+  },
+  {
+    "palabra": "plato",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "plate / dish",
+    "frase_ejemplo": "Este plato está caliente."
+  },
+  {
+    "palabra": "vaso",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "glass",
+    "frase_ejemplo": "Un vaso de agua, gracias."
+  },
+  {
+    "palabra": "taza",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "cup / mug",
+    "frase_ejemplo": "Una taza de café."
+  },
+  {
+    "palabra": "tenedor",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "fork",
+    "frase_ejemplo": "Como la carne con tenedor."
+  },
+  {
+    "palabra": "cuchillo",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino",
+    "traduccion_ingles": "knife",
+    "frase_ejemplo": "El cuchillo no corta bien."
+  },
+  {
+    "palabra": "cuchara",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "spoon",
+    "frase_ejemplo": "Como la sopa con cuchara."
+  },
+  {
+    "palabra": "servilleta",
+    "campo_lexico": "En el Restaurante",
+    "genero": "femenino",
+    "traduccion_ingles": "napkin",
+    "frase_ejemplo": "Límpiate con la servilleta."
+  },
+  {
+    "palabra": "rico",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino (adjetivo)",
+    "traduccion_ingles": "tasty / good",
+    "frase_ejemplo": "El pastel está muy rico."
+  },
+  {
+    "palabra": "delicioso",
+    "campo_lexico": "En el Restaurante",
+    "genero": "masculino (adjetivo)",
+    "traduccion_ingles": "delicious",
+    "frase_ejemplo": "La comida es deliciosa."
+  },
+  {
+    "palabra": "ser",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to be (permanent)",
+    "frase_ejemplo": "Yo soy español."
+  },
+  {
+    "palabra": "estar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to be (temporary/location)",
+    "frase_ejemplo": "Estoy en casa ahora."
+  },
+  {
+    "palabra": "tener",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to have",
+    "frase_ejemplo": "Tengo dos hermanos."
+  },
+  {
+    "palabra": "haber",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo (impersonal: hay)",
+    "traduccion_ingles": "there is / there are",
+    "frase_ejemplo": "Hay un libro en la mesa."
+  },
+  {
+    "palabra": "querer",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to want",
+    "frase_ejemplo": "Quiero un helado de chocolate."
+  },
+  {
+    "palabra": "poder",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to be able to / can",
+    "frase_ejemplo": "No puedo ir a la fiesta."
+  },
+  {
+    "palabra": "saber",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to know (facts/skills)",
+    "frase_ejemplo": "No sé la respuesta."
+  },
+  {
+    "palabra": "llamarse",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo reflexivo",
+    "traduccion_ingles": "to be called",
+    "frase_ejemplo": "Me llamo Ana."
+  },
+  {
+    "palabra": "hablar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to speak",
+    "frase_ejemplo": "Hablo español e inglés."
+  },
+  {
+    "palabra": "comer",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to eat",
+    "frase_ejemplo": "Como a las dos de la tarde."
+  },
+  {
+    "palabra": "beber",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to drink",
+    "frase_ejemplo": "Bebo mucha agua."
+  },
+  {
+    "palabra": "vivir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to live",
+    "frase_ejemplo": "Vivo en Madrid."
+  },
+  {
+    "palabra": "ir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to go",
+    "frase_ejemplo": "Voy al cine los viernes."
+  },
+  {
+    "palabra": "venir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to come",
+    "frase_ejemplo": "¿Vienes a mi casa?"
+  },
+  {
+    "palabra": "hacer",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to do / to make",
+    "frase_ejemplo": "Hago los deberes por la tarde."
+  },
+  {
+    "palabra": "dormir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to sleep",
+    "frase_ejemplo": "Duermo ocho horas al día."
+  },
+  {
+    "palabra": "levantarse",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo reflexivo",
+    "traduccion_ingles": "to get up",
+    "frase_ejemplo": "Me levanto a las siete."
+  },
+  {
+    "palabra": "ducharse",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo reflexivo",
+    "traduccion_ingles": "to take a shower",
+    "frase_ejemplo": "Me ducho por la mañana."
+  },
+  {
+    "palabra": "trabajar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to work",
+    "frase_ejemplo": "Mi padre trabaja en un banco."
+  },
+  {
+    "palabra": "gustar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to like",
+    "frase_ejemplo": "Me gusta el fútbol."
+  },
+  {
+    "palabra": "leer",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to read",
+    "frase_ejemplo": "Leo un libro interesante."
+  },
+  {
+    "palabra": "escribir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to write",
+    "frase_ejemplo": "Escribo un correo electrónico."
+  },
+  {
+    "palabra": "escuchar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to listen",
+    "frase_ejemplo": "Escucho música en el autobús."
+  },
+  {
+    "palabra": "mirar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to look / to watch",
+    "frase_ejemplo": "Mira la pizarra, por favor."
+  },
+  {
+    "palabra": "ver",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to see / to watch",
+    "frase_ejemplo": "Veo la televisión por la noche."
+  },
+  {
+    "palabra": "estudiar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to study",
+    "frase_ejemplo": "Estudio español en la escuela."
+  },
+  {
+    "palabra": "aprender",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to learn",
+    "frase_ejemplo": "Quiero aprender muchas palabras."
+  },
+  {
+    "palabra": "jugar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to play",
+    "frase_ejemplo": "Los niños juegan en el parque."
+  },
+  {
+    "palabra": "comprar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to buy",
+    "frase_ejemplo": "Compro comida en el supermercado."
+  },
+  {
+    "palabra": "viajar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to travel",
+    "frase_ejemplo": "Me gusta viajar en verano."
+  },
+  {
+    "palabra": "salir",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to go out / leave",
+    "frase_ejemplo": "Salgo con mis amigos el sábado."
+  },
+  {
+    "palabra": "llegar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to arrive",
+    "frase_ejemplo": "El tren llega a las cinco."
+  },
+  {
+    "palabra": "entrar",
+    "campo_lexico": "Verbos (Infinitivo)",
+    "genero": "verbo",
+    "traduccion_ingles": "to enter",
+    "frase_ejemplo": "Entra en la clase, por favor."
+  },
+  {
+    "palabra": "bien",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "invariable (adverbio)",
+    "traduccion_ingles": "well / good",
+    "frase_ejemplo": "Estoy muy bien, gracias."
+  },
+  {
+    "palabra": "mal",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "invariable (adverbio)",
+    "traduccion_ingles": "bad / poorly",
+    "frase_ejemplo": "Me siento mal hoy."
+  },
+  {
+    "palabra": "regular",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "invariable",
+    "traduccion_ingles": "so-so / okay",
+    "frase_ejemplo": "—¿Qué tal estás? —Regular."
+  },
+  {
+    "palabra": "contento",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "happy / content",
+    "frase_ejemplo": "Estoy contento con mi trabajo."
+  },
+  {
+    "palabra": "triste",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "invariable",
+    "traduccion_ingles": "sad",
+    "frase_ejemplo": "Ella está triste porque llueve."
+  },
+  {
+    "palabra": "cansado",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "tired",
+    "frase_ejemplo": "Estoy muy cansado, quiero dormir."
+  },
+  {
+    "palabra": "enfadado",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "angry",
+    "frase_ejemplo": "El profesor está enfadado."
+  },
+  {
+    "palabra": "nervioso",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "nervous",
+    "frase_ejemplo": "Estoy nervioso por el examen."
+  },
+  {
+    "palabra": "tranquilo",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "calm / relaxed",
+    "frase_ejemplo": "Este pueblo es muy tranquilo."
+  },
+  {
+    "palabra": "aburrido",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "bored",
+    "frase_ejemplo": "Estoy aburrido, no hay nada que hacer."
+  },
+  {
+    "palabra": "ocupado",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "busy",
+    "frase_ejemplo": "No puedo hablar, estoy ocupado."
+  },
+  {
+    "palabra": "enfermo",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino",
+    "traduccion_ingles": "sick / ill",
+    "frase_ejemplo": "No voy a trabajar, estoy enfermo."
+  },
+  {
+    "palabra": "hambre",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "femenino (se usa con 'tener')",
+    "traduccion_ingles": "hunger",
+    "frase_ejemplo": "Tengo hambre, ¿comemos?"
+  },
+  {
+    "palabra": "sed",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "femenino (se usa con 'tener')",
+    "traduccion_ingles": "thirst",
+    "frase_ejemplo": "Tengo sed, quiero agua."
+  },
+  {
+    "palabra": "frío",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino (se usa con 'tener')",
+    "traduccion_ingles": "cold",
+    "frase_ejemplo": "Tengo frío, cierra la ventana."
+  },
+  {
+    "palabra": "calor",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino (se usa con 'tener')",
+    "traduccion_ingles": "heat / hot",
+    "frase_ejemplo": "Tengo mucho calor en verano."
+  },
+  {
+    "palabra": "sueño",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino (se usa con 'tener')",
+    "traduccion_ingles": "sleepiness",
+    "frase_ejemplo": "Tengo sueño, me voy a la cama."
+  },
+  {
+    "palabra": "miedo",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "masculino (se usa con 'tener')",
+    "traduccion_ingles": "fear",
+    "frase_ejemplo": "Tengo miedo de los perros grandes."
+  },
+  {
+    "palabra": "prisa",
+    "campo_lexico": "Expresar Sentimientos",
+    "genero": "femenino (se usa con 'tener')",
+    "traduccion_ingles": "hurry",
+    "frase_ejemplo": "Rápido, tengo prisa."
+  },
+  {
+    "palabra": "aquí",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "here",
+    "frase_ejemplo": "Vivo aquí, en esta casa."
+  },
+  {
+    "palabra": "allí",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "there",
+    "frase_ejemplo": "La escuela está allí."
+  },
+  {
+    "palabra": "cerca",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "near / close",
+    "frase_ejemplo": "Mi trabajo está cerca de casa."
+  },
+  {
+    "palabra": "lejos",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "far",
+    "frase_ejemplo": "Japón está muy lejos."
+  },
+  {
+    "palabra": "a la derecha",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "expresión",
+    "traduccion_ingles": "to the right",
+    "frase_ejemplo": "El baño está a la derecha."
+  },
+  {
+    "palabra": "a la izquierda",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "expresión",
+    "traduccion_ingles": "to the left",
+    "frase_ejemplo": "Gira a la izquierda."
+  },
+  {
+    "palabra": "delante",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "in front",
+    "frase_ejemplo": "El jardín está delante de la casa."
+  },
+  {
+    "palabra": "detrás",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "behind",
+    "frase_ejemplo": "El gato está detrás del sofá."
+  },
+  {
+    "palabra": "enfrente",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "opposite / facing",
+    "frase_ejemplo": "Vivo enfrente del parque."
+  },
+  {
+    "palabra": "al lado",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "expresión",
+    "traduccion_ingles": "next to",
+    "frase_ejemplo": "El cine está al lado del banco."
+  },
+  {
+    "palabra": "encima",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "on top of",
+    "frase_ejemplo": "Las llaves están encima de la mesa."
+  },
+  {
+    "palabra": "debajo",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "under / underneath",
+    "frase_ejemplo": "El perro está debajo de la cama."
+  },
+  {
+    "palabra": "dentro",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "inside",
+    "frase_ejemplo": "El dinero está dentro de la cartera."
+  },
+  {
+    "palabra": "fuera",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "invariable",
+    "traduccion_ingles": "outside",
+    "frase_ejemplo": "Los niños juegan fuera."
+  },
+  {
+    "palabra": "entre",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "preposición",
+    "traduccion_ingles": "between",
+    "frase_ejemplo": "Estoy entre mi padre y mi madre."
+  },
+  {
+    "palabra": "en",
+    "campo_lexico": "Indicadores de Lugar",
+    "genero": "preposición",
+    "traduccion_ingles": "in / on / at",
+    "frase_ejemplo": "El libro está en la mochila."
+  }
+]
+]
