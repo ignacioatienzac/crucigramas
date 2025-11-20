@@ -68,7 +68,7 @@ let currentLevelData = null;
 // 1. Cargar el JSON
 async function init() {
     try {
-        const response = await fetch('vocabulario-a1-completo.json');
+        const response = await fetch('./vocabulario-a1-completo.json');
         if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
         fullVocabulary = await response.json();
         
