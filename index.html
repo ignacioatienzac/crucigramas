@@ -48,7 +48,7 @@
     <div id="loading">Cargando diccionario...</div>
     
     <div class="controls" style="display:none;" id="game-controls">
-        <button id="new-game-btn" onclick="generateRandomLevel()">🎲 Generar Nuevo Nivel</button>
+        <button id="generate-btn" onclick="handleGenerateClick()">🔄 Generar crucigrama</button>
     </div>
 
     <div class="game-area" id="game-area" style="display:none;">
@@ -195,6 +195,18 @@ function generateRandomLevel() {
     } catch (error) {
         alert(error.message);
     }
+}
+
+function handleGenerateClick() {
+    const btn = document.getElementById('generate-btn');
+    btn.disabled = true;
+    btn.innerText = 'Generando...';
+
+    setTimeout(() => {
+        generateRandomLevel();
+        btn.disabled = false;
+        btn.innerText = '🔄 Generar crucigrama';
+    }, 50);
 }
 
 function isValidPlacement(grid, word, x, y, dir) {
