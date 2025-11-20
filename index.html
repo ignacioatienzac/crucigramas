@@ -108,6 +108,31 @@ function canBeFormedFrom(word, baseWord) {
     return normalize(word).split('').every((char) => letters.has(char));
 }
 
+// Construye un listado amplio de candidatos que compartan letras con la palabra base.
+// Priorizamos las palabras que se forman con la base y, si no hay suficientes,
+// añadimos otras que compartan al menos un par de letras para evitar el error de
+// "menos de 3 palabras".
+function buildCandidates(baseWord, validWords) {
+    const baseNormalized = normalize(baseWord);
+    const baseSet = new Set(baseNormalized.split(''));
+
+    const scored = validWords
+        .filter(item => normalize(item.palabra) !== baseNormalized)
+        .map(item => {
+            const normalized = normalize(item.palabra);
+            const shared = normalized.split('').filter(ch => baseSet.has(ch)).length;
+            return { item, shared, fitsBase: canBeFormedFrom(item.palabra, baseWord) };
+        })
+        .filter(entry => entry.shared >= 2 || entry.fitsBase);
+
+    scored.sort((a, b) => {
+        if (a.fitsBase !== b.fitsBase) return a.fitsBase ? -1 : 1; // Priorizar las que encajan totalmente
+        return b.shared - a.shared; // Luego por cantidad de letras compartidas
+    });
+
+    return scored.map(entry => entry.item);
+}
+
 // Genera un crucigrama asegurando que tenga al menos 3 palabras (incluida la base)
 function generarCrucigrama() {
     const maxAttempts = 50;
@@ -144,21 +169,8 @@ function construirCrucigrama() {
         desglose: baseWord.split('')
     });
 
-    // Filtrado de candidatos tipo Letter Bank
-    let candidates = shuffleArray(validWords.filter(item => canBeFormedFrom(item.palabra, baseWord)));
-
-    // Si no encontramos suficientes palabras estrictamente formadas con las
-    // letras de la base, relajamos la condición para permitir palabras que
-    // compartan al menos 2 letras con la base. Esto garantiza que el tablero
-    // no se quede solo con la palabra inicial.
-    if (candidates.length < 5) {
-        const baseSet = new Set(baseWord.split(''));
-        candidates = shuffleArray(validWords.filter(item => {
-            const normalized = normalize(item.palabra);
-            const shared = normalized.split('').filter(ch => baseSet.has(ch)).length;
-            return shared >= 2 && normalized !== baseWord;
-        }));
-    }
+    // Filtrado de candidatos tipo Letter Bank, con relajación progresiva
+    const candidates = buildCandidates(baseWord, validWords);
 
     for (let candObj of candidates) {
         const candStr = normalize(candObj.palabra);
