@@ -88,6 +88,16 @@ async function init() {
 // Utilidad: Normalizar texto (quitar tildes para la lógica de la rejilla)
 const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
+// Utilidad: Mezclar un arreglo (Fisher-Yates)
+function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
 // Utilidad: Comprobar si 'word' se puede formar con las letras de 'baseWord'
 function canBeFormedFrom(word, baseWord) {
     if (word === baseWord) return false; // No queremos la misma palabra repetida
@@ -102,34 +112,22 @@ function canBeFormedFrom(word, baseWord) {
     return true;
 }
 
-// Función principal de generación
-function generateRandomLevel() {
-    // 1. Filtrar palabras válidas (más de 2 letras, sin espacios)
+// Función principal de generación de crucigramas infinitos
+function generarCrucigrama() {
     const validWords = fullVocabulary.filter(item => item.palabra.trim().length > 2 && !item.palabra.includes(" "));
-    
-    // 2. Seleccionar "Palabra Madre" (Larga, > 6 letras)
     const longWords = validWords.filter(item => item.palabra.length >= 7);
-    if (longWords.length === 0) { alert("No hay palabras suficientemente largas en el JSON."); return; }
-    
+    if (longWords.length === 0) throw new Error("No hay palabras suficientemente largas en el JSON.");
+
     const baseObj = longWords[Math.floor(Math.random() * longWords.length)];
     const baseWord = normalize(baseObj.palabra);
-
-    // 3. Buscar candidatos (palabras que se forman con las letras de la madre)
-    let candidates = validWords.filter(item => canBeFormedFrom(item.palabra, baseWord));
-    // Mezclar candidatos
-    candidates.sort(() => Math.random() - 0.5);
-
-    // 4. Algoritmo de colocación en Rejilla
-    // Usamos una rejilla virtual de 20x20 para calcular posiciones
-    const gridSize = 30;
+    const gridSize = Math.max(30, baseWord.length * 2 + 10);
     const center = Math.floor(gridSize / 2);
-    let grid = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
-    let placedWords = []; // Array para guardar resultado final
+    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+    const placedWords = [];
 
-    // Colocar palabra madre en el centro (Horizontal por defecto)
-    let startX = center - Math.floor(baseWord.length / 2);
-    let startY = center;
-    
+    // Colocar palabra madre
+    const startX = center - Math.floor(baseWord.length / 2);
+    const startY = center;
     placeWordOnGrid(grid, baseObj, startX, startY, 'horizontal', baseWord);
     placedWords.push({
         palabra: baseObj.palabra,
@@ -140,68 +138,63 @@ function generateRandomLevel() {
         desglose: baseWord.split('')
     });
 
-    // Intentar colocar candidatos
-    for (let candObj of candidates) {
-        let candStr = normalize(candObj.palabra);
-        let placed = false;
+    // Filtrado de candidatos tipo Letter Bank
+    const candidates = shuffleArray(validWords.filter(item => canBeFormedFrom(item.palabra, baseWord)));
 
-        // Buscar intersecciones con palabras ya colocadas
-        // Aleatorizamos el orden de las palabras colocadas para variar la estructura
-        let shuffledPlaced = [...placedWords].sort(() => Math.random() - 0.5);
+    for (let candObj of candidates) {
+        const candStr = normalize(candObj.palabra);
+        let placed = false;
+        const shuffledPlaced = shuffleArray(placedWords);
 
         for (let target of shuffledPlaced) {
             if (placed) break;
-            
-            // Verificar cruce letra por letra
-            let targetStr = normalize(target.palabra);
-            
+            const targetStr = normalize(target.palabra);
+
             for (let i = 0; i < candStr.length; i++) {
+                if (placed) break;
                 for (let j = 0; j < targetStr.length; j++) {
-                    if (candStr[i] === targetStr[j]) {
-                        // Hay coincidencia de letra. 
-                        // Si target es Horizontal, candidato debe ser Vertical, y viceversa
-                        let newDir = target.orientacion === 'horizontal' ? 'vertical' : 'horizontal';
-                        
-                        // Calcular coordenadas propuestas para el candidato
-                        // Si target está en (tx, ty) y la letra común es j
-                        // La intersección absoluta es: ix = tx + j (si horiz), iy = ty (si horiz)
-                        let ix = target.x + (target.orientacion === 'horizontal' ? j : 0);
-                        let iy = target.y + (target.orientacion === 'horizontal' ? 0 : j);
+                    if (candStr[i] !== targetStr[j]) continue;
 
-                        // El inicio del candidato será: 
-                        // Si es vertical: x = ix, y = iy - i
-                        // Si es horizontal: x = ix - i, y = iy
-                        let propX = newDir === 'horizontal' ? ix - i : ix;
-                        let propY = newDir === 'vertical' ? iy - i : iy;
+                    const newDir = target.orientacion === 'horizontal' ? 'vertical' : 'horizontal';
+                    const ix = target.x + (target.orientacion === 'horizontal' ? j : 0);
+                    const iy = target.y + (target.orientacion === 'horizontal' ? 0 : j);
+                    const propX = newDir === 'horizontal' ? ix - i : ix;
+                    const propY = newDir === 'vertical' ? iy - i : iy;
 
-                        if (isValidPlacement(grid, candStr, propX, propY, newDir)) {
-                            placeWordOnGrid(grid, candObj, propX, propY, newDir, candStr);
-                            placedWords.push({
-                                palabra: candObj.palabra,
-                                pista: candObj.traduccion_ingles,
-                                orientacion: newDir,
-                                x: propX,
-                                y: propY,
-                                desglose: candStr.split('')
-                            });
-                            placed = true;
-                            break; // Salir bucle j
-                        }
+                    if (isValidPlacement(grid, candStr, propX, propY, newDir)) {
+                        placeWordOnGrid(grid, candObj, propX, propY, newDir, candStr);
+                        placedWords.push({
+                            palabra: candObj.palabra,
+                            pista: candObj.traduccion_ingles,
+                            orientacion: newDir,
+                            x: propX,
+                            y: propY,
+                            desglose: candStr.split('')
+                        });
+                        placed = true;
+                        break;
                     }
                 }
-                if (placed) break; // Salir bucle i
             }
         }
     }
 
-    // 5. Normalizar coordenadas (hacer que empiece en 0,0)
     let minX = Infinity, minY = Infinity;
     placedWords.forEach(p => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); });
     placedWords.forEach(p => { p.x -= minX; p.y -= minY; });
 
-    // Renderizar
-    document.getElementById('level-title').innerText = `Nivel basado en: ${baseObj.palabra.toUpperCase()} (${baseObj.traduccion_ingles})`;
-    renderGame(placedWords);
+    return { palabras: placedWords, base: baseObj };
+}
+
+// Función de conveniencia para la UI actual
+function generateRandomLevel() {
+    try {
+        const { palabras, base } = generarCrucigrama();
+        document.getElementById('level-title').innerText = `Nivel basado en: ${base.palabra.toUpperCase()} (${base.traduccion_ingles})`;
+        renderGame(palabras);
+    } catch (error) {
+        alert(error.message);
+    }
 }
 
 function isValidPlacement(grid, word, x, y, dir) {
