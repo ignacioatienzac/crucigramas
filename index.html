@@ -224,33 +224,26 @@ function isValidPlacement(grid, word, x, y, dir) {
 
         // Verificar celda actual
         let cellContent = grid[cy][cx];
-        
+
         // Si hay letra, debe ser la misma (intersección)
-        if (cellContent !== null && cellContent !== char) return false;
+        if (cellContent !== null) {
+            if (cellContent.char !== char) return false;
+            if (cellContent.dirs.has(dir)) return false; // no se puede solapar en paralelo
+        }
 
         // REGLA DE ADYACENCIA:
-        // Si la celda estaba vacía (no es intersección), verificamos vecinos
+        // Si la celda estaba vacía (no es intersección), verificamos vecinos en las 8 direcciones
         if (cellContent === null) {
-            // Vecinos ortogonales (Arriba, Abajo, Izq, Der) deben estar vacíos
-            // excepto si son parte de una línea válida que estamos cruzando (eso ya se valida indirectamente)
-            // La forma fácil: No puede haber NADA adyacente que no sea parte del cruce permitido.
-            
-            let neighbors = [
-                {nx: cx+1, ny: cy}, {nx: cx-1, ny: cy},
-                {nx: cx, ny: cy+1}, {nx: cx, ny: cy-1}
-            ];
-
-            for (let n of neighbors) {
-                // Si el vecino tiene letra
-                if (grid[n.ny][n.nx] !== null) {
-                    // Solo es válido si esa letra pertenece a una palabra perpendicular que cruza EXACTAMENTE en (cx, cy)
-                    // Pero como estamos en el bloque "cellContent === null", significa que aquí NO hay cruce previo.
-                    // Por tanto, no deberíamos tener ningún vecino.
-                    return false;
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+                    const nx = cx + dx;
+                    const ny = cy + dy;
+                    if (grid[ny] && grid[ny][nx] !== null) return false;
                 }
             }
         }
-        
+
         // Verificar extremos (antes de la primera letra y después de la última)
         if (i === 0) {
             let bx = x + (dir === 'horizontal' ? -1 : 0);
@@ -270,7 +263,11 @@ function placeWordOnGrid(grid, wordObj, x, y, dir, cleanWord) {
     for (let i = 0; i < cleanWord.length; i++) {
         let cx = x + (dir === 'horizontal' ? i : 0);
         let cy = y + (dir === 'vertical' ? i : 0);
-        grid[cy][cx] = cleanWord[i];
+        if (!grid[cy][cx]) {
+            grid[cy][cx] = { char: cleanWord[i], dirs: new Set([dir]) };
+        } else {
+            grid[cy][cx].dirs.add(dir);
+        }
     }
 }
 
