@@ -270,8 +270,8 @@ function isValidPlacement(grid, word, x, y, dir) {
             if (grid[by][bx] !== null) return false;
         }
         if (i === len - 1) {
-            let ax = x + (dir === 'horizontal' ? 1 : 0);
-            let ay = y + (dir === 'vertical' ? 1 : 0);
+            let ax = x + (dir === 'horizontal' ? len : 0);
+            let ay = y + (dir === 'vertical' ? len : 0);
             if (grid[ay][ax] !== null) return false;
         }
     }
