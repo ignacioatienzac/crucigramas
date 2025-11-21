@@ -499,6 +499,8 @@ function generateCrosswordLogic() {
 }
 
 let currentWords = [];
+let gridOffsetX = 0;
+let gridOffsetY = 0;
 
 function initGame() {
     const result = generateCrosswordLogic();
@@ -535,6 +537,9 @@ function renderGrid(words) {
         minY = Math.min(minY, w.y);
         maxY = Math.max(maxY, yEnd);
     });
+
+    gridOffsetX = minX;
+    gridOffsetY = minY;
 
     const width = maxX - minX + 1;
     const height = maxY - minY + 1;
@@ -616,6 +621,27 @@ function renderGrid(words) {
             }
         }
     });
+}
+
+function solveBaseWord() {
+    if (!currentWords.length) return;
+
+    const baseWord = currentWords.find(w => w.dir === 'H');
+    if (!baseWord) return;
+
+    for (let i = 0; i < baseWord.normalized.length; i++) {
+        const posX = (baseWord.x + i) - gridOffsetX;
+        const posY = baseWord.y - gridOffsetY;
+
+        const input = document.querySelector(
+            `.cell-input[data-x="${posX}"][data-y="${posY}"]`
+        );
+
+        if (input) {
+            input.value = baseWord.normalized[i];
+            input.parentElement.classList.remove('incorrect', 'correct');
+        }
+    }
 }
 
 function renderClues(words) {
