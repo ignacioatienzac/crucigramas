@@ -501,10 +501,31 @@ function generateCrosswordLogic() {
 let currentWords = [];
 let gridOffsetX = 0;
 let gridOffsetY = 0;
+let cluesVisible = false;
+
+function setClueVisibility(visible) {
+    const wrapper = document.getElementById('clues-wrapper');
+    const toggleBtn = document.getElementById('toggle-clues');
+
+    cluesVisible = visible;
+
+    if (wrapper) {
+        wrapper.classList.toggle('clues-hidden', !visible);
+    }
+
+    if (toggleBtn) {
+        toggleBtn.textContent = visible ? '🙈 Ocultar pistas' : '👀 Mostrar pistas';
+        toggleBtn.setAttribute('aria-expanded', visible);
+    }
+}
+
+function toggleClues() {
+    setClueVisibility(!cluesVisible);
+}
 
 function initGame() {
     const result = generateCrosswordLogic();
-    
+
     if (!result) {
         // Reintento automático si no encuentra combinación válida
         setTimeout(initGame, 50);
@@ -515,6 +536,7 @@ function initGame() {
 
     renderGrid(currentWords);
     renderClues(currentWords);
+    setClueVisibility(false);
 }
 
 function renderGrid(words) {

@@ -24,13 +24,19 @@
                 <button class="btn-solve" onclick="solveBaseWord()">💡 Resolver palabra base</button>
             </div>
 
-            <div class="clue-group">
-                <h3>Horizontales</h3>
-                <div id="clues-horizontal"></div>
-            </div>
-            <div class="clue-group" style="margin-top: 25px;">
-                <h3>Verticales</h3>
-                <div id="clues-vertical"></div>
+            <button id="toggle-clues" class="btn-toggle" aria-expanded="false" aria-controls="clues-wrapper" onclick="toggleClues()">
+                👀 Mostrar pistas
+            </button>
+
+            <div id="clues-wrapper" class="clues-hidden">
+                <div class="clue-group">
+                    <h3>Horizontales</h3>
+                    <div id="clues-horizontal"></div>
+                </div>
+                <div class="clue-group" style="margin-top: 25px;">
+                    <h3>Verticales</h3>
+                    <div id="clues-vertical"></div>
+                </div>
             </div>
         </div>
     </div>
