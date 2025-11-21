@@ -102,6 +102,7 @@ button:active {
     justify-content: center;
     align-items: center;
     position: relative;
+    perspective: 600px;
 }
 
 .cell-input {
@@ -138,6 +139,16 @@ button:active {
     background-color: var(--error-color);
     color: white;
     border-color: var(--error-color);
+}
+
+.flip-letter {
+    animation: flipIn 0.6s ease;
+}
+
+@keyframes flipIn {
+    0% { transform: rotateY(90deg); }
+    50% { transform: rotateY(-10deg); }
+    100% { transform: rotateY(0deg); }
 }
 
 .cell-number {
