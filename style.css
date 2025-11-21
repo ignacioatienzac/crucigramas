@@ -61,6 +61,12 @@ button:active {
     color: white;
 }
 
+.btn-solve {
+    background-color: #f39c12;
+    color: white;
+    width: 100%;
+}
+
 .game-area {
     display: flex;
     flex-wrap: wrap;
@@ -178,6 +184,9 @@ button:active {
     border-radius: 8px;
     text-align: center;
     border: 1px solid #d2b4de;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
