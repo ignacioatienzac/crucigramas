@@ -3,410 +3,794 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Crucigramas A1</title>
+    <title>Generador de Crucigramas - Español A1</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #2980b9;
-            --accent: #e74c3c;
-            --bg: #ecf0f1;
+            --cell-size: 40px;
+            --primary-color: #3498db;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --bg-color: #f4f4f9;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 950px; width: 100%; }
-        h1 { color: var(--primary); margin-top: 0; text-align: center; font-size: 24px; }
-        
-        .controls { display: flex; gap: 10px; justify-content: center; margin-bottom: 25px; }
-        button { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; transition: 0.2s; }
-        button:hover { background: var(--primary); }
-        button#new-game-btn { background: var(--accent); }
 
-        select { padding: 10px; font-size: 16px; border: 2px solid #bdc3c7; border-radius: 8px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
 
-        .game-area { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; }
-        
-        /* Grid Design */
-        #grid-wrapper { background: #bdc3c7; padding: 5px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); overflow: auto; max-width: 100%; }
-        #grid { display: grid; gap: 2px; }
-        .cell { width: 40px; height: 40px; background: #ecf0f1; display: flex; justify-content: center; align-items: center; position: relative; font-weight: bold; font-size: 18px; color: var(--primary); text-transform: uppercase; }
-        .cell.filled { background: white; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); animation: pop 0.3s ease-out; }
-        .cell .num { position: absolute; top: 1px; left: 3px; font-size: 9px; color: var(--accent); font-weight: 700; line-height: 1; }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
 
-        /* Clues Design */
-        .clues { flex: 1; min-width: 280px; max-width: 400px; background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #eee; max-height: 500px; overflow-y: auto; }
-        h3 { color: var(--secondary); border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; font-size: 18px; }
-        ul { padding-left: 20px; margin-bottom: 20px; }
-        li { margin-bottom: 8px; line-height: 1.4; color: #555; font-size: 14px; }
-        li b { color: var(--primary); margin-right: 5px; }
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
 
-        @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        #loading { text-align: center; color: #7f8c8d; font-style: italic; }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-new {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-new:hover { background-color: #2980b9; }
+
+        .btn-check {
+            background-color: #f1c40f;
+            color: #333;
+        }
+        .btn-check:hover { background-color: #f39c12; }
+
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        /* Grid Styles */
+        #crossword-grid {
+            display: grid;
+            gap: 2px;
+            background-color: #333;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cell {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            background-color: #333; /* Color de fondo para celdas vacías (ocultas) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cell-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: white;
+            color: #333;
+            outline: none;
+        }
+
+        .cell-input:focus {
+            background-color: #e8f6fd;
+        }
+
+        .cell-empty {
+            background-color: #333; /* Mismo que el borde del grid para ocultar */
+            visibility: hidden;
+        }
+
+        .cell.correct .cell-input {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .cell.incorrect .cell-input {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        /* Clues Styles */
+        .clues-container {
+            display: flex;
+            flex-direction: column;
+            min-width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .clues-section h3 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        .clue-item {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .clue-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.6rem;
+            color: #666;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            :root {
+                --cell-size: 30px;
+            }
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .clues-container {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Generador de Crucigramas: Vocabulario</h1>
-    <div id="loading">Cargando diccionario...</div>
+
+    <h1>🇪🇸 Crucigrama A1</h1>
     
-    <div class="controls" style="display:none;" id="game-controls">
-        <button id="generate-btn" onclick="handleGenerateClick()">🔄 Generar crucigrama</button>
+    <div class="controls">
+        <button class="btn-new" onclick="initGame()">🔄 Nuevo Juego</button>
+        <button class="btn-check" onclick="checkAnswers()">✅ Comprobar</button>
     </div>
 
-    <div class="game-area" id="game-area" style="display:none;">
-        <div id="grid-wrapper"><div id="grid"></div></div>
-        <div class="clues">
-            <h4 id="level-title" style="margin-top:0; color:#7f8c8d;"></h4>
-            <h3>Horizontales</h3><ul id="h-clues"></ul>
-            <h3>Verticales</h3><ul id="v-clues"></ul>
+    <div class="game-container">
+        <div id="crossword-grid">
+            </div>
+
+        <div class="clues-container">
+            <div class="clues-section">
+                <h3>Horizontales</h3>
+                <div id="clues-horizontal"></div>
+            </div>
+            <div class="clues-section" style="margin-top: 20px;">
+                <h3>Verticales</h3>
+                <div id="clues-vertical"></div>
+            </div>
         </div>
     </div>
-</div>
 
 <script>
-let fullVocabulary = [];
-let currentLevelData = null;
+    // --- DATOS ---
+    const vocabulario = [
+  { "palabra": "yo", "traduccion_ingles": "I" },
+  { "palabra": "tú", "traduccion_ingles": "you (singular informal)" },
+  { "palabra": "él", "traduccion_ingles": "he" },
+  { "palabra": "ella", "traduccion_ingles": "she" },
+  { "palabra": "usted", "traduccion_ingles": "you (singular formal)" },
+  { "palabra": "nosotros", "traduccion_ingles": "we (masculine/mixed)" },
+  { "palabra": "nosotras", "traduccion_ingles": "we (feminine)" },
+  { "palabra": "vosotros", "traduccion_ingles": "you (plural informal masculine/mixed)" },
+  { "palabra": "vosotras", "traduccion_ingles": "you (plural informal feminine)" },
+  { "palabra": "ellos", "traduccion_ingles": "they (masculine/mixed)" },
+  { "palabra": "ellas", "traduccion_ingles": "they (feminine)" },
+  { "palabra": "ustedes", "traduccion_ingles": "you (plural formal/informal Latin America)" },
+  { "palabra": "español", "traduccion_ingles": "Spanish (nationality)" },
+  { "palabra": "española", "traduccion_ingles": "Spanish (nationality)" },
+  { "palabra": "mexicano", "traduccion_ingles": "Mexican" },
+  { "palabra": "mexicana", "traduccion_ingles": "Mexican" },
+  { "palabra": "francés", "traduccion_ingles": "French" },
+  { "palabra": "francesa", "traduccion_ingles": "French" },
+  { "palabra": "estadounidense", "traduccion_ingles": "American (USA)" },
+  { "palabra": "canadiense", "traduccion_ingles": "Canadian" },
+  { "palabra": "inglés", "traduccion_ingles": "English" },
+  { "palabra": "inglesa", "traduccion_ingles": "English" },
+  { "palabra": "alemán", "traduccion_ingles": "German" },
+  { "palabra": "alemana", "traduccion_ingles": "German" },
+  { "palabra": "italiano", "traduccion_ingles": "Italian" },
+  { "palabra": "italiana", "traduccion_ingles": "Italian" },
+  { "palabra": "chino", "traduccion_ingles": "Chinese" },
+  { "palabra": "china", "traduccion_ingles": "Chinese" },
+  { "palabra": "japonés", "traduccion_ingles": "Japanese" },
+  { "palabra": "japonesa", "traduccion_ingles": "Japanese" },
+  { "palabra": "coreano", "traduccion_ingles": "Korean" },
+  { "palabra": "coreana", "traduccion_ingles": "Korean" },
+  { "palabra": "hola", "traduccion_ingles": "hello / hi" },
+  { "palabra": "adiós", "traduccion_ingles": "goodbye" },
+  { "palabra": "gracias", "traduccion_ingles": "thank you" },
+  { "palabra": "perdón", "traduccion_ingles": "sorry / excuse me" },
+  { "palabra": "encantado", "traduccion_ingles": "pleased to meet you (male)" },
+  { "palabra": "encantada", "traduccion_ingles": "pleased to meet you (female)" },
+  { "palabra": "qué", "traduccion_ingles": "what" },
+  { "palabra": "quién", "traduccion_ingles": "who (singular)" },
+  { "palabra": "dónde", "traduccion_ingles": "where" },
+  { "palabra": "cuándo", "traduccion_ingles": "when" },
+  { "palabra": "cómo", "traduccion_ingles": "how" },
+  { "palabra": "familia", "traduccion_ingles": "family" },
+  { "palabra": "padre", "traduccion_ingles": "father" },
+  { "palabra": "madre", "traduccion_ingles": "mother" },
+  { "palabra": "padres", "traduccion_ingles": "parents" },
+  { "palabra": "hijo", "traduccion_ingles": "son" },
+  { "palabra": "hija", "traduccion_ingles": "daughter" },
+  { "palabra": "hermano", "traduccion_ingles": "brother" },
+  { "palabra": "hermana", "traduccion_ingles": "sister" },
+  { "palabra": "abuelo", "traduccion_ingles": "grandfather" },
+  { "palabra": "abuela", "traduccion_ingles": "grandmother" },
+  { "palabra": "tío", "traduccion_ingles": "uncle" },
+  { "palabra": "tía", "traduccion_ingles": "aunt" },
+  { "palabra": "primo", "traduccion_ingles": "cousin (male)" },
+  { "palabra": "prima", "traduccion_ingles": "cousin (female)" },
+  { "palabra": "profesor", "traduccion_ingles": "teacher (male)" },
+  { "palabra": "profesora", "traduccion_ingles": "teacher (female)" },
+  { "palabra": "estudiante", "traduccion_ingles": "student" },
+  { "palabra": "médico", "traduccion_ingles": "doctor (male)" },
+  { "palabra": "médica", "traduccion_ingles": "doctor (female)" },
+  { "palabra": "enfermero", "traduccion_ingles": "nurse (male)" },
+  { "palabra": "enfermera", "traduccion_ingles": "nurse (female)" },
+  { "palabra": "cocinero", "traduccion_ingles": "cook / chef (male)" },
+  { "palabra": "cocinera", "traduccion_ingles": "cook / chef (female)" },
+  { "palabra": "policía", "traduccion_ingles": "police officer" },
+  { "palabra": "camarero", "traduccion_ingles": "waiter" },
+  { "palabra": "camarera", "traduccion_ingles": "waitress" },
+  { "palabra": "secretario", "traduccion_ingles": "secretary (male)" },
+  { "palabra": "secretaria", "traduccion_ingles": "secretary (female)" },
+  { "palabra": "taxista", "traduccion_ingles": "taxi driver" },
+  { "palabra": "cero", "traduccion_ingles": "zero" },
+  { "palabra": "uno", "traduccion_ingles": "one" },
+  { "palabra": "dos", "traduccion_ingles": "two" },
+  { "palabra": "tres", "traduccion_ingles": "three" },
+  { "palabra": "cuatro", "traduccion_ingles": "four" },
+  { "palabra": "cinco", "traduccion_ingles": "five" },
+  { "palabra": "seis", "traduccion_ingles": "six" },
+  { "palabra": "siete", "traduccion_ingles": "seven" },
+  { "palabra": "ocho", "traduccion_ingles": "eight" },
+  { "palabra": "nueve", "traduccion_ingles": "nine" },
+  { "palabra": "diez", "traduccion_ingles": "ten" },
+  { "palabra": "once", "traduccion_ingles": "eleven" },
+  { "palabra": "doce", "traduccion_ingles": "twelve" },
+  { "palabra": "trece", "traduccion_ingles": "thirteen" },
+  { "palabra": "catorce", "traduccion_ingles": "fourteen" },
+  { "palabra": "quince", "traduccion_ingles": "fifteen" },
+  { "palabra": "veinte", "traduccion_ingles": "twenty" },
+  { "palabra": "treinta", "traduccion_ingles": "thirty" },
+  { "palabra": "cuarenta", "traduccion_ingles": "forty" },
+  { "palabra": "cincuenta", "traduccion_ingles": "fifty" },
+  { "palabra": "sesenta", "traduccion_ingles": "sixty" },
+  { "palabra": "setenta", "traduccion_ingles": "seventy" },
+  { "palabra": "ochenta", "traduccion_ingles": "eighty" },
+  { "palabra": "noventa", "traduccion_ingles": "ninety" },
+  { "palabra": "cien", "traduccion_ingles": "one hundred" },
+  { "palabra": "lunes", "traduccion_ingles": "Monday" },
+  { "palabra": "martes", "traduccion_ingles": "Tuesday" },
+  { "palabra": "miércoles", "traduccion_ingles": "Wednesday" },
+  { "palabra": "jueves", "traduccion_ingles": "Thursday" },
+  { "palabra": "viernes", "traduccion_ingles": "Friday" },
+  { "palabra": "sábado", "traduccion_ingles": "Saturday" },
+  { "palabra": "domingo", "traduccion_ingles": "Sunday" },
+  { "palabra": "enero", "traduccion_ingles": "January" },
+  { "palabra": "febrero", "traduccion_ingles": "February" },
+  { "palabra": "marzo", "traduccion_ingles": "March" },
+  { "palabra": "abril", "traduccion_ingles": "April" },
+  { "palabra": "mayo", "traduccion_ingles": "May" },
+  { "palabra": "junio", "traduccion_ingles": "June" },
+  { "palabra": "julio", "traduccion_ingles": "July" },
+  { "palabra": "agosto", "traduccion_ingles": "August" },
+  { "palabra": "septiembre", "traduccion_ingles": "September" },
+  { "palabra": "octubre", "traduccion_ingles": "October" },
+  { "palabra": "noviembre", "traduccion_ingles": "November" },
+  { "palabra": "diciembre", "traduccion_ingles": "December" },
+  { "palabra": "primavera", "traduccion_ingles": "spring" },
+  { "palabra": "verano", "traduccion_ingles": "summer" },
+  { "palabra": "otoño", "traduccion_ingles": "autumn / fall" },
+  { "palabra": "invierno", "traduccion_ingles": "winter" },
+  { "palabra": "tiempo", "traduccion_ingles": "weather" },
+  { "palabra": "sol", "traduccion_ingles": "sun" },
+  { "palabra": "calor", "traduccion_ingles": "heat" },
+  { "palabra": "frío", "traduccion_ingles": "cold" },
+  { "palabra": "viento", "traduccion_ingles": "wind" },
+  { "palabra": "lluvia", "traduccion_ingles": "rain" },
+  { "palabra": "nieve", "traduccion_ingles": "snow" },
+  { "palabra": "nube", "traduccion_ingles": "cloud" },
+  { "palabra": "nublado", "traduccion_ingles": "cloudy" },
+  { "palabra": "tormenta", "traduccion_ingles": "storm" },
+  { "palabra": "casa", "traduccion_ingles": "house" },
+  { "palabra": "piso", "traduccion_ingles": "flat / apartment" },
+  { "palabra": "habitación", "traduccion_ingles": "room" },
+  { "palabra": "dormitorio", "traduccion_ingles": "bedroom" },
+  { "palabra": "salón", "traduccion_ingles": "living room" },
+  { "palabra": "comedor", "traduccion_ingles": "dining room" },
+  { "palabra": "cocina", "traduccion_ingles": "kitchen" },
+  { "palabra": "baño", "traduccion_ingles": "bathroom" },
+  { "palabra": "jardín", "traduccion_ingles": "garden" },
+  { "palabra": "pared", "traduccion_ingles": "wall" },
+  { "palabra": "suelo", "traduccion_ingles": "floor" },
+  { "palabra": "mesa", "traduccion_ingles": "table" },
+  { "palabra": "silla", "traduccion_ingles": "chair" },
+  { "palabra": "cama", "traduccion_ingles": "bed" },
+  { "palabra": "sofá", "traduccion_ingles": "sofa / couch" },
+  { "palabra": "armario", "traduccion_ingles": "wardrobe / closet" },
+  { "palabra": "estantería", "traduccion_ingles": "shelf / bookcase" },
+  { "palabra": "lámpara", "traduccion_ingles": "lamp" },
+  { "palabra": "espejo", "traduccion_ingles": "mirror" },
+  { "palabra": "televisión", "traduccion_ingles": "television" },
+  { "palabra": "nevera", "traduccion_ingles": "fridge" },
+  { "palabra": "lavadora", "traduccion_ingles": "washing machine" },
+  { "palabra": "móvil", "traduccion_ingles": "mobile phone" },
+  { "palabra": "llave", "traduccion_ingles": "key" },
+  { "palabra": "reloj", "traduccion_ingles": "watch / clock" },
+  { "palabra": "bolso", "traduccion_ingles": "bag / handbag" },
+  { "palabra": "cartera", "traduccion_ingles": "wallet" },
+  { "palabra": "paraguas", "traduccion_ingles": "umbrella" },
+  { "palabra": "dinero", "traduccion_ingles": "money" },
+  { "palabra": "tarjeta", "traduccion_ingles": "card (credit/debit)" },
+  { "palabra": "libro", "traduccion_ingles": "book" },
+  { "palabra": "cuaderno", "traduccion_ingles": "notebook" },
+  { "palabra": "papel", "traduccion_ingles": "paper" },
+  { "palabra": "bolígrafo", "traduccion_ingles": "pen" },
+  { "palabra": "lápiz", "traduccion_ingles": "pencil" },
+  { "palabra": "ordenador", "traduccion_ingles": "computer" },
+  { "palabra": "mochila", "traduccion_ingles": "backpack" },
+  { "palabra": "ciudad", "traduccion_ingles": "city" },
+  { "palabra": "pueblo", "traduccion_ingles": "town / village" },
+  { "palabra": "barrio", "traduccion_ingles": "neighborhood" },
+  { "palabra": "calle", "traduccion_ingles": "street" },
+  { "palabra": "plaza", "traduccion_ingles": "square" },
+  { "palabra": "parque", "traduccion_ingles": "park" },
+  { "palabra": "tienda", "traduccion_ingles": "shop / store" },
+  { "palabra": "supermercado", "traduccion_ingles": "supermarket" },
+  { "palabra": "mercado", "traduccion_ingles": "market" },
+  { "palabra": "escuela", "traduccion_ingles": "school" },
+  { "palabra": "hospital", "traduccion_ingles": "hospital" },
+  { "palabra": "farmacia", "traduccion_ingles": "pharmacy" },
+  { "palabra": "banco", "traduccion_ingles": "bank" },
+  { "palabra": "restaurante", "traduccion_ingles": "restaurant" },
+  { "palabra": "bar", "traduccion_ingles": "bar / cafe" },
+  { "palabra": "cine", "traduccion_ingles": "cinema / movie theater" },
+  { "palabra": "hotel", "traduccion_ingles": "hotel" },
+  { "palabra": "museo", "traduccion_ingles": "museum" },
+  { "palabra": "aeropuerto", "traduccion_ingles": "airport" },
+  { "palabra": "estación", "traduccion_ingles": "station (train/bus)" },
+  { "palabra": "coche", "traduccion_ingles": "car" },
+  { "palabra": "autobús", "traduccion_ingles": "bus" },
+  { "palabra": "metro", "traduccion_ingles": "metro / subway" },
+  { "palabra": "tren", "traduccion_ingles": "train" },
+  { "palabra": "bicicleta", "traduccion_ingles": "bicycle" },
+  { "palabra": "moto", "traduccion_ingles": "motorcycle" },
+  { "palabra": "avión", "traduccion_ingles": "plane" },
+  { "palabra": "taxi", "traduccion_ingles": "taxi" },
+  { "palabra": "barco", "traduccion_ingles": "boat / ship" },
+  { "palabra": "alto", "traduccion_ingles": "tall (male)" },
+  { "palabra": "alta", "traduccion_ingles": "tall (female)" },
+  { "palabra": "bajo", "traduccion_ingles": "short (height - male)" },
+  { "palabra": "baja", "traduccion_ingles": "short (height - female)" },
+  { "palabra": "gordo", "traduccion_ingles": "fat (male)" },
+  { "palabra": "gorda", "traduccion_ingles": "fat (female)" },
+  { "palabra": "delgado", "traduccion_ingles": "thin (male)" },
+  { "palabra": "delgada", "traduccion_ingles": "thin (female)" },
+  { "palabra": "guapo", "traduccion_ingles": "handsome" },
+  { "palabra": "guapa", "traduccion_ingles": "beautiful / pretty" },
+  { "palabra": "feo", "traduccion_ingles": "ugly (male)" },
+  { "palabra": "joven", "traduccion_ingles": "young" },
+  { "palabra": "mayor", "traduccion_ingles": "old / elderly" },
+  { "palabra": "pelo", "traduccion_ingles": "hair" },
+  { "palabra": "ojos", "traduccion_ingles": "eyes" },
+  { "palabra": "rubio", "traduccion_ingles": "blonde (male)" },
+  { "palabra": "morena", "traduccion_ingles": "brunette / dark-haired (female)" },
+  { "palabra": "largo", "traduccion_ingles": "long" },
+  { "palabra": "corto", "traduccion_ingles": "short (length)" },
+  { "palabra": "barba", "traduccion_ingles": "beard" },
+  { "palabra": "simpático", "traduccion_ingles": "nice / friendly (male)" },
+  { "palabra": "antipático", "traduccion_ingles": "unfriendly / unpleasant" },
+  { "palabra": "bueno", "traduccion_ingles": "good / kind" },
+  { "palabra": "malo", "traduccion_ingles": "bad / mean" },
+  { "palabra": "amable", "traduccion_ingles": "kind / polite" },
+  { "palabra": "divertido", "traduccion_ingles": "fun / funny" },
+  { "palabra": "aburrido", "traduccion_ingles": "boring" },
+  { "palabra": "inteligente", "traduccion_ingles": "intelligent" },
+  { "palabra": "trabajador", "traduccion_ingles": "hard-working (male)" },
+  { "palabra": "vago", "traduccion_ingles": "lazy" },
+  { "palabra": "alegre", "traduccion_ingles": "cheerful / happy" },
+  { "palabra": "serio", "traduccion_ingles": "serious" },
+  { "palabra": "tímido", "traduccion_ingles": "shy" },
+  { "palabra": "feliz", "traduccion_ingles": "happy" },
+  { "palabra": "triste", "traduccion_ingles": "sad" },
+  { "palabra": "rojo", "traduccion_ingles": "red" },
+  { "palabra": "azul", "traduccion_ingles": "blue" },
+  { "palabra": "verde", "traduccion_ingles": "green" },
+  { "palabra": "amarillo", "traduccion_ingles": "yellow" },
+  { "palabra": "blanco", "traduccion_ingles": "white" },
+  { "palabra": "negro", "traduccion_ingles": "black" },
+  { "palabra": "marrón", "traduccion_ingles": "brown" },
+  { "palabra": "gris", "traduccion_ingles": "grey" },
+  { "palabra": "naranja", "traduccion_ingles": "orange" },
+  { "palabra": "rosa", "traduccion_ingles": "pink" },
+  { "palabra": "violeta", "traduccion_ingles": "violet / purple" },
+  { "palabra": "camiseta", "traduccion_ingles": "t-shirt" },
+  { "palabra": "camisa", "traduccion_ingles": "shirt" },
+  { "palabra": "pantalón", "traduccion_ingles": "trousers / pants" },
+  { "palabra": "vaqueros", "traduccion_ingles": "jeans" },
+  { "palabra": "falda", "traduccion_ingles": "skirt" },
+  { "palabra": "vestido", "traduccion_ingles": "dress" },
+  { "palabra": "zapatos", "traduccion_ingles": "shoes" },
+  { "palabra": "zapatillas", "traduccion_ingles": "sneakers / trainers" },
+  { "palabra": "abrigo", "traduccion_ingles": "coat" },
+  { "palabra": "chaqueta", "traduccion_ingles": "jacket" },
+  { "palabra": "jersey", "traduccion_ingles": "jumper / sweater" },
+  { "palabra": "calcetines", "traduccion_ingles": "socks" },
+  { "palabra": "bufanda", "traduccion_ingles": "scarf" },
+  { "palabra": "gorro", "traduccion_ingles": "hat (winter/beanie)" },
+  { "palabra": "guantes", "traduccion_ingles": "gloves" },
+  { "palabra": "agua", "traduccion_ingles": "water" },
+  { "palabra": "café", "traduccion_ingles": "coffee" },
+  { "palabra": "leche", "traduccion_ingles": "milk" },
+  { "palabra": "té", "traduccion_ingles": "tea" },
+  { "palabra": "zumo", "traduccion_ingles": "juice" },
+  { "palabra": "vino", "traduccion_ingles": "wine" },
+  { "palabra": "cerveza", "traduccion_ingles": "beer" },
+  { "palabra": "pan", "traduccion_ingles": "bread" },
+  { "palabra": "huevo", "traduccion_ingles": "egg" },
+  { "palabra": "carne", "traduccion_ingles": "meat" },
+  { "palabra": "pollo", "traduccion_ingles": "chicken" },
+  { "palabra": "pescado", "traduccion_ingles": "fish (food)" },
+  { "palabra": "fruta", "traduccion_ingles": "fruit" },
+  { "palabra": "manzana", "traduccion_ingles": "apple" },
+  { "palabra": "plátano", "traduccion_ingles": "banana" },
+  { "palabra": "limón", "traduccion_ingles": "lemon" },
+  { "palabra": "verdura", "traduccion_ingles": "vegetables" },
+  { "palabra": "ensalada", "traduccion_ingles": "salad" },
+  { "palabra": "tomate", "traduccion_ingles": "tomato" },
+  { "palabra": "patata", "traduccion_ingles": "potato" },
+  { "palabra": "arroz", "traduccion_ingles": "rice" },
+  { "palabra": "pasta", "traduccion_ingles": "pasta" },
+  { "palabra": "queso", "traduccion_ingles": "cheese" },
+  { "palabra": "azúcar", "traduccion_ingles": "sugar" },
+  { "palabra": "sal", "traduccion_ingles": "salt" },
+  { "palabra": "aceite", "traduccion_ingles": "oil" },
+  { "palabra": "chocolate", "traduccion_ingles": "chocolate" },
+  { "palabra": "menú", "traduccion_ingles": "menu (set menu)" },
+  { "palabra": "carta", "traduccion_ingles": "menu (a la carte)" },
+  { "palabra": "cuenta", "traduccion_ingles": "bill / check" },
+  { "palabra": "desayuno", "traduccion_ingles": "breakfast" },
+  { "palabra": "almuerzo", "traduccion_ingles": "lunch" },
+  { "palabra": "cena", "traduccion_ingles": "dinner" },
+  { "palabra": "postre", "traduccion_ingles": "dessert" },
+  { "palabra": "plato", "traduccion_ingles": "plate / dish" },
+  { "palabra": "vaso", "traduccion_ingles": "glass" },
+  { "palabra": "taza", "traduccion_ingles": "cup / mug" },
+  { "palabra": "tenedor", "traduccion_ingles": "fork" },
+  { "palabra": "cuchillo", "traduccion_ingles": "knife" },
+  { "palabra": "cuchara", "traduccion_ingles": "spoon" },
+  { "palabra": "servilleta", "traduccion_ingles": "napkin" },
+  { "palabra": "rico", "traduccion_ingles": "tasty / good" },
+  { "palabra": "delicioso", "traduccion_ingles": "delicious" },
+  { "palabra": "ser", "traduccion_ingles": "to be (permanent)" },
+  { "palabra": "estar", "traduccion_ingles": "to be (temporary/location)" },
+  { "palabra": "tener", "traduccion_ingles": "to have" },
+  { "palabra": "haber", "traduccion_ingles": "there is / there are" },
+  { "palabra": "querer", "traduccion_ingles": "to want" },
+  { "palabra": "poder", "traduccion_ingles": "to be able to / can" },
+  { "palabra": "saber", "traduccion_ingles": "to know (facts/skills)" },
+  { "palabra": "llamarse", "traduccion_ingles": "to be called" },
+  { "palabra": "hablar", "traduccion_ingles": "to speak" },
+  { "palabra": "comer", "traduccion_ingles": "to eat" },
+  { "palabra": "beber", "traduccion_ingles": "to drink" },
+  { "palabra": "vivir", "traduccion_ingles": "to live" },
+  { "palabra": "ir", "traduccion_ingles": "to go" },
+  { "palabra": "venir", "traduccion_ingles": "to come" },
+  { "palabra": "hacer", "traduccion_ingles": "to do / to make" },
+  { "palabra": "dormir", "traduccion_ingles": "to sleep" },
+  { "palabra": "levantarse", "traduccion_ingles": "to get up" },
+  { "palabra": "ducharse", "traduccion_ingles": "to take a shower" },
+  { "palabra": "trabajar", "traduccion_ingles": "to work" },
+  { "palabra": "gustar", "traduccion_ingles": "to like" },
+  { "palabra": "leer", "traduccion_ingles": "to read" },
+  { "palabra": "escribir", "traduccion_ingles": "to write" },
+  { "palabra": "escuchar", "traduccion_ingles": "to listen" },
+  { "palabra": "mirar", "traduccion_ingles": "to look / to watch" },
+  { "palabra": "ver", "traduccion_ingles": "to see / to watch" },
+  { "palabra": "estudiar", "traduccion_ingles": "to study" },
+  { "palabra": "aprender", "traduccion_ingles": "to learn" },
+  { "palabra": "jugar", "traduccion_ingles": "to play" },
+  { "palabra": "comprar", "traduccion_ingles": "to buy" },
+  { "palabra": "viajar", "traduccion_ingles": "to travel" },
+  { "palabra": "salir", "traduccion_ingles": "to go out / leave" },
+  { "palabra": "llegar", "traduccion_ingles": "to arrive" },
+  { "palabra": "entrar", "traduccion_ingles": "to enter" },
+  { "palabra": "bien", "traduccion_ingles": "well / good" },
+  { "palabra": "mal", "traduccion_ingles": "bad / poorly" },
+  { "palabra": "regular", "traduccion_ingles": "so-so / okay" },
+  { "palabra": "contento", "traduccion_ingles": "happy / content" },
+  { "palabra": "cansado", "traduccion_ingles": "tired" },
+  { "palabra": "enfadado", "traduccion_ingles": "angry" },
+  { "palabra": "nervioso", "traduccion_ingles": "nervous" },
+  { "palabra": "tranquilo", "traduccion_ingles": "calm / relaxed" },
+  { "palabra": "ocupado", "traduccion_ingles": "busy" },
+  { "palabra": "enfermo", "traduccion_ingles": "sick / ill" },
+  { "palabra": "hambre", "traduccion_ingles": "hunger" },
+  { "palabra": "sed", "traduccion_ingles": "thirst" },
+  { "palabra": "sueño", "traduccion_ingles": "sleepiness" },
+  { "palabra": "miedo", "traduccion_ingles": "fear" },
+  { "palabra": "prisa", "traduccion_ingles": "hurry" },
+  { "palabra": "aquí", "traduccion_ingles": "here" },
+  { "palabra": "allí", "traduccion_ingles": "there" },
+  { "palabra": "cerca", "traduccion_ingles": "near / close" },
+  { "palabra": "lejos", "traduccion_ingles": "far" },
+  { "palabra": "delante", "traduccion_ingles": "in front" },
+  { "palabra": "detrás", "traduccion_ingles": "behind" },
+  { "palabra": "enfrente", "traduccion_ingles": "opposite / facing" },
+  { "palabra": "encima", "traduccion_ingles": "on top of" },
+  { "palabra": "debajo", "traduccion_ingles": "under / underneath" },
+  { "palabra": "dentro", "traduccion_ingles": "inside" },
+  { "palabra": "fuera", "traduccion_ingles": "outside" },
+  { "palabra": "entre", "traduccion_ingles": "between" },
+  { "palabra": "en", "traduccion_ingles": "in / on / at" }
+];
 
-// 1. Cargar el JSON
-async function init() {
-    try {
-        const response = await fetch('./vocabulario-a1-completo.json');
-        if (!response.ok) throw new Error("No se pudo cargar el archivo JSON");
-        fullVocabulary = await response.json();
+    // --- LÓGICA DEL JUEGO ---
+
+    // Utilidad para quitar tildes para comparaciones
+    function normalize(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    function getRandomElement(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generateCrosswordLogic() {
+        // 1. Filtrar palabras de base (longitud >= 6)
+        // Ignoramos frases (con espacios) para simplificar la visualización
+        const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
+        const longWords = singleWords.filter(v => v.palabra.length >= 6);
         
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('game-controls').style.display = 'flex';
-        document.getElementById('game-area').style.display = 'flex';
-        
-        generateRandomLevel();
-    } catch (error) {
-        document.getElementById('loading').innerHTML = "Error: Asegúrate de que 'vocabulario-a1-completo.json' está en la misma carpeta y usa un servidor local (Live Server).";
-        console.error(error);
-    }
-}
+        if (longWords.length === 0) return null;
 
-// --- LÓGICA DEL GENERADOR ---
+        const MAX_ATTEMPTS = 100;
+        let attempt = 0;
 
-// Utilidad: Normalizar texto (quitar tildes para la lógica de la rejilla)
-const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        while (attempt < MAX_ATTEMPTS) {
+            attempt++;
+            
+            // 2. Seleccionar palabra base aleatoria
+            const baseWordObj = getRandomElement(longWords);
+            const baseWord = normalize(baseWordObj.palabra);
+            
+            // Estructura para guardar palabras colocadas: { wordObj, x, y, dir: 'H'|'V', normalized }
+            let placedWords = [];
+            
+            // Colocar base en (0,0) Horizontal
+            placedWords.push({
+                wordObj: baseWordObj,
+                x: 0,
+                y: 0,
+                dir: 'H',
+                normalized: baseWord
+            });
 
-// Utilidad: Mezclar un arreglo (Fisher-Yates)
-function shuffleArray(arr) {
-    const copy = [...arr];
-    for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
-}
+            let usedWords = [baseWordObj.palabra];
+            let intersectCount = 0;
 
-// Utilidad: Comprobar si 'word' se puede formar con las letras de 'baseWord'
-// Para favorecer que aparezcan más palabras (estilo "letter bank" de Scrabble),
-// solo verificamos que las letras existan en la palabra base, sin limitar la
-// frecuencia. También evitamos devolver la misma palabra base.
-function canBeFormedFrom(word, baseWord) {
-    if (normalize(word) === normalize(baseWord)) return false;
-    const letters = new Set(normalize(baseWord).split(''));
-    return normalize(word).split('').every((char) => letters.has(char));
-}
+            // 3. Intentar cruzar palabras
+            // Recorremos letras de la base para encontrar cruces verticales
+            for (let i = 0; i < baseWord.length; i++) {
+                const char = baseWord[i];
+                
+                // Buscar candidatas que contengan 'char' y sean más cortas que la base
+                // y que no estén usadas
+                const candidates = singleWords.filter(v => {
+                    const normV = normalize(v.palabra);
+                    return !usedWords.includes(v.palabra) && 
+                           v.palabra.length < baseWordObj.palabra.length && // Requisito del prompt
+                           normV.includes(char);
+                });
 
-// Construye un listado amplio de candidatos que compartan letras con la palabra base.
-// Priorizamos las palabras que se forman con la base y, si no hay suficientes,
-// añadimos otras que compartan al menos un par de letras para evitar el error de
-// "menos de 3 palabras".
-function buildCandidates(baseWord, validWords) {
-    const baseNormalized = normalize(baseWord);
-    const baseSet = new Set(baseNormalized.split(''));
+                if (candidates.length > 0) {
+                    const crosserObj = getRandomElement(candidates);
+                    const crosserNorm = normalize(crosserObj.palabra);
+                    const charIndex = crosserNorm.indexOf(char); // Dónde cruza en la palabra vertical
 
-    const scored = validWords
-        .filter(item => normalize(item.palabra) !== baseNormalized)
-        .map(item => {
-            const normalized = normalize(item.palabra);
-            const shared = normalized.split('').filter(ch => baseSet.has(ch)).length;
-            return { item, shared, fitsBase: canBeFormedFrom(item.palabra, baseWord) };
-        })
-        .filter(entry => entry.shared >= 2 || entry.fitsBase);
+                    // Posición de la vertical
+                    // Si la base es H en y=0, y la vertical cruza en su letra charIndex en la posición x=i
+                    // Entonces la vertical empieza en y = -charIndex
+                    const newWord = {
+                        wordObj: crosserObj,
+                        x: i,
+                        y: -charIndex,
+                        dir: 'V',
+                        normalized: crosserNorm
+                    };
 
-    scored.sort((a, b) => {
-        if (a.fitsBase !== b.fitsBase) return a.fitsBase ? -1 : 1; // Priorizar las que encajan totalmente
-        return b.shared - a.shared; // Luego por cantidad de letras compartidas
-    });
+                    // Verificar colisiones simples (en este modelo simplificado de 1 base + N verticales,
+                    // las verticales son paralelas, solo hay que chequear que no se toquen lateralmente de forma ilegal
+                    // o se superpongan. Como x=i avanza, nunca se superponen en X.
+                    // Pero hay que evitar que estén pegadas (x, x+1) si eso crea palabras falsas horizontales.
+                    // Para simplificar, forzaremos una distancia de al menos 1 celda entre verticales
+                    
+                    const tooClose = placedWords.some(pw => pw.dir === 'V' && Math.abs(pw.x - newWord.x) < 2);
 
-    return scored.map(entry => entry.item);
-}
+                    if (!tooClose) {
+                        placedWords.push(newWord);
+                        usedWords.push(crosserObj.palabra);
+                        intersectCount++;
+                    }
+                }
+                
+                // Necesitamos al menos 2
+                if (intersectCount >= 2 && Math.random() > 0.5) break; // Seguir un poco más aleatoriamente
+            }
 
-// Devuelve palabras más cortas que solo usen letras de la palabra base
-function getLetterBankWords(baseWordObj, validWords) {
-    const baseWord = baseWordObj.palabra;
-    const baseLength = normalize(baseWord).length;
-    return validWords.filter((item) => {
-        const normalized = normalize(item.palabra);
-        return normalized.length < baseLength && canBeFormedFrom(normalized, baseWord);
-    });
-}
-
-// Genera un crucigrama asegurando que tenga al menos 3 palabras (incluida la base)
-function generarCrucigrama() {
-    const maxAttempts = 50;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        const attemptResult = construirCrucigrama();
-        if (attemptResult.palabras.length >= 2) return attemptResult;
-    }
-    throw new Error("No se pudo generar un crucigrama con al menos 2 palabras. Intenta de nuevo.");
-}
-
-// Función principal de generación de crucigramas infinitos (un intento)
-function construirCrucigrama() {
-    const validWords = fullVocabulary.filter(item => item.palabra.trim().length > 2 && !item.palabra.includes(" "));
-    const longWords = validWords.filter(item => item.palabra.length >= 7);
-    if (longWords.length === 0) throw new Error("No hay palabras suficientemente largas en el JSON.");
-
-    const shuffledLongWords = shuffleArray(longWords);
-    let baseObj = null;
-    let letterBankWords = [];
-
-    for (const longWord of shuffledLongWords) {
-        const bankWords = getLetterBankWords(longWord, validWords);
-        if (bankWords.length >= 2) {
-            baseObj = longWord;
-            letterBankWords = bankWords;
-            break;
+            if (intersectCount >= 2) {
+                return placedWords;
+            }
         }
+        return null; // Falló
     }
 
-    if (!baseObj) throw new Error("No se encontraron palabras largas con al menos 2 derivadas más cortas.");
+    let currentWords = [];
 
-    const baseWord = normalize(baseObj.palabra);
-    const gridSize = Math.max(30, baseWord.length * 2 + 10);
-    const center = Math.floor(gridSize / 2);
-    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
-    const placedWords = [];
-
-    // Colocar palabra madre
-    const startX = center - Math.floor(baseWord.length / 2);
-    const startY = center;
-    placeWordOnGrid(grid, baseObj, startX, startY, 'horizontal', baseWord);
-    placedWords.push({
-        palabra: baseObj.palabra,
-        pista: baseObj.traduccion_ingles,
-        orientacion: 'horizontal',
-        x: startX,
-        y: startY,
-        desglose: baseWord.split('')
-    });
-
-    // Filtrado de candidatos tipo Letter Bank, priorizando las palabras más cortas construidas con la base
-    const candidates = [];
-    const addCandidate = (item) => {
-        const key = normalize(item.palabra);
-        if (!candidates.some((cand) => normalize(cand.palabra) === key)) {
-            candidates.push(item);
+    function initGame() {
+        const result = generateCrosswordLogic();
+        if (!result) {
+            // Reintentar si falla (fuerza bruta simple)
+            setTimeout(initGame, 0);
+            return;
         }
-    };
+        currentWords = result;
+        renderGrid(result);
+        renderClues(result);
+    }
 
-    shuffleArray(letterBankWords).forEach(addCandidate);
-    buildCandidates(baseWord, validWords).forEach(addCandidate);
+    function renderGrid(words) {
+        const gridContainer = document.getElementById('crossword-grid');
+        gridContainer.innerHTML = '';
 
-    for (let candObj of candidates) {
-        const candStr = normalize(candObj.palabra);
-        let placed = false;
-        const shuffledPlaced = shuffleArray(placedWords);
+        // Calcular límites
+        let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
-        for (let target of shuffledPlaced) {
-            if (placed) break;
-            const targetStr = normalize(target.palabra);
+        words.forEach(w => {
+            const len = w.normalized.length;
+            const xEnd = w.dir === 'H' ? w.x + len - 1 : w.x;
+            const yEnd = w.dir === 'V' ? w.y + len - 1 : w.y;
 
-            for (let i = 0; i < candStr.length; i++) {
-                if (placed) break;
-                for (let j = 0; j < targetStr.length; j++) {
-                    if (candStr[i] !== targetStr[j]) continue;
+            minX = Math.min(minX, w.x);
+            maxX = Math.max(maxX, xEnd);
+            minY = Math.min(minY, w.y);
+            maxY = Math.max(maxY, yEnd);
+        });
 
-                    const newDir = target.orientacion === 'horizontal' ? 'vertical' : 'horizontal';
-                    const ix = target.x + (target.orientacion === 'horizontal' ? j : 0);
-                    const iy = target.y + (target.orientacion === 'horizontal' ? 0 : j);
-                    const propX = newDir === 'horizontal' ? ix - i : ix;
-                    const propY = newDir === 'vertical' ? iy - i : iy;
+        const width = maxX - minX + 1;
+        const height = maxY - minY + 1;
 
-                    if (isValidPlacement(grid, candStr, propX, propY, newDir)) {
-                        placeWordOnGrid(grid, candObj, propX, propY, newDir, candStr);
-                        placedWords.push({
-                            palabra: candObj.palabra,
-                            pista: candObj.traduccion_ingles,
-                            orientacion: newDir,
-                            x: propX,
-                            y: propY,
-                            desglose: candStr.split('')
-                        });
-                        placed = true;
-                        break;
+        // Configurar CSS Grid
+        gridContainer.style.gridTemplateColumns = `repeat(${width}, var(--cell-size))`;
+        gridContainer.style.gridTemplateRows = `repeat(${height}, var(--cell-size))`;
+
+        // Crear mapa de celdas para evitar duplicados en cruces
+        const cellMap = new Map(); // key: "x,y", val: element
+
+        words.forEach((w, index) => {
+            const len = w.normalized.length;
+            for (let i = 0; i < len; i++) {
+                const posX = (w.dir === 'H' ? w.x + i : w.x) - minX; // Normalizar a 0..N
+                const posY = (w.dir === 'V' ? w.y + i : w.y) - minY;
+                const char = w.normalized[i];
+                const key = `${posX},${posY}`;
+
+                // Si ya existe la celda (cruce), usamos la misma
+                let cellDiv = cellMap.get(key);
+                
+                if (!cellDiv) {
+                    cellDiv = document.createElement('div');
+                    cellDiv.className = 'cell';
+                    cellDiv.style.gridColumnStart = posX + 1;
+                    cellDiv.style.gridRowStart = posY + 1;
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.maxLength = 1;
+                    input.className = 'cell-input';
+                    input.dataset.correct = char; // Guardar respuesta correcta (sin tilde)
+                    
+                    // Navegación simple
+                    input.addEventListener('keyup', (e) => {
+                        if (e.key.length === 1 && e.key.match(/[a-zñ]/i)) {
+                            // Mover foco? (Implementación básica, no direccional compleja)
+                        }
+                    });
+
+                    cellDiv.appendChild(input);
+                    gridContainer.appendChild(cellDiv);
+                    cellMap.set(key, cellDiv);
+                }
+
+                // Si es el inicio de la palabra, añadir numerito
+                if (i === 0) {
+                    const numSpan = document.createElement('span');
+                    numSpan.className = 'cell-number';
+                    numSpan.innerText = index + 1;
+                    // Evitar solapamiento de números si dos palabras empiezan igual (raro aquí)
+                    if(!cellDiv.querySelector('.cell-number')) {
+                        cellDiv.appendChild(numSpan);
                     }
                 }
             }
-        }
-    }
-
-    let minX = Infinity, minY = Infinity;
-    placedWords.forEach(p => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); });
-    placedWords.forEach(p => { p.x -= minX; p.y -= minY; });
-
-    const shorterWordsPlaced = placedWords.filter((p) => normalize(p.palabra).length < baseWord.length);
-
-    if (placedWords.length >= 3 && shorterWordsPlaced.length >= 2) {
-        return { palabras: placedWords, base: baseObj };
-    }
-
-    return { palabras: [], base: baseObj };
-}
-
-// Función de conveniencia para la UI actual
-function generateRandomLevel() {
-    try {
-        const { palabras, base } = generarCrucigrama();
-        document.getElementById('level-title').innerText = `Nivel basado en: ${base.palabra.toUpperCase()} (${base.traduccion_ingles})`;
-        renderGame(palabras);
-    } catch (error) {
-        alert(error.message);
-    }
-}
-
-function handleGenerateClick() {
-    const btn = document.getElementById('generate-btn');
-    btn.disabled = true;
-    btn.innerText = 'Generando...';
-
-    setTimeout(() => {
-        generateRandomLevel();
-        btn.disabled = false;
-        btn.innerText = '🔄 Generar crucigrama';
-    }, 50);
-}
-
-function isValidPlacement(grid, word, x, y, dir) {
-    const len = word.length;
-    const h = grid.length;
-    const w = grid[0].length;
-
-    // 1. Check Bounds (Límites)
-    if (x < 1 || y < 1 || x + (dir === 'horizontal' ? len : 1) >= w - 1 || y + (dir === 'vertical' ? len : 1) >= h - 1) return false;
-
-    for (let i = 0; i < len; i++) {
-        let cx = x + (dir === 'horizontal' ? i : 0);
-        let cy = y + (dir === 'vertical' ? i : 0);
-        let char = word[i];
-
-        let cellContent = grid[cy][cx];
-
-        // Si hay letra (Intersección), debe ser la misma
-        if (cellContent !== null) {
-            if (cellContent.char !== char) return false;
-            if (cellContent.dirs.has(dir)) return false; // No solapar en la misma dirección
-        }
-
-        // REGLA DE ADYACENCIA (CORREGIDA):
-        // Si la celda está vacía, verificamos que no pegue con otras palabras,
-        // PERO ignoramos los vecinos en el mismo eje de la palabra actual.
-        if (cellContent === null) {
-            for (let dy = -1; dy <= 1; dy++) {
-                for (let dx = -1; dx <= 1; dx++) {
-                    if (dx === 0 && dy === 0) continue;
-                    
-                    // --- CORRECCIÓN AQUÍ ---
-                    // Si escribimos horizontal, no verificamos vecinos izquierda/derecha dentro del bucle
-                    // (ya que eso lo controlan los límites start/end más abajo y el propio flujo de la palabra).
-                    if (dir === 'horizontal' && dy === 0) continue;
-                    if (dir === 'vertical' && dx === 0) continue;
-                    // -----------------------
-
-                    const nx = cx + dx;
-                    const ny = cy + dy;
-                    if (grid[ny] && grid[ny][nx] !== null) return false;
-                }
-            }
-        }
-
-        // Verificar extremos (antes de la primera letra y después de la última)
-        // Esto asegura que no pegamos la palabra "culo con culo" con otra existente.
-        if (i === 0) {
-            let bx = x + (dir === 'horizontal' ? -1 : 0);
-            let by = y + (dir === 'vertical' ? -1 : 0);
-            if (grid[by][bx] !== null) return false;
-        }
-        if (i === len - 1) {
-            let ax = x + (dir === 'horizontal' ? len : 0);
-            let ay = y + (dir === 'vertical' ? len : 0);
-            if (grid[ay][ax] !== null) return false;
-        }
-    }
-    return true;
-}
-
-function placeWordOnGrid(grid, wordObj, x, y, dir, cleanWord) {
-    for (let i = 0; i < cleanWord.length; i++) {
-        let cx = x + (dir === 'horizontal' ? i : 0);
-        let cy = y + (dir === 'vertical' ? i : 0);
-        if (!grid[cy][cx]) {
-            grid[cy][cx] = { char: cleanWord[i], dirs: new Set([dir]) };
-        } else {
-            grid[cy][cx].dirs.add(dir);
-        }
-    }
-}
-
-// --- RENDERIZADO (IGUAL QUE ANTES PERO ADAPTADO) ---
-
-function renderGame(wordsData) {
-    const gridEl = document.getElementById('grid');
-    const hEl = document.getElementById('h-clues');
-    const vEl = document.getElementById('v-clues');
-    
-    // Calcular dimensiones finales
-    let cols = 0, rows = 0;
-    wordsData.forEach(p => {
-        if (p.orientacion === 'horizontal') { cols = Math.max(cols, p.x + p.desglose.length); rows = Math.max(rows, p.y + 1); }
-        else { cols = Math.max(cols, p.x + 1); rows = Math.max(rows, p.y + p.desglose.length); }
-    });
-
-    // Mapear celdas
-    const map = Array.from({ length: rows }, () => Array(cols).fill(null));
-    wordsData.forEach((p, wi) => {
-        let cx = p.x, cy = p.y;
-        p.desglose.forEach((char, ci) => {
-            if (!map[cy][cx]) map[cy][cx] = { char: char, nums: [] };
-            if (ci === 0) map[cy][cx].nums.push(wi + 1); // Número de la pista
-            p.orientacion === 'horizontal' ? cx++ : cy++;
         });
-    });
-
-    // Dibujar Grid
-    gridEl.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
-    gridEl.innerHTML = ''; hEl.innerHTML = ''; vEl.innerHTML = '';
-
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            let cell = document.createElement('div'); cell.className = 'cell';
-            if (map[r][c]) {
-                cell.classList.add('filled'); cell.innerText = map[r][c].char;
-                if (map[r][c].nums.length) {
-                    let n = document.createElement('span'); n.className = 'num';
-                    n.innerText = map[r][c].nums.join('/'); cell.appendChild(n);
-                }
-            } else {
-                cell.style.background = "transparent"; // Ocultar celdas vacías visualmente
-                cell.style.boxShadow = "none";
-            }
-            gridEl.appendChild(cell);
-        }
     }
 
-    // Dibujar Pistas
-    wordsData.forEach((p, i) => {
-        let li = document.createElement('li'); 
-        li.innerHTML = `<b>${i + 1}.</b> ${p.pista} <i style="color:#95a5a6; font-size:0.8em;">(${p.palabra})</i>`; // Muestro la respuesta temporalmente para debug, puedes quitarlo
-        li.innerHTML = `<b>${i + 1}.</b> ${p.pista}`; // Versión final limpia
-        p.orientacion === 'horizontal' ? hEl.appendChild(li) : vEl.appendChild(li);
-    });
-}
+    function renderClues(words) {
+        const hContainer = document.getElementById('clues-horizontal');
+        const vContainer = document.getElementById('clues-vertical');
+        hContainer.innerHTML = '';
+        vContainer.innerHTML = '';
 
-// Iniciar aplicación
-init();
+        words.forEach((w, index) => {
+            const div = document.createElement('div');
+            div.className = 'clue-item';
+            // Clue: Número + Traducción
+            div.innerHTML = `<span class="clue-number">${index + 1}</span> ${w.wordObj.traduccion_ingles}`;
+            
+            if (w.dir === 'H') {
+                hContainer.appendChild(div);
+            } else {
+                vContainer.appendChild(div);
+            }
+        });
+    }
+
+    function checkAnswers() {
+        const inputs = document.querySelectorAll('.cell-input');
+        inputs.forEach(input => {
+            const userVal = normalize(input.value);
+            const correctVal = input.dataset.correct;
+            const parent = input.parentElement;
+
+            parent.classList.remove('correct', 'incorrect');
+
+            if (userVal === '') {
+                // Vacío, sin estilo
+            } else if (userVal === correctVal) {
+                parent.classList.add('correct');
+            } else {
+                parent.classList.add('incorrect');
+            }
+        });
+    }
+
+    // Iniciar al cargar
+    window.onload = initGame;
 
 </script>
 </body>
