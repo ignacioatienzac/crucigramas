@@ -1442,5 +1442,93 @@
     {
         "palabra": "en",
         "traduccion_ingles": "in / on / at"
+    },
+    {
+        "palabra": "España",
+        "traduccion_ingles": "Spain"
+    },
+    {
+        "palabra": "México",
+        "traduccion_ingles": "Mexico"
+    },
+    {
+        "palabra": "Francia",
+        "traduccion_ingles": "France"
+    },
+    {
+        "palabra": "Alemania",
+        "traduccion_ingles": "Germany"
+    },
+    {
+        "palabra": "Italia",
+        "traduccion_ingles": "Italy"
+    },
+    {
+        "palabra": "Reino Unido",
+        "traduccion_ingles": "United Kingdom"
+    },
+    {
+        "palabra": "Estados Unidos",
+        "traduccion_ingles": "United States"
+    },
+    {
+        "palabra": "China",
+        "traduccion_ingles": "China"
+    },
+    {
+        "palabra": "Japón",
+        "traduccion_ingles": "Japan"
+    },
+    {
+        "palabra": "Brasil",
+        "traduccion_ingles": "Brazil"
+    },
+    {
+        "palabra": "Portugal",
+        "traduccion_ingles": "Portugal"
+    },
+    {
+        "palabra": "oficina",
+        "traduccion_ingles": "office"
+    },
+    {
+        "palabra": "fábrica",
+        "traduccion_ingles": "factory"
+    },
+    {
+        "palabra": "universidad",
+        "traduccion_ingles": "university"
+    },
+    {
+        "palabra": "biblioteca",
+        "traduccion_ingles": "library"
+    },
+    {
+        "palabra": "correos",
+        "traduccion_ingles": "post office"
+    },
+    {
+        "palabra": "comisaría",
+        "traduccion_ingles": "police station"
+    },
+    {
+        "palabra": "gimnasio",
+        "traduccion_ingles": "gym"
+    },
+    {
+        "palabra": "teatro",
+        "traduccion_ingles": "theater"
+    },
+    {
+        "palabra": "panadería",
+        "traduccion_ingles": "bakery"
+    },
+    {
+        "palabra": "cafetería",
+        "traduccion_ingles": "cafeteria / coffee shop"
+    },
+    {
+        "palabra": "librería",
+        "traduccion_ingles": "bookstore"
     }
 ]
