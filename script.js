@@ -373,15 +373,35 @@ function getRandomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// --- LÓGICA DEL JUEGO (ANAGRAMA PARCIAL) ---
+function getCharFrequency(str) {
+    const freq = {};
+    for (const char of str) {
+        freq[char] = (freq[char] || 0) + 1;
+    }
+    return freq;
+}
+
+// Verifica que la candidata use SOLO letras de la base y en cantidades <= a las de la base
+function isStrictSubset(candidateStr, baseFreq) {
+    const candFreq = getCharFrequency(candidateStr);
+    for (const char in candFreq) {
+        // 1. ¿Existe la letra en la base?
+        if (!baseFreq[char]) return false;
+        // 2. ¿La cantidad en candidata supera a la base?
+        if (candFreq[char] > baseFreq[char]) return false;
+    }
+    return true;
+}
+
+// --- LÓGICA DEL JUEGO (ANAGRAMA ESTRICTO) ---
 
 function generateCrosswordLogic() {
     const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
-    const longWords = singleWords.filter(v => v.palabra.length >= 7); // Subimos mínimamente el requisito para asegurar juego
+    const longWords = singleWords.filter(v => v.palabra.length >= 7); // Base larga para tener "inventario" suficiente
     
     if (longWords.length === 0) return null;
 
-    const MAX_ATTEMPTS = 200; // Más intentos porque el filtro es estricto
+    const MAX_ATTEMPTS = 300; // Más intentos necesarios por la restricción estricta
     let attempt = 0;
 
     while (attempt < MAX_ATTEMPTS) {
@@ -391,26 +411,21 @@ function generateCrosswordLogic() {
         const baseWordObj = getRandomElement(longWords);
         const baseWord = normalize(baseWordObj.palabra);
         
-        // Crear Set de letras de la base para validación rápida
-        const baseCharsSet = new Set(baseWord.split(''));
+        // Crear mapa de frecuencia de la base (Inventario de letras disponibles)
+        const baseFreq = getCharFrequency(baseWord);
 
-        // 2. Filtrar pool de palabras VÁLIDAS (Deben ser subset de la base)
+        // 2. Filtrar pool de palabras VÁLIDAS (Anagrama parcial estricto)
         const validPool = singleWords.filter(v => {
             const normV = normalize(v.palabra);
             
-            // Condición 1: Más corta que la base
+            // Condición: Más corta y subset estricto (letras y cantidades)
             if (normV.length >= baseWord.length) return false;
-            if (normV.length < 2) return false; // Ignorar letras sueltas si existen
+            if (normV.length < 2) return false; 
 
-            // Condición 2: TODAS las letras de la palabra candidata deben existir en la base
-            for (let char of normV) {
-                if (!baseCharsSet.has(char)) return false;
-            }
-            
-            return true;
+            return isStrictSubset(normV, baseFreq);
         });
 
-        // Si no hay suficientes palabras que se puedan formar con la base, intentamos otra base
+        // Si el pool es muy pequeño, esta palabra base no sirve para el juego
         if (validPool.length < 3) continue; 
 
         // --- Inicio Algoritmo de Colocación ---
@@ -439,12 +454,7 @@ function generateCrosswordLogic() {
             const candidateNorm = normalize(candidateObj.palabra);
             
             // Buscar punto de cruce
-            // Iteramos sobre las letras de la candidata para ver si alguna coincide con alguna de la base
-            // (La base siempre está en placedWords[0])
-            
             let placed = false;
-            
-            // Mezclamos el orden de chequeo para variedad
             const baseIndices = Array.from({length: baseWord.length}, (_, i) => i).sort(() => Math.random() - 0.5);
 
             for (let i of baseIndices) {
@@ -453,9 +463,7 @@ function generateCrosswordLogic() {
                 if (candidateNorm.includes(charBase)) {
                     const charIndexCand = candidateNorm.indexOf(charBase);
                     
-                    // Coordenadas propuestas para la vertical
-                    // Base está en y=0. Cruza en x=i.
-                    // La vertical debe empezar en y = -charIndexCand para que su letra coincida en y=0
+                    // Coordenadas para cruzar verticalmente
                     const proposedWord = {
                         wordObj: candidateObj,
                         x: i,
@@ -464,11 +472,10 @@ function generateCrosswordLogic() {
                         normalized: candidateNorm
                     };
 
-                    // Validación de espacio (simplificada para estructura peine: 1 Horiz, N Verts)
-                    // Chequear que no esté pegada a otra vertical (x debe distar > 1)
+                    // Verificación de colisiones
                     const collision = placedWords.some(pw => {
-                        if (pw.dir === 'H') return false; // Ignorar la base misma
-                        return Math.abs(pw.x - proposedWord.x) < 2; // Mínimo 1 espacio entre columnas
+                        if (pw.dir === 'H') return false; 
+                        return Math.abs(pw.x - proposedWord.x) < 2; 
                     });
 
                     if (!collision) {
@@ -482,7 +489,6 @@ function generateCrosswordLogic() {
             }
         }
 
-        // Si logramos al menos 2 cruces, es un juego válido
         if (intersectCount >= 2) {
             return { words: placedWords, baseWord: baseWordObj.palabra.toUpperCase() };
         }
@@ -498,17 +504,16 @@ function initGame() {
     const result = generateCrosswordLogic();
     
     if (!result) {
-        // Reintento automático si no encuentra combinación (puede pasar con azar)
+        // Reintento automático si no encuentra combinación válida
         setTimeout(initGame, 50);
         return;
     }
     
     currentWords = result.words;
     
-    // Mostrar info de la palabra base
     document.getElementById('base-word-display').innerHTML = 
         `Palabra Base: <strong>${result.baseWord}</strong><br>
-         <small>(Todas las demás palabras usan letras de esta)</small>`;
+         <small>(Las verticales usan SOLO las letras disponibles en la base)</small>`;
 
     renderGrid(currentWords);
     renderClues(currentWords);
@@ -561,12 +566,8 @@ function renderGrid(words) {
                 input.className = 'cell-input';
                 input.dataset.correct = char;
                 
-                // Auto-tabulación simple
                 input.addEventListener('input', function() {
-                    if(this.value.length === 1) {
-                        // Lógica básica para saltar al siguiente input (no direccional estricta)
-                        /* En un crucigrama real esto es complejo, aquí lo dejamos manual */
-                    }
+                    // Lógica visual opcional
                 });
 
                 cellDiv.appendChild(input);
