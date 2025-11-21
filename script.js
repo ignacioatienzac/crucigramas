@@ -510,12 +510,8 @@ function initGame() {
         setTimeout(initGame, 50);
         return;
     }
-    
+
     currentWords = result.words;
-    
-    document.getElementById('base-word-display').innerHTML = 
-        `Palabra Base: <strong>${result.baseWord}</strong><br>
-         <small>(Las verticales usan SOLO las letras disponibles en la base)</small>`;
 
     renderGrid(currentWords);
     renderClues(currentWords);

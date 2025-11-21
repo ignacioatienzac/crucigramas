@@ -10,11 +10,10 @@
 
     <h1>🧩 Crucigrama "Letras Ocultas"</h1>
     <p class="subtitle">Las palabras cruzadas se forman usando <strong>solo</strong> las letras de la palabra principal.</p>
-    
+
     <div class="controls">
         <button class="btn-new" onclick="initGame()">🔄 Generar Nuevo</button>
         <button class="btn-check" onclick="checkAnswers()">✅ Comprobar</button>
-        <button class="btn-check" onclick="solveBaseWord()">💡 Resolver palabra base</button>
     </div>
 
     <div class="game-area">
@@ -22,7 +21,8 @@
 
         <div class="clues-panel">
             <div id="base-word-display" class="base-word-info">
-                </div>
+                <button class="btn-solve" onclick="solveBaseWord()">💡 Resolver palabra base</button>
+            </div>
 
             <div class="clue-group">
                 <h3>Horizontales</h3>
