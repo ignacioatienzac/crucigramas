@@ -133,6 +133,16 @@ function buildCandidates(baseWord, validWords) {
     return scored.map(entry => entry.item);
 }
 
+// Devuelve palabras más cortas que solo usen letras de la palabra base
+function getLetterBankWords(baseWordObj, validWords) {
+    const baseWord = baseWordObj.palabra;
+    const baseLength = normalize(baseWord).length;
+    return validWords.filter((item) => {
+        const normalized = normalize(item.palabra);
+        return normalized.length < baseLength && canBeFormedFrom(normalized, baseWord);
+    });
+}
+
 // Genera un crucigrama asegurando que tenga al menos 3 palabras (incluida la base)
 function generarCrucigrama() {
     const maxAttempts = 50;
@@ -149,7 +159,21 @@ function construirCrucigrama() {
     const longWords = validWords.filter(item => item.palabra.length >= 7);
     if (longWords.length === 0) throw new Error("No hay palabras suficientemente largas en el JSON.");
 
-    const baseObj = longWords[Math.floor(Math.random() * longWords.length)];
+    const shuffledLongWords = shuffleArray(longWords);
+    let baseObj = null;
+    let letterBankWords = [];
+
+    for (const longWord of shuffledLongWords) {
+        const bankWords = getLetterBankWords(longWord, validWords);
+        if (bankWords.length >= 2) {
+            baseObj = longWord;
+            letterBankWords = bankWords;
+            break;
+        }
+    }
+
+    if (!baseObj) throw new Error("No se encontraron palabras largas con al menos 2 derivadas más cortas.");
+
     const baseWord = normalize(baseObj.palabra);
     const gridSize = Math.max(30, baseWord.length * 2 + 10);
     const center = Math.floor(gridSize / 2);
@@ -169,8 +193,17 @@ function construirCrucigrama() {
         desglose: baseWord.split('')
     });
 
-    // Filtrado de candidatos tipo Letter Bank, con relajación progresiva
-    const candidates = buildCandidates(baseWord, validWords);
+    // Filtrado de candidatos tipo Letter Bank, priorizando las palabras más cortas construidas con la base
+    const candidates = [];
+    const addCandidate = (item) => {
+        const key = normalize(item.palabra);
+        if (!candidates.some((cand) => normalize(cand.palabra) === key)) {
+            candidates.push(item);
+        }
+    };
+
+    shuffleArray(letterBankWords).forEach(addCandidate);
+    buildCandidates(baseWord, validWords).forEach(addCandidate);
 
     for (let candObj of candidates) {
         const candStr = normalize(candObj.palabra);
@@ -214,7 +247,13 @@ function construirCrucigrama() {
     placedWords.forEach(p => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); });
     placedWords.forEach(p => { p.x -= minX; p.y -= minY; });
 
-    return { palabras: placedWords, base: baseObj };
+    const shorterWordsPlaced = placedWords.filter((p) => normalize(p.palabra).length < baseWord.length);
+
+    if (placedWords.length >= 3 && shorterWordsPlaced.length >= 2) {
+        return { palabras: placedWords, base: baseObj };
+    }
+
+    return { palabras: [], base: baseObj };
 }
 
 // Función de conveniencia para la UI actual
