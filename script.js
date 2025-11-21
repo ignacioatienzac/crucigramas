@@ -565,9 +565,40 @@ function renderGrid(words) {
                 input.maxLength = 1;
                 input.className = 'cell-input';
                 input.dataset.correct = char;
-                
+                input.dataset.x = posX;
+                input.dataset.y = posY;
+
                 input.addEventListener('input', function() {
                     // Lógica visual opcional
+                });
+
+                input.addEventListener('keydown', function(event) {
+                    const { key } = event;
+                    const currentX = parseInt(event.target.dataset.x, 10);
+                    const currentY = parseInt(event.target.dataset.y, 10);
+
+                    const deltas = {
+                        ArrowUp: { dx: 0, dy: -1 },
+                        ArrowDown: { dx: 0, dy: 1 },
+                        ArrowLeft: { dx: -1, dy: 0 },
+                        ArrowRight: { dx: 1, dy: 0 }
+                    };
+
+                    if (!deltas[key]) return;
+
+                    event.preventDefault();
+
+                    const { dx, dy } = deltas[key];
+                    const targetX = currentX + dx;
+                    const targetY = currentY + dy;
+
+                    const targetInput = document.querySelector(
+                        `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
+                    );
+
+                    if (targetInput) {
+                        targetInput.focus();
+                    }
                 });
 
                 cellDiv.appendChild(input);
