@@ -148,9 +148,9 @@ function generarCrucigrama() {
     const maxAttempts = 50;
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
         const attemptResult = construirCrucigrama();
-        if (attemptResult.palabras.length >= 3) return attemptResult;
+        if (attemptResult.palabras.length >= 2) return attemptResult;
     }
-    throw new Error("No se pudo generar un crucigrama con al menos 3 palabras. Intenta de nuevo.");
+    throw new Error("No se pudo generar un crucigrama con al menos 2 palabras. Intenta de nuevo.");
 }
 
 // Función principal de generación de crucigramas infinitos (un intento)
