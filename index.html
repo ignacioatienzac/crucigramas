@@ -284,7 +284,7 @@ function isValidPlacement(grid, word, x, y, dir) {
     const h = grid.length;
     const w = grid[0].length;
 
-    // 1. Check Bounds
+    // 1. Check Bounds (Límites)
     if (x < 1 || y < 1 || x + (dir === 'horizontal' ? len : 1) >= w - 1 || y + (dir === 'vertical' ? len : 1) >= h - 1) return false;
 
     for (let i = 0; i < len; i++) {
@@ -292,21 +292,29 @@ function isValidPlacement(grid, word, x, y, dir) {
         let cy = y + (dir === 'vertical' ? i : 0);
         let char = word[i];
 
-        // Verificar celda actual
         let cellContent = grid[cy][cx];
 
-        // Si hay letra, debe ser la misma (intersección)
+        // Si hay letra (Intersección), debe ser la misma
         if (cellContent !== null) {
             if (cellContent.char !== char) return false;
-            if (cellContent.dirs.has(dir)) return false; // no se puede solapar en paralelo
+            if (cellContent.dirs.has(dir)) return false; // No solapar en la misma dirección
         }
 
-        // REGLA DE ADYACENCIA:
-        // Si la celda estaba vacía (no es intersección), verificamos vecinos en las 8 direcciones
+        // REGLA DE ADYACENCIA (CORREGIDA):
+        // Si la celda está vacía, verificamos que no pegue con otras palabras,
+        // PERO ignoramos los vecinos en el mismo eje de la palabra actual.
         if (cellContent === null) {
             for (let dy = -1; dy <= 1; dy++) {
                 for (let dx = -1; dx <= 1; dx++) {
                     if (dx === 0 && dy === 0) continue;
+                    
+                    // --- CORRECCIÓN AQUÍ ---
+                    // Si escribimos horizontal, no verificamos vecinos izquierda/derecha dentro del bucle
+                    // (ya que eso lo controlan los límites start/end más abajo y el propio flujo de la palabra).
+                    if (dir === 'horizontal' && dy === 0) continue;
+                    if (dir === 'vertical' && dx === 0) continue;
+                    // -----------------------
+
                     const nx = cx + dx;
                     const ny = cy + dy;
                     if (grid[ny] && grid[ny][nx] !== null) return false;
@@ -315,6 +323,7 @@ function isValidPlacement(grid, word, x, y, dir) {
         }
 
         // Verificar extremos (antes de la primera letra y después de la última)
+        // Esto asegura que no pegamos la palabra "culo con culo" con otra existente.
         if (i === 0) {
             let bx = x + (dir === 'horizontal' ? -1 : 0);
             let by = y + (dir === 'vertical' ? -1 : 0);
