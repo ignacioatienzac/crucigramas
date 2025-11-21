@@ -3,80 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Crucigramas - Español A1</title>
+    <title>Generador de Crucigramas (Modo Anagrama)</title>
     <style>
         :root {
-            --cell-size: 40px;
-            --primary-color: #3498db;
-            --success-color: #2ecc71;
-            --error-color: #e74c3c;
-            --bg-color: #f4f4f9;
+            --cell-size: 45px;
+            --primary-color: #8e44ad; /* Morado para estilo 'juego de palabras' */
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --bg-color: #ecf0f1;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Verdana', sans-serif;
             background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            color: #333;
+            color: #2c3e50;
         }
 
         h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        p.subtitle {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            max-width: 600px;
+            text-align: center;
         }
 
         .controls {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .btn-new {
             background-color: var(--primary-color);
             color: white;
         }
-        .btn-new:hover { background-color: #2980b9; }
 
         .btn-check {
-            background-color: #f1c40f;
-            color: #333;
+            background-color: #f39c12;
+            color: white;
         }
-        .btn-check:hover { background-color: #f39c12; }
 
-        .game-container {
+        .game-area {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 40px;
             justify-content: center;
+            align-items: flex-start;
+            width: 100%;
             max-width: 1200px;
         }
 
         /* Grid Styles */
         #crossword-grid {
             display: grid;
-            gap: 2px;
-            background-color: #333;
-            padding: 5px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            gap: 4px;
+            padding: 10px;
+            background-color: #bdc3c7;
+            border-radius: 8px;
         }
 
         .cell {
             width: var(--cell-size);
             height: var(--cell-size);
-            background-color: #333; /* Color de fondo para celdas vacías (ocultas) */
+            background-color: #bdc3c7;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -86,107 +100,122 @@
         .cell-input {
             width: 100%;
             height: 100%;
-            border: none;
+            border: 2px solid #fff;
+            border-radius: 4px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             text-transform: uppercase;
             background-color: white;
-            color: #333;
+            color: #2c3e50;
             outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .cell-input:focus {
-            background-color: #e8f6fd;
+            border-color: var(--primary-color);
+            background-color: #fbfaff;
         }
 
         .cell-empty {
-            background-color: #333; /* Mismo que el borde del grid para ocultar */
             visibility: hidden;
         }
 
         .cell.correct .cell-input {
             background-color: var(--success-color);
             color: white;
+            border-color: var(--success-color);
         }
 
         .cell.incorrect .cell-input {
             background-color: var(--error-color);
             color: white;
-        }
-
-        /* Clues Styles */
-        .clues-container {
-            display: flex;
-            flex-direction: column;
-            min-width: 300px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .clues-section h3 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 5px;
-            margin-top: 0;
-        }
-
-        .clue-item {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .clue-number {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-right: 5px;
+            border-color: var(--error-color);
         }
 
         .cell-number {
             position: absolute;
             top: 2px;
-            left: 2px;
-            font-size: 0.6rem;
-            color: #666;
+            left: 4px;
+            font-size: 0.65rem;
+            color: #7f8c8d;
             z-index: 2;
             pointer-events: none;
+            font-weight: bold;
         }
 
-        /* Mobile responsive */
+        /* Clues Styles */
+        .clues-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            min-width: 280px;
+            max-width: 350px;
+        }
+
+        .clue-group h3 {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .clue-item {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .clue-badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        /* Base word highlight */
+        .base-word-info {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e8daef;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #d2b4de;
+        }
+
         @media (max-width: 768px) {
-            :root {
-                --cell-size: 30px;
-            }
-            .game-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .clues-container {
-                width: 100%;
-            }
+            :root { --cell-size: 35px; }
+            .game-area { flex-direction: column; align-items: center; }
+            .clues-panel { width: 90%; }
         }
     </style>
 </head>
 <body>
 
-    <h1>🇪🇸 Crucigrama A1</h1>
+    <h1>🧩 Crucigrama "Letras Ocultas"</h1>
+    <p class="subtitle">Las palabras cruzadas se forman usando <strong>solo</strong> las letras de la palabra principal.</p>
     
     <div class="controls">
-        <button class="btn-new" onclick="initGame()">🔄 Nuevo Juego</button>
+        <button class="btn-new" onclick="initGame()">🔄 Generar Nuevo</button>
         <button class="btn-check" onclick="checkAnswers()">✅ Comprobar</button>
     </div>
 
-    <div class="game-container">
-        <div id="crossword-grid">
-            </div>
+    <div class="game-area">
+        <div id="crossword-grid"></div>
 
-        <div class="clues-container">
-            <div class="clues-section">
+        <div class="clues-panel">
+            <div id="base-word-display" class="base-word-info">
+                </div>
+
+            <div class="clue-group">
                 <h3>Horizontales</h3>
                 <div id="clues-horizontal"></div>
             </div>
-            <div class="clues-section" style="margin-top: 20px;">
+            <div class="clue-group" style="margin-top: 25px;">
                 <h3>Verticales</h3>
                 <div id="clues-vertical"></div>
             </div>
@@ -194,7 +223,7 @@
     </div>
 
 <script>
-    // --- DATOS ---
+    // --- BASE DE DATOS (JSON COMPLETO) ---
     const vocabulario = [
   { "palabra": "yo", "traduccion_ingles": "I" },
   { "palabra": "tú", "traduccion_ingles": "you (singular informal)" },
@@ -559,9 +588,8 @@
   { "palabra": "en", "traduccion_ingles": "in / on / at" }
 ];
 
-    // --- LÓGICA DEL JUEGO ---
-
-    // Utilidad para quitar tildes para comparaciones
+    // --- UTILIDADES ---
+    
     function normalize(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
@@ -570,28 +598,49 @@
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
+    // --- LÓGICA DEL JUEGO (ANAGRAMA PARCIAL) ---
+
     function generateCrosswordLogic() {
-        // 1. Filtrar palabras de base (longitud >= 6)
-        // Ignoramos frases (con espacios) para simplificar la visualización
         const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
-        const longWords = singleWords.filter(v => v.palabra.length >= 6);
+        const longWords = singleWords.filter(v => v.palabra.length >= 7); // Subimos mínimamente el requisito para asegurar juego
         
         if (longWords.length === 0) return null;
 
-        const MAX_ATTEMPTS = 100;
+        const MAX_ATTEMPTS = 200; // Más intentos porque el filtro es estricto
         let attempt = 0;
 
         while (attempt < MAX_ATTEMPTS) {
             attempt++;
             
-            // 2. Seleccionar palabra base aleatoria
+            // 1. Seleccionar palabra base
             const baseWordObj = getRandomElement(longWords);
             const baseWord = normalize(baseWordObj.palabra);
             
-            // Estructura para guardar palabras colocadas: { wordObj, x, y, dir: 'H'|'V', normalized }
-            let placedWords = [];
+            // Crear Set de letras de la base para validación rápida
+            const baseCharsSet = new Set(baseWord.split(''));
+
+            // 2. Filtrar pool de palabras VÁLIDAS (Deben ser subset de la base)
+            const validPool = singleWords.filter(v => {
+                const normV = normalize(v.palabra);
+                
+                // Condición 1: Más corta que la base
+                if (normV.length >= baseWord.length) return false;
+                if (normV.length < 2) return false; // Ignorar letras sueltas si existen
+
+                // Condición 2: TODAS las letras de la palabra candidata deben existir en la base
+                for (let char of normV) {
+                    if (!baseCharsSet.has(char)) return false;
+                }
+                
+                return true;
+            });
+
+            // Si no hay suficientes palabras que se puedan formar con la base, intentamos otra base
+            if (validPool.length < 3) continue; 
+
+            // --- Inicio Algoritmo de Colocación ---
             
-            // Colocar base en (0,0) Horizontal
+            let placedWords = [];
             placedWords.push({
                 wordObj: baseWordObj,
                 x: 0,
@@ -602,82 +651,98 @@
 
             let usedWords = [baseWordObj.palabra];
             let intersectCount = 0;
+            let retriesInBase = 0;
 
-            // 3. Intentar cruzar palabras
-            // Recorremos letras de la base para encontrar cruces verticales
-            for (let i = 0; i < baseWord.length; i++) {
-                const char = baseWord[i];
+            // Intentamos colocar hasta 4 palabras verticales
+            while (intersectCount < 4 && retriesInBase < 50) {
+                retriesInBase++;
+
+                // Elegir candidata del pool validado
+                const candidateObj = getRandomElement(validPool);
+                if (usedWords.includes(candidateObj.palabra)) continue;
+
+                const candidateNorm = normalize(candidateObj.palabra);
                 
-                // Buscar candidatas que contengan 'char' y sean más cortas que la base
-                // y que no estén usadas
-                const candidates = singleWords.filter(v => {
-                    const normV = normalize(v.palabra);
-                    return !usedWords.includes(v.palabra) && 
-                           v.palabra.length < baseWordObj.palabra.length && // Requisito del prompt
-                           normV.includes(char);
-                });
+                // Buscar punto de cruce
+                // Iteramos sobre las letras de la candidata para ver si alguna coincide con alguna de la base
+                // (La base siempre está en placedWords[0])
+                
+                let placed = false;
+                
+                // Mezclamos el orden de chequeo para variedad
+                const baseIndices = Array.from({length: baseWord.length}, (_, i) => i).sort(() => Math.random() - 0.5);
 
-                if (candidates.length > 0) {
-                    const crosserObj = getRandomElement(candidates);
-                    const crosserNorm = normalize(crosserObj.palabra);
-                    const charIndex = crosserNorm.indexOf(char); // Dónde cruza en la palabra vertical
-
-                    // Posición de la vertical
-                    // Si la base es H en y=0, y la vertical cruza en su letra charIndex en la posición x=i
-                    // Entonces la vertical empieza en y = -charIndex
-                    const newWord = {
-                        wordObj: crosserObj,
-                        x: i,
-                        y: -charIndex,
-                        dir: 'V',
-                        normalized: crosserNorm
-                    };
-
-                    // Verificar colisiones simples (en este modelo simplificado de 1 base + N verticales,
-                    // las verticales son paralelas, solo hay que chequear que no se toquen lateralmente de forma ilegal
-                    // o se superpongan. Como x=i avanza, nunca se superponen en X.
-                    // Pero hay que evitar que estén pegadas (x, x+1) si eso crea palabras falsas horizontales.
-                    // Para simplificar, forzaremos una distancia de al menos 1 celda entre verticales
+                for (let i of baseIndices) {
+                    const charBase = baseWord[i];
                     
-                    const tooClose = placedWords.some(pw => pw.dir === 'V' && Math.abs(pw.x - newWord.x) < 2);
+                    if (candidateNorm.includes(charBase)) {
+                        const charIndexCand = candidateNorm.indexOf(charBase);
+                        
+                        // Coordenadas propuestas para la vertical
+                        // Base está en y=0. Cruza en x=i.
+                        // La vertical debe empezar en y = -charIndexCand para que su letra coincida en y=0
+                        const proposedWord = {
+                            wordObj: candidateObj,
+                            x: i,
+                            y: -charIndexCand,
+                            dir: 'V',
+                            normalized: candidateNorm
+                        };
 
-                    if (!tooClose) {
-                        placedWords.push(newWord);
-                        usedWords.push(crosserObj.palabra);
-                        intersectCount++;
+                        // Validación de espacio (simplificada para estructura peine: 1 Horiz, N Verts)
+                        // Chequear que no esté pegada a otra vertical (x debe distar > 1)
+                        const collision = placedWords.some(pw => {
+                            if (pw.dir === 'H') return false; // Ignorar la base misma
+                            return Math.abs(pw.x - proposedWord.x) < 2; // Mínimo 1 espacio entre columnas
+                        });
+
+                        if (!collision) {
+                            placedWords.push(proposedWord);
+                            usedWords.push(candidateObj.palabra);
+                            intersectCount++;
+                            placed = true;
+                            break; 
+                        }
                     }
                 }
-                
-                // Necesitamos al menos 2
-                if (intersectCount >= 2 && Math.random() > 0.5) break; // Seguir un poco más aleatoriamente
             }
 
+            // Si logramos al menos 2 cruces, es un juego válido
             if (intersectCount >= 2) {
-                return placedWords;
+                return { words: placedWords, baseWord: baseWordObj.palabra.toUpperCase() };
             }
         }
-        return null; // Falló
+        
+        console.log("Falló la generación, reintentando...");
+        return null;
     }
 
     let currentWords = [];
 
     function initGame() {
         const result = generateCrosswordLogic();
+        
         if (!result) {
-            // Reintentar si falla (fuerza bruta simple)
-            setTimeout(initGame, 0);
+            // Reintento automático si no encuentra combinación (puede pasar con azar)
+            setTimeout(initGame, 50);
             return;
         }
-        currentWords = result;
-        renderGrid(result);
-        renderClues(result);
+        
+        currentWords = result.words;
+        
+        // Mostrar info de la palabra base
+        document.getElementById('base-word-display').innerHTML = 
+            `Palabra Base: <strong>${result.baseWord}</strong><br>
+             <small>(Todas las demás palabras usan letras de esta)</small>`;
+
+        renderGrid(currentWords);
+        renderClues(currentWords);
     }
 
     function renderGrid(words) {
         const gridContainer = document.getElementById('crossword-grid');
         gridContainer.innerHTML = '';
 
-        // Calcular límites
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
         words.forEach(w => {
@@ -694,22 +759,19 @@
         const width = maxX - minX + 1;
         const height = maxY - minY + 1;
 
-        // Configurar CSS Grid
         gridContainer.style.gridTemplateColumns = `repeat(${width}, var(--cell-size))`;
         gridContainer.style.gridTemplateRows = `repeat(${height}, var(--cell-size))`;
 
-        // Crear mapa de celdas para evitar duplicados en cruces
-        const cellMap = new Map(); // key: "x,y", val: element
+        const cellMap = new Map();
 
         words.forEach((w, index) => {
             const len = w.normalized.length;
             for (let i = 0; i < len; i++) {
-                const posX = (w.dir === 'H' ? w.x + i : w.x) - minX; // Normalizar a 0..N
+                const posX = (w.dir === 'H' ? w.x + i : w.x) - minX;
                 const posY = (w.dir === 'V' ? w.y + i : w.y) - minY;
                 const char = w.normalized[i];
                 const key = `${posX},${posY}`;
 
-                // Si ya existe la celda (cruce), usamos la misma
                 let cellDiv = cellMap.get(key);
                 
                 if (!cellDiv) {
@@ -722,12 +784,13 @@
                     input.type = 'text';
                     input.maxLength = 1;
                     input.className = 'cell-input';
-                    input.dataset.correct = char; // Guardar respuesta correcta (sin tilde)
+                    input.dataset.correct = char;
                     
-                    // Navegación simple
-                    input.addEventListener('keyup', (e) => {
-                        if (e.key.length === 1 && e.key.match(/[a-zñ]/i)) {
-                            // Mover foco? (Implementación básica, no direccional compleja)
+                    // Auto-tabulación simple
+                    input.addEventListener('input', function() {
+                        if(this.value.length === 1) {
+                            // Lógica básica para saltar al siguiente input (no direccional estricta)
+                            /* En un crucigrama real esto es complejo, aquí lo dejamos manual */
                         }
                     });
 
@@ -736,12 +799,10 @@
                     cellMap.set(key, cellDiv);
                 }
 
-                // Si es el inicio de la palabra, añadir numerito
                 if (i === 0) {
                     const numSpan = document.createElement('span');
                     numSpan.className = 'cell-number';
                     numSpan.innerText = index + 1;
-                    // Evitar solapamiento de números si dos palabras empiezan igual (raro aquí)
                     if(!cellDiv.querySelector('.cell-number')) {
                         cellDiv.appendChild(numSpan);
                     }
@@ -759,8 +820,7 @@
         words.forEach((w, index) => {
             const div = document.createElement('div');
             div.className = 'clue-item';
-            // Clue: Número + Traducción
-            div.innerHTML = `<span class="clue-number">${index + 1}</span> ${w.wordObj.traduccion_ingles}`;
+            div.innerHTML = `<span class="clue-badge">${index + 1}</span> ${w.wordObj.traduccion_ingles}`;
             
             if (w.dir === 'H') {
                 hContainer.appendChild(div);
@@ -780,7 +840,7 @@
             parent.classList.remove('correct', 'incorrect');
 
             if (userVal === '') {
-                // Vacío, sin estilo
+                // vacío
             } else if (userVal === correctVal) {
                 parent.classList.add('correct');
             } else {
@@ -789,7 +849,6 @@
         });
     }
 
-    // Iniciar al cargar
     window.onload = initGame;
 
 </script>
