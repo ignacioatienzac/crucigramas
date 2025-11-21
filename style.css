@@ -67,6 +67,14 @@ button:active {
     width: 100%;
 }
 
+.btn-toggle {
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    width: 100%;
+    margin-bottom: 16px;
+}
+
 .game-area {
     display: flex;
     flex-wrap: wrap;
@@ -151,6 +159,10 @@ button:active {
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     min-width: 280px;
     max-width: 350px;
+}
+
+.clues-hidden {
+    display: none;
 }
 
 .clue-group h3 {
