@@ -156,9 +156,14 @@ function generateCrosswordLogic() {
 
                 let collision = false;
 
+                const candidateCells = candidateNorm.map((_, i) => ({
+                    x: orientation === 'H' ? startX + i : startX,
+                    y: orientation === 'V' ? startY + i : startY
+                }));
+                const candidatePositions = new Set(candidateCells.map(({ x, y }) => getCellKey(x, y)));
+
                 for (let i = 0; i < candidateNorm.length; i++) {
-                    const posX = orientation === 'H' ? startX + i : startX;
-                    const posY = orientation === 'V' ? startY + i : startY;
+                    const { x: posX, y: posY } = candidateCells[i];
                     const key = getCellKey(posX, posY);
                     const existing = grid.get(key);
 
@@ -166,7 +171,34 @@ function generateCrosswordLogic() {
                         if (existing.char !== candidateNorm[i]) { collision = true; break; }
                         if (existing.baseIndex !== mapping[i]) { collision = true; break; }
                         if (existing.dirs.has(orientation)) { collision = true; break; }
+                        continue;
                     }
+
+                    const neighbors = [
+                        { x: posX - 1, y: posY },
+                        { x: posX + 1, y: posY },
+                        { x: posX, y: posY - 1 },
+                        { x: posX, y: posY + 1 }
+                    ];
+
+                    for (const neighbor of neighbors) {
+                        const neighborKey = getCellKey(neighbor.x, neighbor.y);
+                        if (candidatePositions.has(neighborKey)) continue;
+                        if (grid.has(neighborKey)) { collision = true; break; }
+                    }
+
+                    if (collision) break;
+                }
+
+                const beforeKey = orientation === 'H'
+                    ? getCellKey(startX - 1, startY)
+                    : getCellKey(startX, startY - 1);
+                const afterKey = orientation === 'H'
+                    ? getCellKey(startX + candidateNorm.length, startY)
+                    : getCellKey(startX, startY + candidateNorm.length);
+
+                if (grid.has(beforeKey) || grid.has(afterKey)) {
+                    collision = true;
                 }
 
                 if (collision) continue;
