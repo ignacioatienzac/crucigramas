@@ -9,7 +9,7 @@
 <body>
 
     <h1>🧩 Crucigrama "Letras Ocultas"</h1>
-    <p class="subtitle">Las palabras cruzadas se forman usando <strong>solo</strong> las letras de la palabra principal.</p>
+    <p class="subtitle">Las palabras cruzadas se forman con las letras de la palabra principal y pueden enlazarse entre sí compartiendo letra y posición.</p>
 
     <div class="controls">
         <button class="btn-new" onclick="initGame()">🔄 Generar Nuevo</button>
@@ -21,6 +21,7 @@
 
         <div class="clues-panel">
             <div id="base-word-display" class="base-word-info">
+                <div id="base-word-text" aria-live="polite"></div>
                 <button class="btn-solve" onclick="solveBaseWord()">💡 Resolver palabra base</button>
             </div>
 

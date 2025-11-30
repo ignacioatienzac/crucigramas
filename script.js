@@ -35,107 +35,184 @@ function isStrictSubset(candidateStr, baseFreq) {
     return true;
 }
 
-// --- LÓGICA DEL JUEGO (ANAGRAMA ESTRICTO) ---
+function buildBaseIndexMap(baseWord) {
+    const map = {};
+    for (let i = 0; i < baseWord.length; i++) {
+        const char = baseWord[i];
+        if (!map[char]) map[char] = [];
+        map[char].push(i);
+    }
+    return map;
+}
+
+// Asigna a cada letra de la palabra candidata un índice concreto de la palabra base
+// Se fuerza que la letra en anchorIndex use forcedBaseIndex para asegurar que
+// la nueva palabra comparte letra y número de letra con la base.
+function assignIndicesForWord(baseMap, candidateWord, anchorIndex, forcedBaseIndex) {
+    const workingMap = {};
+    Object.keys(baseMap).forEach(key => {
+        workingMap[key] = [...baseMap[key]];
+    });
+
+    const mapping = new Array(candidateWord.length);
+    const anchorChar = candidateWord[anchorIndex];
+    const anchorList = workingMap[anchorChar];
+
+    if (!anchorList || !anchorList.includes(forcedBaseIndex)) return null;
+
+    workingMap[anchorChar] = anchorList.filter(idx => idx !== forcedBaseIndex);
+    mapping[anchorIndex] = forcedBaseIndex;
+
+    for (let i = 0; i < candidateWord.length; i++) {
+        if (i === anchorIndex) continue;
+        const char = candidateWord[i];
+        const list = workingMap[char];
+        if (!list || list.length === 0) return null;
+        mapping[i] = list.shift();
+    }
+
+    return mapping;
+}
+
+// --- LÓGICA DEL JUEGO (ANAGRAMA ENLAZADO) ---
 
 function generateCrosswordLogic() {
     const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
     const longWords = singleWords.filter(v => v.palabra.length >= 7); // Base larga para tener "inventario" suficiente
-    
+
     if (longWords.length === 0) return null;
 
-    const MAX_ATTEMPTS = 300; // Más intentos necesarios por la restricción estricta
+    const MAX_ATTEMPTS = 300;
     let attempt = 0;
+
+    const getCellKey = (x, y) => `${x},${y}`;
 
     while (attempt < MAX_ATTEMPTS) {
         attempt++;
-        
-        // 1. Seleccionar palabra base
+
         const baseWordObj = getRandomElement(longWords);
         const baseWord = normalize(baseWordObj.palabra);
-        
-        // Crear mapa de frecuencia de la base (Inventario de letras disponibles)
         const baseFreq = getCharFrequency(baseWord);
+        const baseMap = buildBaseIndexMap(baseWord);
 
-        // 2. Filtrar pool de palabras VÁLIDAS (Anagrama parcial estricto)
         const validPool = singleWords.filter(v => {
             const normV = normalize(v.palabra);
-            
-            // Condición: Más corta y subset estricto (letras y cantidades)
             if (normV.length >= baseWord.length) return false;
-            if (normV.length < 2) return false; 
-
+            if (normV.length < 2) return false;
             return isStrictSubset(normV, baseFreq);
         });
 
-        // Si el pool es muy pequeño, esta palabra base no sirve para el juego
-        if (validPool.length < 3) continue; 
+        if (validPool.length < 3) continue;
 
-        // --- Inicio Algoritmo de Colocación ---
-        
-        let placedWords = [];
+        const placedWords = [];
+        const usedWords = new Set([baseWordObj.palabra]);
+        const grid = new Map();
+
+        // Colocar la palabra base en horizontal
         placedWords.push({
             wordObj: baseWordObj,
             x: 0,
             y: 0,
             dir: 'H',
-            normalized: baseWord
+            normalized: baseWord,
+            baseIndices: Array.from({ length: baseWord.length }, (_, i) => i)
         });
 
-        let usedWords = [baseWordObj.palabra];
-        let intersectCount = 0;
-        let retriesInBase = 0;
+        for (let i = 0; i < baseWord.length; i++) {
+            const key = getCellKey(i, 0);
+            grid.set(key, { char: baseWord[i], baseIndex: i, dirs: new Set(['H']) });
+        }
 
-        // Intentamos colocar hasta 4 palabras verticales
-        while (intersectCount < 4 && retriesInBase < 50) {
-            retriesInBase++;
-
-            // Elegir candidata del pool validado
-            const candidateObj = getRandomElement(validPool);
-            if (usedWords.includes(candidateObj.palabra)) continue;
-
+        const tryPlaceDerived = (candidateObj) => {
             const candidateNorm = normalize(candidateObj.palabra);
-            
-            // Buscar punto de cruce
-            let placed = false;
-            const baseIndices = Array.from({length: baseWord.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+            const anchorOptions = [];
 
-            for (let i of baseIndices) {
-                const charBase = baseWord[i];
-                
-                if (candidateNorm.includes(charBase)) {
-                    const charIndexCand = candidateNorm.indexOf(charBase);
-                    
-                    // Coordenadas para cruzar verticalmente
-                    const proposedWord = {
-                        wordObj: candidateObj,
-                        x: i,
-                        y: -charIndexCand,
-                        dir: 'V',
-                        normalized: candidateNorm
-                    };
-
-                    // Verificación de colisiones
-                    const collision = placedWords.some(pw => {
-                        if (pw.dir === 'H') return false; 
-                        return Math.abs(pw.x - proposedWord.x) < 2; 
-                    });
-
-                    if (!collision) {
-                        placedWords.push(proposedWord);
-                        usedWords.push(candidateObj.palabra);
-                        intersectCount++;
-                        placed = true;
-                        break; 
+            for (const [key, cell] of grid.entries()) {
+                const [cellX, cellY] = key.split(',').map(Number);
+                for (let i = 0; i < candidateNorm.length; i++) {
+                    if (candidateNorm[i] === cell.char) {
+                        anchorOptions.push({
+                            cellX,
+                            cellY,
+                            anchorIndex: i,
+                            forcedBaseIndex: cell.baseIndex,
+                            existingDirs: cell.dirs
+                        });
                     }
                 }
             }
+
+            const shuffledAnchors = anchorOptions.sort(() => Math.random() - 0.5);
+
+            for (const anchor of shuffledAnchors) {
+                if (anchor.existingDirs.size > 1) continue;
+
+                const orientation = anchor.existingDirs.has('H') ? 'V' : 'H';
+                const mapping = assignIndicesForWord(baseMap, candidateNorm, anchor.anchorIndex, anchor.forcedBaseIndex);
+                if (!mapping) continue;
+
+                const startX = orientation === 'H' ? anchor.cellX - anchor.anchorIndex : anchor.cellX;
+                const startY = orientation === 'V' ? anchor.cellY - anchor.anchorIndex : anchor.cellY;
+
+                let collision = false;
+
+                for (let i = 0; i < candidateNorm.length; i++) {
+                    const posX = orientation === 'H' ? startX + i : startX;
+                    const posY = orientation === 'V' ? startY + i : startY;
+                    const key = getCellKey(posX, posY);
+                    const existing = grid.get(key);
+
+                    if (existing) {
+                        if (existing.char !== candidateNorm[i]) { collision = true; break; }
+                        if (existing.baseIndex !== mapping[i]) { collision = true; break; }
+                        if (existing.dirs.has(orientation)) { collision = true; break; }
+                    }
+                }
+
+                if (collision) continue;
+
+                for (let i = 0; i < candidateNorm.length; i++) {
+                    const posX = orientation === 'H' ? startX + i : startX;
+                    const posY = orientation === 'V' ? startY + i : startY;
+                    const key = getCellKey(posX, posY);
+                    const existing = grid.get(key);
+
+                    if (existing) {
+                        existing.dirs.add(orientation);
+                    } else {
+                        grid.set(key, { char: candidateNorm[i], baseIndex: mapping[i], dirs: new Set([orientation]) });
+                    }
+                }
+
+                placedWords.push({
+                    wordObj: candidateObj,
+                    x: startX,
+                    y: startY,
+                    dir: orientation,
+                    normalized: candidateNorm,
+                    baseIndices: mapping
+                });
+
+                usedWords.add(candidateObj.palabra);
+                return true;
+            }
+
+            return false;
+        };
+
+        let retries = 0;
+        while (placedWords.length < 6 && retries < 200) {
+            retries++;
+            const candidateObj = getRandomElement(validPool);
+            if (usedWords.has(candidateObj.palabra)) continue;
+            tryPlaceDerived(candidateObj);
         }
 
-        if (intersectCount >= 2) {
+        if (placedWords.length >= 3) {
             return { words: placedWords, baseWord: baseWordObj.palabra.toUpperCase() };
         }
     }
-    
+
     console.log("Falló la generación, reintentando...");
     return null;
 }
@@ -236,6 +313,11 @@ function initGame() {
 
     currentWords = result.words;
     solvedWordIds = new Set();
+
+    const baseWordText = document.getElementById('base-word-text');
+    if (baseWordText) {
+        baseWordText.textContent = `Palabra base: ${result.baseWord}`;
+    }
 
     renderGrid(currentWords);
     renderClues(currentWords);
