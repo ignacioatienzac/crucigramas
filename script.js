@@ -33,6 +33,14 @@ function getCharFrequency(str) {
     return freq;
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 // Verifica que la candidata use SOLO letras de la base y en cantidades <= a las de la base
 function isStrictSubset(candidateStr, baseFreq) {
     const candFreq = getCharFrequency(candidateStr);
@@ -43,7 +51,7 @@ function isStrictSubset(candidateStr, baseFreq) {
     return true;
 }
 
-// --- LÓGICA DE COLOCACIÓN Y VALIDACIÓN ---
+// --- LÓGICA DE COLOCACIÓN Y VALIDACIÓN (GRID) ---
 
 function canPlaceWord(candidateWord, x, y, dir, placedWords) {
     const len = candidateWord.length;
@@ -76,10 +84,7 @@ function canPlaceWord(candidateWord, x, y, dir, placedWords) {
                 if (pChar !== char) return false;
             }
 
-            // 2. CHEQUEO DE ADYACENCIA (Regla de no estar contiguas)
-            // Permitimos que estén contiguas, pero la lógica de renderizado las marcará visualmente.
-            // Sin embargo, para evitar aglomeraciones excesivas, mantenemos cierta restricción
-            // si son paralelas y se solapan mucho.
+            // 2. CHEQUEO DE ADYACENCIA
             if (pw.dir === dir) {
                 if (dir === 'H') {
                     if (Math.abs(pw.y - cy) <= 1) {
@@ -102,7 +107,6 @@ function canPlaceWord(candidateWord, x, y, dir, placedWords) {
         }
     }
     
-    // Evita punta con punta exacto en la misma dirección (opcional)
     for (const pw of placedWords) {
         if (pw.dir === dir) {
             if (dir === 'H' && pw.y === y) {
@@ -118,7 +122,7 @@ function canPlaceWord(candidateWord, x, y, dir, placedWords) {
 }
 
 
-// --- LÓGICA PRINCIPAL DEL JUEGO ---
+// --- LÓGICA PRINCIPAL DEL JUEGO (GENERACIÓN) ---
 
 function generateCrosswordLogic() {
     const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
@@ -132,7 +136,7 @@ function generateCrosswordLogic() {
     while (attempt < MAX_ATTEMPTS) {
         attempt++;
         
-        // --- PASO 1: PALABRA BASE (HORIZONTAL) ---
+        // Base
         const baseWordObj = getRandomElement(longWords);
         const baseWord = normalize(baseWordObj.palabra);
         const baseFreq = getCharFrequency(baseWord);
@@ -149,7 +153,6 @@ function generateCrosswordLogic() {
         let placedWords = [];
         let usedWords = new Set();
         
-        // Base en (0,0)
         placedWords.push({
             wordObj: baseWordObj,
             x: 0,
@@ -159,7 +162,7 @@ function generateCrosswordLogic() {
         });
         usedWords.add(baseWordObj.palabra);
 
-        // --- PASO 2: PALABRAS VERTICALES ---
+        // Verticales
         let intersectCount = 0;
         let retries = 0;
         
@@ -198,7 +201,7 @@ function generateCrosswordLogic() {
 
         if (intersectCount < 2) continue;
 
-        // --- PASO 3: PALABRAS HORIZONTALES SECUNDARIAS ---
+        // Horizontales Secundarias
         const verticalWords = placedWords.filter(w => w.dir === 'V');
         let secondaryCount = 0;
         let secRetries = 0;
@@ -243,13 +246,16 @@ function generateCrosswordLogic() {
         }
 
         if (placedWords.length >= 3) {
-            return { words: placedWords, baseWord: baseWordObj.palabra.toUpperCase() };
+            // Pasamos también la palabra base original para la rueda
+            return { words: placedWords, baseWordNormalized: baseWord };
         }
     }
     
-    console.log("No se pudo generar un crucigrama válido tras varios intentos.");
+    console.log("Reintentando generación...");
     return null;
 }
+
+// --- VARIABLES GLOBALES DEL JUEGO ---
 
 let currentWords = [];
 let gridOffsetX = 0;
@@ -257,26 +263,24 @@ let gridOffsetY = 0;
 let cluesVisible = false;
 let solvedWordIds = new Set();
 
+// Variables para la Rueda
+let wheelLetters = []; // Elementos DOM
+let wheelOrder = [];   // Caracteres
+let isDragging = false;
+let selectedIndices = []; // Índices de las letras seleccionadas actualmente
+
 function getWordId(word) {
     return `${word.dir}-${word.x}-${word.y}-${word.wordObj.palabra}`;
 }
 
 function getWordInputs(word) {
     const inputs = [];
-
     for (let i = 0; i < word.normalized.length; i++) {
         const posX = (word.dir === 'H' ? word.x + i : word.x) - gridOffsetX;
         const posY = (word.dir === 'V' ? word.y + i : word.y) - gridOffsetY;
-
-        const input = document.querySelector(
-            `.cell-input[data-x="${posX}"][data-y="${posY}"]`
-        );
-
-        if (input) {
-            inputs.push(input);
-        }
+        const input = document.querySelector(`.cell-input[data-x="${posX}"][data-y="${posY}"]`);
+        if (input) inputs.push(input);
     }
-
     return inputs;
 }
 
@@ -306,36 +310,13 @@ function updateSolvedWords(triggerAnimation = true) {
         const id = getWordId(word);
         if (!solvedWordIds.has(id) && isWordSolved(word)) {
             solvedWordIds.add(id);
-            if (triggerAnimation) {
-                animateWordFlip(word);
-            }
+            if (triggerAnimation) animateWordFlip(word);
         }
     });
 }
 
-function setClueVisibility(visible) {
-    const wrapper = document.getElementById('clues-wrapper');
-    const toggleBtn = document.getElementById('toggle-clues');
-
-    cluesVisible = visible;
-
-    if (wrapper) {
-        wrapper.classList.toggle('clues-hidden', !visible);
-    }
-
-    if (toggleBtn) {
-        toggleBtn.textContent = visible ? '🙈 Ocultar pistas' : '👀 Mostrar pistas';
-        toggleBtn.setAttribute('aria-expanded', visible);
-    }
-}
-
-function toggleClues() {
-    setClueVisibility(!cluesVisible);
-}
-
 function initGame() {
     const result = generateCrosswordLogic();
-
     if (!result) {
         setTimeout(initGame, 100);
         return;
@@ -347,26 +328,28 @@ function initGame() {
     renderGrid(currentWords);
     renderClues(currentWords);
     setClueVisibility(false);
+    
+    // Iniciar la rueda con las letras de la palabra base
+    initWheel(result.baseWordNormalized);
 }
+
+// --- RENDERIZADO GRID & CLUES ---
 
 function renderGrid(words) {
     const gridContainer = document.getElementById('crossword-grid');
     gridContainer.innerHTML = '';
 
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-
     words.forEach(w => {
         const len = w.normalized.length;
         const xEnd = w.dir === 'H' ? w.x + len - 1 : w.x;
         const yEnd = w.dir === 'V' ? w.y + len - 1 : w.y;
-
         minX = Math.min(minX, w.x);
         maxX = Math.max(maxX, xEnd);
         minY = Math.min(minY, w.y);
         maxY = Math.max(maxY, yEnd);
     });
 
-    // Margen visual de 1 celda
     minX -= 1; maxX += 1;
     minY -= 1; maxY += 1;
 
@@ -381,7 +364,6 @@ function renderGrid(words) {
 
     const cellMap = new Map();
 
-    // 1. Renderizado de Celdas
     words.forEach((w, index) => {
         const len = w.normalized.length;
         for (let i = 0; i < len; i++) {
@@ -402,17 +384,11 @@ function renderGrid(words) {
                 input.type = 'text';
                 input.maxLength = 1;
                 input.className = 'cell-input';
+                input.readOnly = true; // El input manual se bloquea para favorecer la rueda
                 input.dataset.correct = char;
                 input.dataset.x = posX;
                 input.dataset.y = posY;
-
-                input.addEventListener('input', function() {
-                   this.parentElement.classList.remove('incorrect');
-                });
-
-                input.addEventListener('keydown', handleKeyNavigation);
-                input.addEventListener('click', () => input.select());
-
+                
                 cellDiv.appendChild(input);
                 gridContainer.appendChild(cellDiv);
                 cellMap.set(key, cellDiv);
@@ -422,7 +398,6 @@ function renderGrid(words) {
                 const numSpan = document.createElement('span');
                 numSpan.className = 'cell-number';
                 numSpan.innerText = index + 1;
-                
                 const existingNum = cellDiv.querySelector('.cell-number');
                 if(existingNum) {
                     existingNum.innerText += "/" + (index + 1);
@@ -433,116 +408,32 @@ function renderGrid(words) {
         }
     });
 
-    // 2. Renderizado de Barreras (Separadores visuales para palabras contiguas)
-    // Recorremos todas las celdas generadas y verificamos sus vecinos.
+    // Barreras visuales
     cellMap.forEach((cellDiv, key) => {
-        const [sx, sy] = key.split(',').map(Number); // Coordenadas relativas en la Grid visual
+        const [sx, sy] = key.split(',').map(Number); 
 
-        // --- Chequeo Abajo (Vertical) ---
-        // Si hay una celda justo abajo, pero NO hay una palabra vertical que las conecte.
+        // Barrera Abajo
         const bottomKey = `${sx},${sy + 1}`;
         if (cellMap.has(bottomKey)) {
-            // Convertir a coordenadas absolutas para buscar en 'words'
             const absX = sx + minX;
             const absY = sy + minY;
-
-            // Buscamos si existe alguna palabra Vertical en esa columna (absX)
-            // que cubra tanto absY como absY + 1
             const isConnected = words.some(w => 
-                w.dir === 'V' && 
-                w.x === absX && 
-                w.y <= absY && 
-                (w.y + w.normalized.length) > absY + 1
+                w.dir === 'V' && w.x === absX && w.y <= absY && (w.y + w.normalized.length) > absY + 1
             );
-
-            if (!isConnected) {
-                cellDiv.classList.add('barrier-bottom');
-            }
+            if (!isConnected) cellDiv.classList.add('barrier-bottom');
         }
 
-        // --- Chequeo Derecha (Horizontal) ---
-        // Si hay una celda a la derecha, pero NO hay una palabra horizontal que las conecte.
+        // Barrera Derecha
         const rightKey = `${sx + 1},${sy}`;
         if (cellMap.has(rightKey)) {
             const absX = sx + minX;
             const absY = sy + minY;
-
             const isConnected = words.some(w => 
-                w.dir === 'H' && 
-                w.y === absY && 
-                w.x <= absX && 
-                (w.x + w.normalized.length) > absX + 1
+                w.dir === 'H' && w.y === absY && w.x <= absX && (w.x + w.normalized.length) > absX + 1
             );
-
-            if (!isConnected) {
-                cellDiv.classList.add('barrier-right');
-            }
+            if (!isConnected) cellDiv.classList.add('barrier-right');
         }
     });
-}
-
-function handleKeyNavigation(event) {
-    const { key } = event;
-    const currentInput = event.target;
-    const currentX = parseInt(currentInput.dataset.x, 10);
-    const currentY = parseInt(currentInput.dataset.y, 10);
-
-    const deltas = {
-        ArrowUp: { dx: 0, dy: -1 },
-        ArrowDown: { dx: 0, dy: 1 },
-        ArrowLeft: { dx: -1, dy: 0 },
-        ArrowRight: { dx: 1, dy: 0 }
-    };
-
-    if (!deltas[key]) return;
-
-    event.preventDefault();
-
-    const { dx, dy } = deltas[key];
-    let targetX = currentX + dx;
-    let targetY = currentY + dy;
-
-    let targetInput = document.querySelector(
-        `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
-    );
-
-    if (!targetInput) {
-        targetX += dx;
-        targetY += dy;
-        targetInput = document.querySelector(
-            `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
-        );
-    }
-
-    if (targetInput) {
-        targetInput.focus();
-    }
-}
-
-function solveBaseWord() {
-    if (!currentWords.length) return;
-    const baseWord = currentWords[0];
-    if (!baseWord) return;
-
-    for (let i = 0; i < baseWord.normalized.length; i++) {
-        const posX = (baseWord.dir === 'H' ? baseWord.x + i : baseWord.x) - gridOffsetX;
-        const posY = (baseWord.dir === 'V' ? baseWord.y + i : baseWord.y) - gridOffsetY;
-
-        const input = document.querySelector(
-            `.cell-input[data-x="${posX}"][data-y="${posY}"]`
-        );
-
-        if (input) {
-            input.value = baseWord.normalized[i];
-            input.parentElement.classList.remove('incorrect', 'correct');
-        }
-    }
-
-    const baseId = getWordId(baseWord);
-    if (!solvedWordIds.has(baseId)) {
-        solvedWordIds.add(baseId);
-        animateWordFlip(baseWord);
-    }
 }
 
 function renderClues(words) {
@@ -555,12 +446,8 @@ function renderClues(words) {
         const div = document.createElement('div');
         div.className = 'clue-item';
         div.innerHTML = `<span class="clue-badge">${index + 1}</span> ${w.wordObj.traduccion_ingles}`;
-        
-        if (w.dir === 'H') {
-            hContainer.appendChild(div);
-        } else {
-            vContainer.appendChild(div);
-        }
+        if (w.dir === 'H') hContainer.appendChild(div);
+        else vContainer.appendChild(div);
     });
 }
 
@@ -570,19 +457,254 @@ function checkAnswers() {
         const userVal = normalize(input.value);
         const correctVal = input.dataset.correct;
         const parent = input.parentElement;
-
         parent.classList.remove('correct', 'incorrect');
+        if (userVal === '') {} 
+        else if (userVal === correctVal) parent.classList.add('correct');
+        else parent.classList.add('incorrect');
+    });
+    updateSolvedWords(true);
+}
 
-        if (userVal === '') {
-        } else if (userVal === correctVal) {
-            parent.classList.add('correct');
+// --- LÓGICA DE LA RUEDA (WORD WHEEL) ---
+
+function initWheel(baseWord) {
+    const lettersContainer = document.getElementById('wheel-letters');
+    const svgContainer = document.getElementById('wheel-svg');
+    const wheelContainer = document.getElementById('wheel-container');
+    const selectionDisplay = document.getElementById('current-selection');
+
+    lettersContainer.innerHTML = '';
+    svgContainer.innerHTML = ''; // Limpiar SVG
+    selectionDisplay.innerText = '';
+    selectionDisplay.classList.remove('visible');
+
+    // Desordenar letras (incluyendo repetidas)
+    const chars = baseWord.split('');
+    shuffleArray(chars);
+    wheelOrder = chars;
+    
+    // Configuración geométrica
+    const count = chars.length;
+    // El radio es la mitad del tamaño definido en CSS (300px) menos margen
+    const radius = 100; 
+    const centerX = 150; 
+    const centerY = 150; 
+    const angleStep = (2 * Math.PI) / count;
+
+    wheelLetters = [];
+
+    chars.forEach((char, i) => {
+        const angle = i * angleStep - Math.PI / 2; // Empezar arriba
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+
+        const btn = document.createElement('div');
+        btn.className = 'wheel-letter';
+        btn.innerText = char.toUpperCase();
+        // Centrar el elemento: restar mitad de su tamaño (50px / 2 = 25)
+        btn.style.left = (x - 25) + 'px';
+        btn.style.top = (y - 25) + 'px';
+        btn.dataset.index = i;
+        btn.dataset.char = char;
+        
+        // Coordenadas centrales reales para dibujar líneas
+        btn.dataset.cx = x;
+        btn.dataset.cy = y;
+
+        // Eventos individuales
+        btn.addEventListener('mousedown', handleStart);
+        btn.addEventListener('touchstart', handleStart, {passive: false});
+
+        lettersContainer.appendChild(btn);
+        wheelLetters.push(btn);
+    });
+
+    // Eventos globales del contenedor para el arrastre
+    wheelContainer.addEventListener('mousemove', handleMove);
+    wheelContainer.addEventListener('touchmove', handleMove, {passive: false});
+    
+    // Eventos para soltar en cualquier lado del documento
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchend', handleEnd);
+}
+
+// -- Manejadores de Eventos de la Rueda --
+
+function handleStart(e) {
+    e.preventDefault(); // Evitar selección de texto
+    isDragging = true;
+    selectedIndices = [];
+    
+    // Añadir la letra inicial
+    const index = parseInt(e.target.dataset.index);
+    selectLetter(index);
+}
+
+function handleMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    let clientX, clientY;
+    if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+    }
+
+    // Detectar elemento bajo el dedo/cursor
+    const element = document.elementFromPoint(clientX, clientY);
+    
+    if (element && element.classList.contains('wheel-letter')) {
+        const index = parseInt(element.dataset.index);
+        // Si no es la última seleccionada (evitar reentrada inmediata) y no está ya en el camino (o permitir backtrack?)
+        // En Wordscapes NO se puede volver a usar la misma letra (el mismo nodo físico) en una jugada
+        if (!selectedIndices.includes(index)) {
+            selectLetter(index);
         } else {
-            parent.classList.add('incorrect');
+            // Lógica de "Backtrack": Si vuelves a la penúltima, deseleccionas la última
+            if (selectedIndices.length > 1 && index === selectedIndices[selectedIndices.length - 2]) {
+                unselectLast();
+            }
+        }
+    }
+    
+    drawPath(clientX, clientY);
+}
+
+function handleEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    // Procesar palabra
+    const word = selectedIndices.map(i => wheelLetters[i].dataset.char).join('');
+    checkWheelAttempt(word);
+
+    // Limpiar visuales
+    selectedIndices = [];
+    wheelLetters.forEach(l => l.classList.remove('active'));
+    document.getElementById('wheel-svg').innerHTML = '';
+    
+    const display = document.getElementById('current-selection');
+    display.classList.remove('visible');
+}
+
+function selectLetter(index) {
+    selectedIndices.push(index);
+    wheelLetters[index].classList.add('active');
+    updateSelectionDisplay();
+}
+
+function unselectLast() {
+    const removedIndex = selectedIndices.pop();
+    wheelLetters[removedIndex].classList.remove('active');
+    updateSelectionDisplay();
+}
+
+function updateSelectionDisplay() {
+    const display = document.getElementById('current-selection');
+    const word = selectedIndices.map(i => wheelLetters[i].dataset.char).join('').toUpperCase();
+    display.innerText = word;
+    display.classList.add('visible');
+}
+
+function drawPath(cursorX, cursorY) {
+    const svg = document.getElementById('wheel-svg');
+    svg.innerHTML = ''; // Borrar anterior
+
+    if (selectedIndices.length === 0) return;
+
+    // Construir puntos del polyline
+    let points = "";
+    
+    // 1. Puntos de las letras conectadas
+    selectedIndices.forEach(i => {
+        const btn = wheelLetters[i];
+        points += `${btn.dataset.cx},${btn.dataset.cy} `;
+    });
+
+    // 2. Punto hacia el cursor (línea elástica)
+    // Necesitamos coordenadas relativas al contenedor de la rueda
+    const containerRect = document.getElementById('wheel-container').getBoundingClientRect();
+    const relX = cursorX - containerRect.left;
+    const relY = cursorY - containerRect.top;
+    
+    points += `${relX},${relY}`;
+
+    // Crear elemento Polyline
+    const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    polyline.setAttribute("points", points);
+    polyline.style.fill = "none";
+    polyline.style.stroke = "#f39c12"; // Color naranja de conexión
+    polyline.style.strokeWidth = "8";
+    polyline.style.strokeLinecap = "round";
+    polyline.style.strokeLinejoin = "round";
+    polyline.style.opacity = "0.7";
+
+    svg.appendChild(polyline);
+}
+
+// -- Validar palabra de la rueda --
+
+function checkWheelAttempt(wordAttempt) {
+    if (wordAttempt.length < 2) return; // Ignorar toques accidentales
+
+    // Buscar si la palabra existe en el crucigrama
+    // Buscamos todas las coincidencias porque una palabra podría aparecer 2 veces (raro pero posible)
+    let found = false;
+
+    currentWords.forEach(w => {
+        if (w.normalized === wordAttempt) {
+            // ¡Palabra encontrada!
+            fillWordInGrid(w);
+            found = true;
         }
     });
 
-    updateSolvedWords(true);
+    // Feedback visual (Opcional: Podríamos añadir animación de error si falla)
+    if (found) {
+        // Reproducir sonido o efecto visual de éxito aquí si se desea
+    }
 }
+
+function fillWordInGrid(word) {
+    const inputs = getWordInputs(word);
+    
+    // Verificar si ya estaba resuelta para no repetir animaciones innecesarias
+    const id = getWordId(word);
+    if (solvedWordIds.has(id)) return;
+
+    // Rellenar inputs
+    inputs.forEach((input, i) => {
+        input.value = word.normalized[i];
+        input.parentElement.classList.add('correct');
+        input.parentElement.classList.remove('incorrect');
+    });
+
+    // Marcar como resuelta y animar
+    solvedWordIds.add(id);
+    animateWordFlip(word);
+}
+
+// --- UTILIDAD BASE WORD (Botón original) ---
+function solveBaseWord() {
+    if (!currentWords.length) return;
+    const baseWord = currentWords[0];
+    fillWordInGrid(baseWord);
+}
+
+function setClueVisibility(visible) {
+    const wrapper = document.getElementById('clues-wrapper');
+    const toggleBtn = document.getElementById('toggle-clues');
+    cluesVisible = visible;
+    if (wrapper) wrapper.classList.toggle('clues-hidden', !visible);
+    if (toggleBtn) {
+        toggleBtn.textContent = visible ? '🙈 Ocultar pistas' : '👀 Mostrar pistas';
+        toggleBtn.setAttribute('aria-expanded', visible);
+    }
+}
+function toggleClues() { setClueVisibility(!cluesVisible); }
 
 window.onload = async () => {
     await loadVocabulario();

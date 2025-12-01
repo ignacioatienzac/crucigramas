@@ -4,7 +4,9 @@
     --success-color: #27ae60;
     --error-color: #c0392b;
     --bg-color: #ecf0f1;
-    --barrier-color: #2c3e50; /* Color oscuro para las líneas de separación */
+    --barrier-color: #2c3e50;
+    --wheel-size: 300px;
+    --wheel-bg: rgba(255, 255, 255, 0.85);
 }
 
 body {
@@ -15,6 +17,8 @@ body {
     align-items: center;
     padding: 20px;
     color: #2c3e50;
+    /* Evitar scroll mientras se arrastra en móviles */
+    touch-action: pan-y; 
 }
 
 h1 {
@@ -86,14 +90,16 @@ button:active {
     max-width: 1200px;
 }
 
-/* Grid Styles */
+/* --- GRID STYLES (Con barreras) --- */
 #crossword-grid {
     display: grid;
-    /* Aumentado el gap a 12px para mayor separación */
     gap: 12px;
     padding: 10px;
     background-color: #bdc3c7;
     border-radius: 8px;
+    /* Para que el grid no sea demasiado ancho en pantallas pequeñas */
+    max-width: 100%;
+    overflow: auto;
 }
 
 .cell {
@@ -107,11 +113,10 @@ button:active {
     perspective: 600px;
 }
 
-/* Estilos de Barreras para palabras contiguas pero no conectadas */
 .barrier-bottom::after {
     content: '';
     position: absolute;
-    bottom: -8px; /* Centrado en el gap de 12px */
+    bottom: -8px;
     left: 0;
     width: 100%;
     height: 4px;
@@ -124,7 +129,7 @@ button:active {
 .barrier-right::after {
     content: '';
     position: absolute;
-    right: -8px; /* Centrado en el gap de 12px */
+    right: -8px;
     top: 0;
     width: 4px;
     height: 100%;
@@ -147,11 +152,7 @@ button:active {
     color: #2c3e50;
     outline: none;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.cell-input:focus {
-    border-color: var(--primary-color);
-    background-color: #fbfaff;
+    cursor: default; /* Ya no incita a escribir */
 }
 
 .cell.correct .cell-input {
@@ -187,7 +188,7 @@ button:active {
     font-weight: bold;
 }
 
-/* Clues Styles */
+/* --- CLUES STYLES --- */
 .clues-panel {
     background: white;
     padding: 25px;
@@ -224,7 +225,6 @@ button:active {
     font-weight: bold;
 }
 
-/* Base word highlight */
 .base-word-info {
     margin-bottom: 20px;
     padding: 10px;
@@ -237,8 +237,83 @@ button:active {
     align-items: center;
 }
 
+/* --- WHEEL STYLES (NUEVO) --- */
+#wheel-container {
+    width: var(--wheel-size);
+    height: var(--wheel-size);
+    border-radius: 50%;
+    background-color: var(--wheel-bg);
+    position: relative;
+    margin: 20px auto;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    user-select: none;
+    touch-action: none; /* Importante para gestos */
+}
+
+#wheel-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.wheel-letter {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s;
+    z-index: 20;
+    text-transform: uppercase;
+}
+
+.wheel-letter.active {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.selection-display {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(44, 62, 80, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.selection-display.visible {
+    opacity: 1;
+}
+
 @media (max-width: 768px) {
-    :root { --cell-size: 35px; }
+    :root { 
+        --cell-size: 35px; 
+        --wheel-size: 260px;
+    }
     .game-area { flex-direction: column; align-items: center; }
-    .clues-panel { width: 90%; }
+    .clues-panel { width: 90%; order: 3; } /* Panel al final en móvil */
+    #wheel-container { order: 2; margin-bottom: 40px;} /* Rueda debajo del grid */
+    #crossword-grid { order: 1; }
 }
