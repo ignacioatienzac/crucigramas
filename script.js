@@ -1,8 +1,19 @@
 let vocabulario = [];
 
 async function loadVocabulario() {
-    const response = await fetch('vocabulario-a1.json');
-    vocabulario = await response.json();
+    try {
+        const response = await fetch('vocabulario-a1-completo.json'); // Asegúrate de que el nombre coincida con tu archivo
+        vocabulario = await response.json();
+    } catch (e) {
+        console.warn("No se pudo cargar el JSON completo, intentando con el por defecto...", e);
+        // Fallback o manejo de error si el archivo cambia de nombre
+        try {
+            const response = await fetch('vocabulario-a1.json');
+            vocabulario = await response.json();
+        } catch (e2) {
+            console.error("Error cargando vocabulario");
+        }
+    }
 }
 
 // --- UTILIDADES ---
@@ -27,52 +38,138 @@ function getCharFrequency(str) {
 function isStrictSubset(candidateStr, baseFreq) {
     const candFreq = getCharFrequency(candidateStr);
     for (const char in candFreq) {
-        // 1. ¿Existe la letra en la base?
         if (!baseFreq[char]) return false;
-        // 2. ¿La cantidad en candidata supera a la base?
         if (candFreq[char] > baseFreq[char]) return false;
     }
     return true;
 }
 
-// --- LÓGICA DEL JUEGO (ANAGRAMA ESTRICTO) ---
+// --- LÓGICA DE COLOCACIÓN Y VALIDACIÓN ---
+
+/**
+ * Comprueba si una palabra se puede colocar en la posición dada.
+ * Verifica colisiones de letras incorrectas y reglas de adyacencia (espaciado).
+ */
+function canPlaceWord(candidateWord, x, y, dir, placedWords) {
+    const len = candidateWord.length;
+
+    // Iteramos por cada letra de la palabra candidata
+    for (let i = 0; i < len; i++) {
+        const cx = dir === 'H' ? x + i : x;
+        const cy = dir === 'V' ? y + i : y;
+        const char = candidateWord[i];
+
+        // Verificamos contra todas las palabras ya colocadas
+        for (const pw of placedWords) {
+            const pLen = pw.normalized.length;
+            
+            // 1. CHEQUEO DE COLISIÓN (Misma celda)
+            // Calculamos si la palabra 'pw' ocupa la celda (cx, cy)
+            let isIntersecting = false;
+            let pChar = '';
+
+            if (pw.dir === 'H') {
+                if (cy === pw.y && cx >= pw.x && cx < pw.x + pLen) {
+                    isIntersecting = true;
+                    pChar = pw.normalized[cx - pw.x];
+                }
+            } else { // pw.dir === 'V'
+                if (cx === pw.x && cy >= pw.y && cy < pw.y + pLen) {
+                    isIntersecting = true;
+                    pChar = pw.normalized[cy - pw.y];
+                }
+            }
+
+            if (isIntersecting) {
+                // Si hay intersección, la letra DEBE ser la misma
+                if (pChar !== char) return false;
+            }
+
+            // 2. CHEQUEO DE ADYACENCIA (Regla de no estar contiguas)
+            // Si las palabras son paralelas, debe haber al menos una fila/columna de separación.
+            if (pw.dir === dir) {
+                // Si es paralela, verificamos si está "pegada" lateralmente
+                if (dir === 'H') {
+                    // Si están en la misma fila (y se solapan, ya chequeado arriba) o filas adyacentes (y-1, y+1)
+                    if (Math.abs(pw.y - cy) <= 1) {
+                        // Verificamos si hay solapamiento en el eje X (longitud)
+                        const xOverlap = (cx >= pw.x - 1 && cx <= pw.x + pLen); // -1 y +1 para evitar tocarse punta con punta también
+                        // Nota: Ser estricto con punta con punta: (cx >= pw.x && cx < pw.x + pLen)
+                        // Para evitar palabras pegadas:
+                        const start1 = x, end1 = x + len;
+                        const start2 = pw.x, end2 = pw.x + pLen;
+                        // Hay solapamiento de rangos X si:
+                        if (Math.max(start1, start2) < Math.min(end1, end2)) {
+                             // Están solapadas en X y están en filas contiguas o misma fila
+                             return false;
+                        }
+                    }
+                } else { // dir === 'V'
+                    if (Math.abs(pw.x - cx) <= 1) {
+                        const start1 = y, end1 = y + len;
+                        const start2 = pw.y, end2 = pw.y + pLen;
+                        if (Math.max(start1, start2) < Math.min(end1, end2)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Verificación extra para "punta con punta" en la misma dirección (opcional pero estético)
+    // Evita que una palabra termine donde empieza otra en la misma línea sin espacio.
+    for (const pw of placedWords) {
+        if (pw.dir === dir) {
+            if (dir === 'H' && pw.y === y) {
+                // Misma fila horizontal
+                if (x === pw.x + pw.normalized.length || x + len === pw.x) return false; 
+            }
+            if (dir === 'V' && pw.x === x) {
+                // Misma columna vertical
+                if (y === pw.y + pw.normalized.length || y + len === pw.y) return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+// --- LÓGICA PRINCIPAL DEL JUEGO ---
 
 function generateCrosswordLogic() {
+    // 1. Preparar el Pool
     const singleWords = vocabulario.filter(v => !v.palabra.includes(" ") && !v.palabra.includes("?"));
-    const longWords = singleWords.filter(v => v.palabra.length >= 7); // Base larga para tener "inventario" suficiente
+    const longWords = singleWords.filter(v => v.palabra.length >= 7); 
     
     if (longWords.length === 0) return null;
 
-    const MAX_ATTEMPTS = 300; // Más intentos necesarios por la restricción estricta
+    const MAX_ATTEMPTS = 500; 
     let attempt = 0;
 
     while (attempt < MAX_ATTEMPTS) {
         attempt++;
         
-        // 1. Seleccionar palabra base
+        // --- PASO 1: PALABRA BASE (HORIZONTAL) ---
         const baseWordObj = getRandomElement(longWords);
         const baseWord = normalize(baseWordObj.palabra);
-        
-        // Crear mapa de frecuencia de la base (Inventario de letras disponibles)
         const baseFreq = getCharFrequency(baseWord);
 
-        // 2. Filtrar pool de palabras VÁLIDAS (Anagrama parcial estricto)
+        // Filtramos todas las palabras posibles que se pueden formar con la base
         const validPool = singleWords.filter(v => {
             const normV = normalize(v.palabra);
-            
-            // Condición: Más corta y subset estricto (letras y cantidades)
-            if (normV.length >= baseWord.length) return false;
-            if (normV.length < 2) return false; 
-
+            if (normV.length >= baseWord.length) return false; // Deben ser más cortas
+            if (normV.length < 3) return false; // Mínimo 3 letras para dar juego
             return isStrictSubset(normV, baseFreq);
         });
 
-        // Si el pool es muy pequeño, esta palabra base no sirve para el juego
-        if (validPool.length < 3) continue; 
+        if (validPool.length < 5) continue; // Necesitamos variedad
 
-        // --- Inicio Algoritmo de Colocación ---
-        
         let placedWords = [];
+        let usedWords = new Set();
+        
+        // Colocamos Base en (0,0)
         placedWords.push({
             wordObj: baseWordObj,
             x: 0,
@@ -80,63 +177,123 @@ function generateCrosswordLogic() {
             dir: 'H',
             normalized: baseWord
         });
+        usedWords.add(baseWordObj.palabra);
 
-        let usedWords = [baseWordObj.palabra];
+        // --- PASO 2: PALABRAS VERTICALES (CONECTAN CON BASE) ---
         let intersectCount = 0;
-        let retriesInBase = 0;
-
-        // Intentamos colocar hasta 4 palabras verticales
-        while (intersectCount < 4 && retriesInBase < 50) {
-            retriesInBase++;
-
-            // Elegir candidata del pool validado
+        let retries = 0;
+        
+        // Intentamos colocar entre 2 y 4 verticales
+        while (intersectCount < 4 && retries < 100) {
+            retries++;
             const candidateObj = getRandomElement(validPool);
-            if (usedWords.includes(candidateObj.palabra)) continue;
+            if (usedWords.has(candidateObj.palabra)) continue;
 
-            const candidateNorm = normalize(candidateObj.palabra);
+            const candNorm = normalize(candidateObj.palabra);
             
-            // Buscar punto de cruce
-            let placed = false;
-            const baseIndices = Array.from({length: baseWord.length}, (_, i) => i).sort(() => Math.random() - 0.5);
+            // Buscar cruce con la palabra base
+            // La base está en y=0, x de 0 a len-1
+            const validPlacements = [];
 
-            for (let i of baseIndices) {
-                const charBase = baseWord[i];
-                
-                if (candidateNorm.includes(charBase)) {
-                    const charIndexCand = candidateNorm.indexOf(charBase);
-                    
-                    // Coordenadas para cruzar verticalmente
-                    const proposedWord = {
-                        wordObj: candidateObj,
-                        x: i,
-                        y: -charIndexCand,
-                        dir: 'V',
-                        normalized: candidateNorm
-                    };
-
-                    // Verificación de colisiones
-                    const collision = placedWords.some(pw => {
-                        if (pw.dir === 'H') return false; 
-                        return Math.abs(pw.x - proposedWord.x) < 2; 
-                    });
-
-                    if (!collision) {
-                        placedWords.push(proposedWord);
-                        usedWords.push(candidateObj.palabra);
-                        intersectCount++;
-                        placed = true;
-                        break; 
+            for (let i = 0; i < candNorm.length; i++) {
+                const charCand = candNorm[i];
+                // Buscamos coincidencia en la palabra base
+                for (let j = 0; j < baseWord.length; j++) {
+                    if (baseWord[j] === charCand) {
+                        // Propuesta: Vertical cruza en la letra 'j' de la base
+                        // Coordenadas de la palabra vertical:
+                        // x = j (columna de la letra de la base)
+                        // y = -i (para que la letra i de candidata coincida con y=0)
+                        validPlacements.push({ x: j, y: -i });
                     }
+                }
+            }
+
+            if (validPlacements.length > 0) {
+                // Probamos una posición aleatoria válida
+                const pos = getRandomElement(validPlacements);
+                if (canPlaceWord(candNorm, pos.x, pos.y, 'V', placedWords)) {
+                    placedWords.push({
+                        wordObj: candidateObj,
+                        x: pos.x,
+                        y: pos.y,
+                        dir: 'V',
+                        normalized: candNorm
+                    });
+                    usedWords.add(candidateObj.palabra);
+                    intersectCount++;
                 }
             }
         }
 
-        if (intersectCount >= 2) {
+        if (intersectCount < 2) continue; // Si no logramos poner al menos 2 verticales, reiniciamos
+
+        // --- PASO 3: PALABRAS HORIZONTALES SECUNDARIAS (CONECTAN CON VERTICALES) ---
+        // Recorremos las palabras verticales ya colocadas para intentar engancharles horizontales
+        const verticalWords = placedWords.filter(w => w.dir === 'V');
+        let secondaryCount = 0;
+        let secRetries = 0;
+
+        // Intentamos añadir algunas horizontales extra
+        while (secondaryCount < 3 && secRetries < 200) {
+            secRetries++;
+            
+            // Elegimos una palabra vertical existente para usar de "ancla"
+            const anchorWord = getRandomElement(verticalWords);
+            const anchorLen = anchorWord.normalized.length;
+
+            // Elegimos una candidata del pool
+            const candidateObj = getRandomElement(validPool);
+            if (usedWords.has(candidateObj.palabra)) continue;
+            const candNorm = normalize(candidateObj.palabra);
+
+            // Buscamos intersección
+            const validSecPlacements = [];
+
+            for (let i = 0; i < candNorm.length; i++) { // Letra de la candidata (Horizontal)
+                const charCand = candNorm[i];
+                for (let j = 0; j < anchorLen; j++) { // Letra de la ancla (Vertical)
+                    // Importante: No usar la letra que ya cruza con la base (que está en y=0)
+                    // La palabra vertical empieza en anchorWord.y. La letra j está en anchorWord.y + j.
+                    const anchorAbsY = anchorWord.y + j;
+                    if (anchorAbsY === 0) continue; // Saltamos la intersección con la Base
+
+                    if (anchorWord.normalized[j] === charCand) {
+                        // Propuesta:
+                        // La ancla está en x = anchorWord.x
+                        // Queremos que candNorm[i] esté en (anchorWord.x, anchorAbsY)
+                        // Por tanto, el inicio de candNorm (x) será: anchorWord.x - i
+                        // Y la posición y será: anchorAbsY
+                        validSecPlacements.push({ x: anchorWord.x - i, y: anchorAbsY });
+                    }
+                }
+            }
+
+            if (validSecPlacements.length > 0) {
+                const pos = getRandomElement(validSecPlacements);
+                // Validamos con las reglas (especialmente la de no contiguas)
+                if (canPlaceWord(candNorm, pos.x, pos.y, 'H', placedWords)) {
+                    placedWords.push({
+                        wordObj: candidateObj,
+                        x: pos.x,
+                        y: pos.y,
+                        dir: 'H',
+                        normalized: candNorm
+                    });
+                    usedWords.add(candidateObj.palabra);
+                    secondaryCount++;
+                }
+            }
+        }
+
+        // Si tenemos una estructura interesante, devolvemos
+        // Mínimo: Base + 2 Verticales. (Las secundarias son bonus, si hay 0 no pasa nada, pero idealmente habrá)
+        if (placedWords.length >= 3) {
             return { words: placedWords, baseWord: baseWordObj.palabra.toUpperCase() };
         }
     }
     
-    console.log("Falló la generación, reintentando...");
+    console.log("No se pudo generar un crucigrama válido tras varios intentos.");
     return null;
 }
 
@@ -171,6 +328,7 @@ function getWordInputs(word) {
 
 function isWordSolved(word) {
     const inputs = getWordInputs(word);
+    // Si por alguna razón de renderizado faltan inputs, no está resuelta
     if (inputs.length !== word.normalized.length) return false;
 
     return inputs.every((input, idx) => normalize(input.value) === word.normalized[idx]);
@@ -181,15 +339,16 @@ function animateWordFlip(word) {
 
     inputs.forEach((input, idx) => {
         const cell = input.parentElement;
+        // Reiniciar animación si ya existía
         cell.classList.remove('flip-letter');
-        void cell.offsetWidth;
+        void cell.offsetWidth; // Trigger reflow
 
         setTimeout(() => {
             cell.classList.add('flip-letter');
             cell.addEventListener('animationend', () => {
                 cell.classList.remove('flip-letter');
             }, { once: true });
-        }, idx * 120);
+        }, idx * 100);
     });
 }
 
@@ -229,8 +388,8 @@ function initGame() {
     const result = generateCrosswordLogic();
 
     if (!result) {
-        // Reintento automático si no encuentra combinación válida
-        setTimeout(initGame, 50);
+        // Reintento rápido si falla la generación
+        setTimeout(initGame, 100);
         return;
     }
 
@@ -246,6 +405,7 @@ function renderGrid(words) {
     const gridContainer = document.getElementById('crossword-grid');
     gridContainer.innerHTML = '';
 
+    // Calcular límites
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
 
     words.forEach(w => {
@@ -259,6 +419,10 @@ function renderGrid(words) {
         maxY = Math.max(maxY, yEnd);
     });
 
+    // Margen visual de 1 celda alrededor
+    minX -= 1; maxX += 1;
+    minY -= 1; maxY += 1;
+
     gridOffsetX = minX;
     gridOffsetY = minY;
 
@@ -268,8 +432,11 @@ function renderGrid(words) {
     gridContainer.style.gridTemplateColumns = `repeat(${width}, var(--cell-size))`;
     gridContainer.style.gridTemplateRows = `repeat(${height}, var(--cell-size))`;
 
+    // Mapa para evitar duplicar celdas en las intersecciones
     const cellMap = new Map();
 
+    // Ordenamos palabras para que las horizontales se pinten "encima" si hay duda, 
+    // aunque la lógica de celdas compartidas maneja esto.
     words.forEach((w, index) => {
         const len = w.normalized.length;
         for (let i = 0; i < len; i++) {
@@ -294,49 +461,31 @@ function renderGrid(words) {
                 input.dataset.x = posX;
                 input.dataset.y = posY;
 
+                // Eventos de input y navegación
                 input.addEventListener('input', function() {
-                    // Lógica visual opcional
+                   // Limpiar estilos de validación al escribir
+                   this.parentElement.classList.remove('incorrect');
                 });
 
-                input.addEventListener('keydown', function(event) {
-                    const { key } = event;
-                    const currentX = parseInt(event.target.dataset.x, 10);
-                    const currentY = parseInt(event.target.dataset.y, 10);
-
-                    const deltas = {
-                        ArrowUp: { dx: 0, dy: -1 },
-                        ArrowDown: { dx: 0, dy: 1 },
-                        ArrowLeft: { dx: -1, dy: 0 },
-                        ArrowRight: { dx: 1, dy: 0 }
-                    };
-
-                    if (!deltas[key]) return;
-
-                    event.preventDefault();
-
-                    const { dx, dy } = deltas[key];
-                    const targetX = currentX + dx;
-                    const targetY = currentY + dy;
-
-                    const targetInput = document.querySelector(
-                        `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
-                    );
-
-                    if (targetInput) {
-                        targetInput.focus();
-                    }
-                });
+                input.addEventListener('keydown', handleKeyNavigation);
+                input.addEventListener('click', () => input.select());
 
                 cellDiv.appendChild(input);
                 gridContainer.appendChild(cellDiv);
                 cellMap.set(key, cellDiv);
             }
 
+            // Añadir número pequeño a la primera letra de la palabra
             if (i === 0) {
                 const numSpan = document.createElement('span');
                 numSpan.className = 'cell-number';
                 numSpan.innerText = index + 1;
-                if(!cellDiv.querySelector('.cell-number')) {
+                
+                // Si la celda ya tiene un número (intersección de inicios), lo concatenamos
+                const existingNum = cellDiv.querySelector('.cell-number');
+                if(existingNum) {
+                    existingNum.innerText += "/" + (index + 1);
+                } else {
                     cellDiv.appendChild(numSpan);
                 }
             }
@@ -344,15 +493,61 @@ function renderGrid(words) {
     });
 }
 
+function handleKeyNavigation(event) {
+    const { key } = event;
+    const currentInput = event.target;
+    const currentX = parseInt(currentInput.dataset.x, 10);
+    const currentY = parseInt(currentInput.dataset.y, 10);
+
+    const deltas = {
+        ArrowUp: { dx: 0, dy: -1 },
+        ArrowDown: { dx: 0, dy: 1 },
+        ArrowLeft: { dx: -1, dy: 0 },
+        ArrowRight: { dx: 1, dy: 0 }
+    };
+
+    if (key === 'Backspace' && currentInput.value === '') {
+        // Mover atrás al borrar si está vacío (simple heuristic)
+        // Podría mejorarse detectando la dirección de la palabra actual
+    }
+
+    if (!deltas[key]) return;
+
+    event.preventDefault();
+
+    const { dx, dy } = deltas[key];
+    let targetX = currentX + dx;
+    let targetY = currentY + dy;
+
+    let targetInput = document.querySelector(
+        `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
+    );
+
+    // Salto de huecos vacíos (opcional, para UX suave si hay huecos)
+    if (!targetInput) {
+        targetX += dx;
+        targetY += dy;
+        targetInput = document.querySelector(
+            `.cell-input[data-x="${targetX}"][data-y="${targetY}"]`
+        );
+    }
+
+    if (targetInput) {
+        targetInput.focus();
+    }
+}
+
 function solveBaseWord() {
     if (!currentWords.length) return;
 
-    const baseWord = currentWords.find(w => w.dir === 'H');
+    // Asumimos que la palabra base es la primera Horizontal que añadimos (index 0 generalmente)
+    // O la buscamos por ser la que está en y=0 relativa a la generación
+    const baseWord = currentWords[0]; // Por lógica de generación es la primera
     if (!baseWord) return;
 
     for (let i = 0; i < baseWord.normalized.length; i++) {
-        const posX = (baseWord.x + i) - gridOffsetX;
-        const posY = baseWord.y - gridOffsetY;
+        const posX = (baseWord.dir === 'H' ? baseWord.x + i : baseWord.x) - gridOffsetX;
+        const posY = (baseWord.dir === 'V' ? baseWord.y + i : baseWord.y) - gridOffsetY;
 
         const input = document.querySelector(
             `.cell-input[data-x="${posX}"][data-y="${posY}"]`
@@ -400,7 +595,7 @@ function checkAnswers() {
         parent.classList.remove('correct', 'incorrect');
 
         if (userVal === '') {
-            // vacío
+            // vacío, ignorar
         } else if (userVal === correctVal) {
             parent.classList.add('correct');
         } else {
