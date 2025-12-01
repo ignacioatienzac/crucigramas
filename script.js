@@ -246,7 +246,6 @@ function generateCrosswordLogic() {
         }
 
         if (placedWords.length >= 3) {
-            // Pasamos también la palabra base original para la rueda
             return { words: placedWords, baseWordNormalized: baseWord };
         }
     }
@@ -264,10 +263,10 @@ let cluesVisible = false;
 let solvedWordIds = new Set();
 
 // Variables para la Rueda
-let wheelLetters = []; // Elementos DOM
-let wheelOrder = [];   // Caracteres
+let wheelLetters = []; 
+let wheelOrder = [];   
 let isDragging = false;
-let selectedIndices = []; // Índices de las letras seleccionadas actualmente
+let selectedIndices = []; 
 
 function getWordId(word) {
     return `${word.dir}-${word.x}-${word.y}-${word.wordObj.palabra}`;
@@ -329,7 +328,6 @@ function initGame() {
     renderClues(currentWords);
     setClueVisibility(false);
     
-    // Iniciar la rueda con las letras de la palabra base
     initWheel(result.baseWordNormalized);
 }
 
@@ -384,7 +382,7 @@ function renderGrid(words) {
                 input.type = 'text';
                 input.maxLength = 1;
                 input.className = 'cell-input';
-                input.readOnly = true; // El input manual se bloquea para favorecer la rueda
+                input.readOnly = true; 
                 input.dataset.correct = char;
                 input.dataset.x = posX;
                 input.dataset.y = posY;
@@ -408,11 +406,9 @@ function renderGrid(words) {
         }
     });
 
-    // Barreras visuales
     cellMap.forEach((cellDiv, key) => {
         const [sx, sy] = key.split(',').map(Number); 
 
-        // Barrera Abajo
         const bottomKey = `${sx},${sy + 1}`;
         if (cellMap.has(bottomKey)) {
             const absX = sx + minX;
@@ -423,7 +419,6 @@ function renderGrid(words) {
             if (!isConnected) cellDiv.classList.add('barrier-bottom');
         }
 
-        // Barrera Derecha
         const rightKey = `${sx + 1},${sy}`;
         if (cellMap.has(rightKey)) {
             const absX = sx + minX;
@@ -474,44 +469,51 @@ function initWheel(baseWord) {
     const selectionDisplay = document.getElementById('current-selection');
 
     lettersContainer.innerHTML = '';
-    svgContainer.innerHTML = ''; // Limpiar SVG
+    svgContainer.innerHTML = ''; 
     selectionDisplay.innerText = '';
     selectionDisplay.classList.remove('visible');
 
-    // Desordenar letras (incluyendo repetidas)
     const chars = baseWord.split('');
     shuffleArray(chars);
     wheelOrder = chars;
     
-    // Configuración geométrica
+    // --- CORRECCIÓN: Cálculo dinámico basado en el tamaño real del contenedor ---
+    const containerWidth = wheelContainer.offsetWidth || 260; // Fallback al valor CSS
+    const containerHeight = wheelContainer.offsetHeight || 260;
+    
+    // El tamaño de la letra es aprox 45px. 
+    // Radio = (Mitad del contenedor) - (Mitad de la letra) - (Margen de seguridad)
+    const letterSize = 45;
+    const padding = 10;
+    const radius = (containerWidth / 2) - (letterSize / 2) - padding;
+    
+    const centerX = containerWidth / 2;
+    const centerY = containerHeight / 2;
     const count = chars.length;
-    // El radio es la mitad del tamaño definido en CSS (300px) menos margen
-    const radius = 100; 
-    const centerX = 150; 
-    const centerY = 150; 
     const angleStep = (2 * Math.PI) / count;
 
     wheelLetters = [];
 
     chars.forEach((char, i) => {
-        const angle = i * angleStep - Math.PI / 2; // Empezar arriba
+        const angle = i * angleStep - Math.PI / 2; 
         const x = centerX + radius * Math.cos(angle);
         const y = centerY + radius * Math.sin(angle);
 
         const btn = document.createElement('div');
         btn.className = 'wheel-letter';
         btn.innerText = char.toUpperCase();
-        // Centrar el elemento: restar mitad de su tamaño (50px / 2 = 25)
-        btn.style.left = (x - 25) + 'px';
-        btn.style.top = (y - 25) + 'px';
+        
+        // Centrar el elemento restando la mitad de su tamaño (22.5px aprox)
+        btn.style.left = (x - (letterSize / 2)) + 'px';
+        btn.style.top = (y - (letterSize / 2)) + 'px';
+        
         btn.dataset.index = i;
         btn.dataset.char = char;
         
-        // Coordenadas centrales reales para dibujar líneas
+        // Guardamos las coordenadas centrales RELATIVAS al contenedor para el SVG
         btn.dataset.cx = x;
         btn.dataset.cy = y;
 
-        // Eventos individuales
         btn.addEventListener('mousedown', handleStart);
         btn.addEventListener('touchstart', handleStart, {passive: false});
 
@@ -519,23 +521,16 @@ function initWheel(baseWord) {
         wheelLetters.push(btn);
     });
 
-    // Eventos globales del contenedor para el arrastre
     wheelContainer.addEventListener('mousemove', handleMove);
     wheelContainer.addEventListener('touchmove', handleMove, {passive: false});
-    
-    // Eventos para soltar en cualquier lado del documento
     document.addEventListener('mouseup', handleEnd);
     document.addEventListener('touchend', handleEnd);
 }
 
-// -- Manejadores de Eventos de la Rueda --
-
 function handleStart(e) {
-    e.preventDefault(); // Evitar selección de texto
+    e.preventDefault(); 
     isDragging = true;
     selectedIndices = [];
-    
-    // Añadir la letra inicial
     const index = parseInt(e.target.dataset.index);
     selectLetter(index);
 }
@@ -553,17 +548,13 @@ function handleMove(e) {
         clientY = e.clientY;
     }
 
-    // Detectar elemento bajo el dedo/cursor
     const element = document.elementFromPoint(clientX, clientY);
     
     if (element && element.classList.contains('wheel-letter')) {
         const index = parseInt(element.dataset.index);
-        // Si no es la última seleccionada (evitar reentrada inmediata) y no está ya en el camino (o permitir backtrack?)
-        // En Wordscapes NO se puede volver a usar la misma letra (el mismo nodo físico) en una jugada
         if (!selectedIndices.includes(index)) {
             selectLetter(index);
         } else {
-            // Lógica de "Backtrack": Si vuelves a la penúltima, deseleccionas la última
             if (selectedIndices.length > 1 && index === selectedIndices[selectedIndices.length - 2]) {
                 unselectLast();
             }
@@ -577,11 +568,9 @@ function handleEnd(e) {
     if (!isDragging) return;
     isDragging = false;
     
-    // Procesar palabra
     const word = selectedIndices.map(i => wheelLetters[i].dataset.char).join('');
     checkWheelAttempt(word);
 
-    // Limpiar visuales
     selectedIndices = [];
     wheelLetters.forEach(l => l.classList.remove('active'));
     document.getElementById('wheel-svg').innerHTML = '';
@@ -611,32 +600,27 @@ function updateSelectionDisplay() {
 
 function drawPath(cursorX, cursorY) {
     const svg = document.getElementById('wheel-svg');
-    svg.innerHTML = ''; // Borrar anterior
+    svg.innerHTML = ''; 
 
     if (selectedIndices.length === 0) return;
 
-    // Construir puntos del polyline
     let points = "";
     
-    // 1. Puntos de las letras conectadas
     selectedIndices.forEach(i => {
         const btn = wheelLetters[i];
         points += `${btn.dataset.cx},${btn.dataset.cy} `;
     });
 
-    // 2. Punto hacia el cursor (línea elástica)
-    // Necesitamos coordenadas relativas al contenedor de la rueda
     const containerRect = document.getElementById('wheel-container').getBoundingClientRect();
     const relX = cursorX - containerRect.left;
     const relY = cursorY - containerRect.top;
     
     points += `${relX},${relY}`;
 
-    // Crear elemento Polyline
     const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     polyline.setAttribute("points", points);
     polyline.style.fill = "none";
-    polyline.style.stroke = "#f39c12"; // Color naranja de conexión
+    polyline.style.stroke = "#f39c12"; 
     polyline.style.strokeWidth = "8";
     polyline.style.strokeLinecap = "round";
     polyline.style.strokeLinejoin = "round";
@@ -645,49 +629,33 @@ function drawPath(cursorX, cursorY) {
     svg.appendChild(polyline);
 }
 
-// -- Validar palabra de la rueda --
-
 function checkWheelAttempt(wordAttempt) {
-    if (wordAttempt.length < 2) return; // Ignorar toques accidentales
+    if (wordAttempt.length < 2) return; 
 
-    // Buscar si la palabra existe en el crucigrama
-    // Buscamos todas las coincidencias porque una palabra podría aparecer 2 veces (raro pero posible)
     let found = false;
-
     currentWords.forEach(w => {
         if (w.normalized === wordAttempt) {
-            // ¡Palabra encontrada!
             fillWordInGrid(w);
             found = true;
         }
     });
-
-    // Feedback visual (Opcional: Podríamos añadir animación de error si falla)
-    if (found) {
-        // Reproducir sonido o efecto visual de éxito aquí si se desea
-    }
 }
 
 function fillWordInGrid(word) {
     const inputs = getWordInputs(word);
-    
-    // Verificar si ya estaba resuelta para no repetir animaciones innecesarias
     const id = getWordId(word);
     if (solvedWordIds.has(id)) return;
 
-    // Rellenar inputs
     inputs.forEach((input, i) => {
         input.value = word.normalized[i];
         input.parentElement.classList.add('correct');
         input.parentElement.classList.remove('incorrect');
     });
 
-    // Marcar como resuelta y animar
     solvedWordIds.add(id);
     animateWordFlip(word);
 }
 
-// --- UTILIDAD BASE WORD (Botón original) ---
 function solveBaseWord() {
     if (!currentWords.length) return;
     const baseWord = currentWords[0];
