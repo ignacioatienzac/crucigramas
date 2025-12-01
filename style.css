@@ -1,11 +1,11 @@
 :root {
-    --cell-size: 45px;
+    --cell-size: 40px; /* Reducido ligeramente para que quepa mejor */
     --primary-color: #8e44ad; 
     --success-color: #27ae60;
     --error-color: #c0392b;
     --bg-color: #ecf0f1;
     --barrier-color: #2c3e50;
-    --wheel-size: 300px;
+    --wheel-size: 260px; /* Reducido un poco para ganar espacio vertical */
     --wheel-bg: rgba(255, 255, 255, 0.85);
 }
 
@@ -15,37 +15,27 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    /* Reducimos padding para subir todo */
+    padding: 10px;
+    margin: 0;
     color: #2c3e50;
-    /* Evitar scroll mientras se arrastra en móviles */
-    touch-action: pan-y; 
+    touch-action: pan-y;
+    min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-p.subtitle {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    margin-bottom: 20px;
-    max-width: 600px;
-    text-align: center;
-}
-
+/* Ajuste de controles para que ocupen menos */
 .controls {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 button {
-    padding: 12px 24px;
+    padding: 8px 16px; /* Botones más compactos */
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: bold;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.1s, box-shadow 0.1s;
@@ -77,28 +67,40 @@ button:active {
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+    padding: 6px;
+    font-size: 0.9rem;
 }
 
+/* Área principal del juego */
 .game-area {
     display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
+    flex-direction: row; /* Disposición horizontal: Grid | Sidebar */
+    gap: 30px;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinear al top para aprovechar espacio */
     width: 100%;
     max-width: 1200px;
+    height: 100%;
 }
 
-/* --- GRID STYLES (Con barreras) --- */
+/* Columna derecha (Rueda + Pistas) */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- GRID STYLES --- */
 #crossword-grid {
     display: grid;
-    gap: 12px;
+    gap: 8px; /* Gap reducido un poco */
     padding: 10px;
     background-color: #bdc3c7;
     border-radius: 8px;
-    /* Para que el grid no sea demasiado ancho en pantallas pequeñas */
-    max-width: 100%;
+    /* Ajuste para que no desborde */
+    max-height: 85vh; 
     overflow: auto;
 }
 
@@ -116,7 +118,7 @@ button:active {
 .barrier-bottom::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -6px; /* Ajustado al nuevo gap */
     left: 0;
     width: 100%;
     height: 4px;
@@ -129,7 +131,7 @@ button:active {
 .barrier-right::after {
     content: '';
     position: absolute;
-    right: -8px;
+    right: -6px; /* Ajustado al nuevo gap */
     top: 0;
     width: 4px;
     height: 100%;
@@ -145,14 +147,14 @@ button:active {
     border: 2px solid #fff;
     border-radius: 4px;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: bold;
     text-transform: uppercase;
     background-color: white;
     color: #2c3e50;
     outline: none;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-    cursor: default; /* Ya no incita a escribir */
+    cursor: default;
 }
 
 .cell.correct .cell-input {
@@ -179,75 +181,28 @@ button:active {
 
 .cell-number {
     position: absolute;
-    top: 2px;
-    left: 4px;
-    font-size: 0.65rem;
+    top: 1px;
+    left: 3px;
+    font-size: 0.6rem;
     color: #7f8c8d;
     z-index: 2;
     pointer-events: none;
     font-weight: bold;
 }
 
-/* --- CLUES STYLES --- */
-.clues-panel {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    min-width: 280px;
-    max-width: 350px;
-}
-
-.clues-hidden {
-    display: none;
-}
-
-.clue-group h3 {
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 8px;
-    margin-top: 0;
-    color: var(--primary-color);
-}
-
-.clue-item {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    line-height: 1.4;
-}
-
-.clue-badge {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin-right: 8px;
-    font-weight: bold;
-}
-
-.base-word-info {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #e8daef;
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid #d2b4de;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- WHEEL STYLES (NUEVO) --- */
+/* --- WHEEL STYLES --- */
 #wheel-container {
     width: var(--wheel-size);
     height: var(--wheel-size);
     border-radius: 50%;
     background-color: var(--wheel-bg);
     position: relative;
-    margin: 20px auto;
+    /* Eliminado margen grande para pegar todo */
+    margin: 0; 
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     user-select: none;
-    touch-action: none; /* Importante para gestos */
+    touch-action: none;
+    flex-shrink: 0; /* Evitar que se aplaste */
 }
 
 #wheel-svg {
@@ -261,15 +216,15 @@ button:active {
 }
 
 .wheel-letter {
-    width: 50px;
-    height: 50px;
+    width: 45px; /* Ligeramente más pequeñas */
+    height: 45px;
     background-color: #fff;
     border-radius: 50%;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: var(--primary-color);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -287,14 +242,14 @@ button:active {
 
 .selection-display {
     position: absolute;
-    top: -50px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(44, 62, 80, 0.9);
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 1.2rem;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     pointer-events: none;
@@ -307,13 +262,71 @@ button:active {
     opacity: 1;
 }
 
+/* --- CLUES STYLES --- */
+.clues-panel {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: var(--wheel-size); /* Que coincida con el ancho de la rueda */
+    box-sizing: border-box;
+}
+
+.clues-hidden {
+    display: none;
+}
+
+.clue-group h3 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-top: 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.clue-item {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.clue-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-right: 6px;
+    font-weight: bold;
+}
+
+.base-word-info {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #e8daef;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #d2b4de;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive: En móviles volvemos a columna única pero compacta */
 @media (max-width: 768px) {
-    :root { 
-        --cell-size: 35px; 
-        --wheel-size: 260px;
+    .game-area { 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 20px;
     }
-    .game-area { flex-direction: column; align-items: center; }
-    .clues-panel { width: 90%; order: 3; } /* Panel al final en móvil */
-    #wheel-container { order: 2; margin-bottom: 40px;} /* Rueda debajo del grid */
-    #crossword-grid { order: 1; }
+    
+    .right-column {
+        width: 100%;
+        max-width: 350px;
+    }
+    
+    .clues-panel {
+        max-width: 100%;
+    }
 }
