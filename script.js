@@ -64,7 +64,7 @@ function canPlaceWord(candidateWord, x, y, dir, placedWords) {
         for (const pw of placedWords) {
             const pLen = pw.normalized.length;
             
-            // 1. CHEQUEO DE COLISIÓN (Misma celda)
+            // 1. CHEQUEO DE COLISIÓN
             let isIntersecting = false;
             let pChar = '';
 
@@ -262,7 +262,6 @@ let gridOffsetY = 0;
 let cluesVisible = false;
 let solvedWordIds = new Set();
 
-// Variables para la Rueda
 let wheelLetters = []; 
 let wheelOrder = [];   
 let isDragging = false;
@@ -330,8 +329,6 @@ function initGame() {
     
     initWheel(result.baseWordNormalized);
 }
-
-// --- RENDERIZADO GRID & CLUES ---
 
 function renderGrid(words) {
     const gridContainer = document.getElementById('crossword-grid');
@@ -467,22 +464,21 @@ function initWheel(baseWord) {
     const svgContainer = document.getElementById('wheel-svg');
     const wheelContainer = document.getElementById('wheel-container');
     const selectionDisplay = document.getElementById('current-selection');
+    const feedbackDisplay = document.getElementById('feedback-message'); // Nuevo
 
     lettersContainer.innerHTML = '';
     svgContainer.innerHTML = ''; 
     selectionDisplay.innerText = '';
     selectionDisplay.classList.remove('visible');
+    feedbackDisplay.classList.remove('visible'); // Limpiar error si lo había
 
     const chars = baseWord.split('');
     shuffleArray(chars);
     wheelOrder = chars;
     
-    // --- CORRECCIÓN: Cálculo dinámico basado en el tamaño real del contenedor ---
-    const containerWidth = wheelContainer.offsetWidth || 260; // Fallback al valor CSS
+    const containerWidth = wheelContainer.offsetWidth || 260; 
     const containerHeight = wheelContainer.offsetHeight || 260;
     
-    // El tamaño de la letra es aprox 45px. 
-    // Radio = (Mitad del contenedor) - (Mitad de la letra) - (Margen de seguridad)
     const letterSize = 45;
     const padding = 10;
     const radius = (containerWidth / 2) - (letterSize / 2) - padding;
@@ -503,14 +499,12 @@ function initWheel(baseWord) {
         btn.className = 'wheel-letter';
         btn.innerText = char.toUpperCase();
         
-        // Centrar el elemento restando la mitad de su tamaño (22.5px aprox)
         btn.style.left = (x - (letterSize / 2)) + 'px';
         btn.style.top = (y - (letterSize / 2)) + 'px';
         
         btn.dataset.index = i;
         btn.dataset.char = char;
         
-        // Guardamos las coordenadas centrales RELATIVAS al contenedor para el SVG
         btn.dataset.cx = x;
         btn.dataset.cy = y;
 
@@ -531,6 +525,10 @@ function handleStart(e) {
     e.preventDefault(); 
     isDragging = true;
     selectedIndices = [];
+    
+    // Limpiar mensaje de error si existía al empezar nueva selección
+    document.getElementById('feedback-message').classList.remove('visible');
+    
     const index = parseInt(e.target.dataset.index);
     selectLetter(index);
 }
@@ -569,10 +567,31 @@ function handleEnd(e) {
     isDragging = false;
     
     const word = selectedIndices.map(i => wheelLetters[i].dataset.char).join('');
-    checkWheelAttempt(word);
+    
+    // Si la palabra es muy corta, limpiamos inmediatamente
+    if (word.length < 2) {
+        clearSelection();
+        return;
+    }
 
+    // Comprobar la palabra
+    const found = checkWheelAttempt(word);
+
+    if (found) {
+        // Éxito: Limpiar selección inmediatamente
+        clearSelection();
+    } else {
+        // Fallo: Mostrar animación y mensaje, retrasar limpieza
+        triggerErrorEffect();
+    }
+}
+
+function clearSelection() {
     selectedIndices = [];
-    wheelLetters.forEach(l => l.classList.remove('active'));
+    wheelLetters.forEach(l => {
+        l.classList.remove('active');
+        l.classList.remove('shake'); // Asegurar quitar shake
+    });
     document.getElementById('wheel-svg').innerHTML = '';
     
     const display = document.getElementById('current-selection');
@@ -630,8 +649,6 @@ function drawPath(cursorX, cursorY) {
 }
 
 function checkWheelAttempt(wordAttempt) {
-    if (wordAttempt.length < 2) return; 
-
     let found = false;
     currentWords.forEach(w => {
         if (w.normalized === wordAttempt) {
@@ -639,6 +656,24 @@ function checkWheelAttempt(wordAttempt) {
             found = true;
         }
     });
+    return found;
+}
+
+function triggerErrorEffect() {
+    // 1. Añadir clase shake a las letras seleccionadas
+    selectedIndices.forEach(index => {
+        wheelLetters[index].classList.add('shake');
+    });
+
+    // 2. Mostrar mensaje de error
+    const feedback = document.getElementById('feedback-message');
+    feedback.classList.add('visible');
+
+    // 3. Esperar a que termine la animación (500ms) para limpiar
+    setTimeout(() => {
+        clearSelection();
+        feedback.classList.remove('visible');
+    }, 800); // 800ms para que se lea un poco el mensaje
 }
 
 function fillWordInGrid(word) {
