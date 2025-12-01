@@ -9,7 +9,7 @@
 <body>
 
     <h1>🧩 Crucigrama "Letras Ocultas"</h1>
-    <p class="subtitle">Las palabras cruzadas se forman usando <strong>solo</strong> las letras de la palabra principal.</p>
+    <p class="subtitle">Conecta las letras para formar las palabras del crucigrama.</p>
 
     <div class="controls">
         <button class="btn-new" onclick="initGame()">🔄 Generar Nuevo</button>
@@ -18,6 +18,12 @@
 
     <div class="game-area">
         <div id="crossword-grid"></div>
+        
+        <div id="wheel-container">
+            <svg id="wheel-svg"></svg>
+            <div id="wheel-letters"></div>
+            <div id="current-selection" class="selection-display"></div>
+        </div>
 
         <div class="clues-panel">
             <div id="base-word-display" class="base-word-info">
