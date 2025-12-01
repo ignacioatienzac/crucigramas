@@ -1,9 +1,10 @@
 :root {
     --cell-size: 45px;
-    --primary-color: #8e44ad; /* Morado para estilo 'juego de palabras' */
+    --primary-color: #8e44ad; 
     --success-color: #27ae60;
     --error-color: #c0392b;
     --bg-color: #ecf0f1;
+    --barrier-color: #2c3e50; /* Color oscuro para las líneas de separación */
 }
 
 body {
@@ -88,7 +89,8 @@ button:active {
 /* Grid Styles */
 #crossword-grid {
     display: grid;
-    gap: 4px;
+    /* Aumentado el gap a 12px para mayor separación */
+    gap: 12px;
     padding: 10px;
     background-color: #bdc3c7;
     border-radius: 8px;
@@ -103,6 +105,33 @@ button:active {
     align-items: center;
     position: relative;
     perspective: 600px;
+}
+
+/* Estilos de Barreras para palabras contiguas pero no conectadas */
+.barrier-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: -8px; /* Centrado en el gap de 12px */
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--barrier-color);
+    border-radius: 2px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.barrier-right::after {
+    content: '';
+    position: absolute;
+    right: -8px; /* Centrado en el gap de 12px */
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--barrier-color);
+    border-radius: 2px;
+    z-index: 5;
+    pointer-events: none;
 }
 
 .cell-input {
@@ -123,10 +152,6 @@ button:active {
 .cell-input:focus {
     border-color: var(--primary-color);
     background-color: #fbfaff;
-}
-
-.cell-empty {
-    visibility: hidden;
 }
 
 .cell.correct .cell-input {
