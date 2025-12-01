@@ -1,11 +1,11 @@
 :root {
-    --cell-size: 40px; /* Reducido ligeramente para que quepa mejor */
+    --cell-size: 40px; 
     --primary-color: #8e44ad; 
     --success-color: #27ae60;
     --error-color: #c0392b;
     --bg-color: #ecf0f1;
     --barrier-color: #2c3e50;
-    --wheel-size: 260px; /* Reducido un poco para ganar espacio vertical */
+    --wheel-size: 260px; 
     --wheel-bg: rgba(255, 255, 255, 0.85);
 }
 
@@ -15,7 +15,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Reducimos padding para subir todo */
     padding: 10px;
     margin: 0;
     color: #2c3e50;
@@ -23,7 +22,6 @@ body {
     min-height: 100vh;
 }
 
-/* Ajuste de controles para que ocupen menos */
 .controls {
     margin-bottom: 10px;
     display: flex;
@@ -31,7 +29,7 @@ body {
 }
 
 button {
-    padding: 8px 16px; /* Botones más compactos */
+    padding: 8px 16px; 
     border: none;
     border-radius: 50px;
     cursor: pointer;
@@ -72,19 +70,17 @@ button:active {
     font-size: 0.9rem;
 }
 
-/* Área principal del juego */
 .game-area {
     display: flex;
-    flex-direction: row; /* Disposición horizontal: Grid | Sidebar */
+    flex-direction: row; 
     gap: 30px;
     justify-content: center;
-    align-items: flex-start; /* Alinear al top para aprovechar espacio */
+    align-items: flex-start; 
     width: 100%;
     max-width: 1200px;
     height: 100%;
 }
 
-/* Columna derecha (Rueda + Pistas) */
 .right-column {
     display: flex;
     flex-direction: column;
@@ -95,11 +91,10 @@ button:active {
 /* --- GRID STYLES --- */
 #crossword-grid {
     display: grid;
-    gap: 8px; /* Gap reducido un poco */
+    gap: 8px; 
     padding: 10px;
     background-color: #bdc3c7;
     border-radius: 8px;
-    /* Ajuste para que no desborde */
     max-height: 85vh; 
     overflow: auto;
 }
@@ -118,7 +113,7 @@ button:active {
 .barrier-bottom::after {
     content: '';
     position: absolute;
-    bottom: -6px; /* Ajustado al nuevo gap */
+    bottom: -6px; 
     left: 0;
     width: 100%;
     height: 4px;
@@ -131,7 +126,7 @@ button:active {
 .barrier-right::after {
     content: '';
     position: absolute;
-    right: -6px; /* Ajustado al nuevo gap */
+    right: -6px; 
     top: 0;
     width: 4px;
     height: 100%;
@@ -197,12 +192,11 @@ button:active {
     border-radius: 50%;
     background-color: var(--wheel-bg);
     position: relative;
-    /* Eliminado margen grande para pegar todo */
     margin: 0; 
     box-shadow: 0 8px 30px rgba(0,0,0,0.1);
     user-select: none;
     touch-action: none;
-    flex-shrink: 0; /* Evitar que se aplaste */
+    flex-shrink: 0; 
 }
 
 #wheel-svg {
@@ -216,7 +210,7 @@ button:active {
 }
 
 .wheel-letter {
-    width: 45px; /* Ligeramente más pequeñas */
+    width: 45px; 
     height: 45px;
     background-color: #fff;
     border-radius: 50%;
@@ -238,6 +232,21 @@ button:active {
     background-color: var(--primary-color);
     color: white;
     transform: scale(1.1);
+}
+
+/* --- ANIMACIÓN VIBRACIÓN (ERROR) --- */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.wheel-letter.shake {
+    animation: shake 0.4s ease-in-out;
+    background-color: var(--error-color) !important;
+    color: white !important;
 }
 
 .selection-display {
@@ -262,6 +271,30 @@ button:active {
     opacity: 1;
 }
 
+/* --- MENSAJE DE ERROR --- */
+.feedback-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(192, 57, 43, 0.95); /* Fondo rojo semitransparente */
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 30;
+    width: 80%;
+}
+
+.feedback-message.visible {
+    opacity: 1;
+}
+
 /* --- CLUES STYLES --- */
 .clues-panel {
     background: white;
@@ -269,7 +302,7 @@ button:active {
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     width: 100%;
-    max-width: var(--wheel-size); /* Que coincida con el ancho de la rueda */
+    max-width: var(--wheel-size); 
     box-sizing: border-box;
 }
 
@@ -313,7 +346,6 @@ button:active {
     align-items: center;
 }
 
-/* Responsive: En móviles volvemos a columna única pero compacta */
 @media (max-width: 768px) {
     .game-area { 
         flex-direction: column; 
