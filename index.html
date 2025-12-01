@@ -8,42 +8,43 @@
 </head>
 <body>
 
-    <h1>🧩 Crucigrama "Letras Ocultas"</h1>
-    <p class="subtitle">Conecta las letras para formar las palabras del crucigrama.</p>
-
     <div class="controls">
-        <button class="btn-new" onclick="initGame()">🔄 Generar Nuevo</button>
+        <button class="btn-new" onclick="initGame()">🔄 Nuevo</button>
         <button class="btn-check" onclick="checkAnswers()">✅ Comprobar</button>
     </div>
 
     <div class="game-area">
         <div id="crossword-grid"></div>
         
-        <div id="wheel-container">
-            <svg id="wheel-svg"></svg>
-            <div id="wheel-letters"></div>
-            <div id="current-selection" class="selection-display"></div>
-        </div>
-
-        <div class="clues-panel">
-            <div id="base-word-display" class="base-word-info">
-                <button class="btn-solve" onclick="solveBaseWord()">💡 Resolver palabra base</button>
+        <div class="right-column">
+            
+            <div id="wheel-container">
+                <svg id="wheel-svg"></svg>
+                <div id="wheel-letters"></div>
+                <div id="current-selection" class="selection-display"></div>
             </div>
 
-            <button id="toggle-clues" class="btn-toggle" aria-expanded="false" aria-controls="clues-wrapper" onclick="toggleClues()">
-                👀 Mostrar pistas
-            </button>
-
-            <div id="clues-wrapper" class="clues-hidden">
-                <div class="clue-group">
-                    <h3>Horizontales</h3>
-                    <div id="clues-horizontal"></div>
+            <div class="clues-panel">
+                <div id="base-word-display" class="base-word-info">
+                    <button class="btn-solve" onclick="solveBaseWord()">💡 Resolver palabra base</button>
                 </div>
-                <div class="clue-group" style="margin-top: 25px;">
-                    <h3>Verticales</h3>
-                    <div id="clues-vertical"></div>
+
+                <button id="toggle-clues" class="btn-toggle" aria-expanded="false" aria-controls="clues-wrapper" onclick="toggleClues()">
+                    👀 Mostrar pistas
+                </button>
+
+                <div id="clues-wrapper" class="clues-hidden">
+                    <div class="clue-group">
+                        <h3>Horizontales</h3>
+                        <div id="clues-horizontal"></div>
+                    </div>
+                    <div class="clue-group" style="margin-top: 15px;">
+                        <h3>Verticales</h3>
+                        <div id="clues-vertical"></div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
